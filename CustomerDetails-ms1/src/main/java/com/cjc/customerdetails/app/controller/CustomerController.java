@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -52,5 +53,17 @@ public class CustomerController {
 		return new ResponseEntity<List<Enquiry>>( cd , HttpStatus.OK);
 	}
 
+	@DeleteMapping("/deleteCustomer/{customerid}")
+	public ResponseEntity<String> deleteSingleData(@PathVariable int customerid)
+	{
+		csi.deleteData(customerid);
+		return new ResponseEntity<String>( HttpStatus.NO_CONTENT);
+	}
 	
+	@DeleteMapping("/deleteAllCustomer")
+	public ResponseEntity<String> deleteAllData()
+	{
+		csi.deleteAllCustomer();
+		return new ResponseEntity<String>( HttpStatus.NO_CONTENT);
+	}
 }

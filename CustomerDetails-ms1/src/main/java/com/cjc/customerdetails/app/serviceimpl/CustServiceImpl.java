@@ -62,6 +62,20 @@ public class CustServiceImpl implements CustServiceI{
 			return cd;			
 		}
 
+
+		@Override
+		public void deleteData(int customerid) 
+		{			
+			cri.deleteById(customerid);
+		}
+
+
+		@Override
+		public void deleteAllCustomer() 
+		{
+			cri.deleteAll();
+		}
+
 	
 
 }	

@@ -15,4 +15,10 @@ public interface CustServiceI {
 
 	List<Enquiry> getAllData();
 
+
+	void deleteData(int customerid);
+
+
+	void deleteAllCustomer();
+
 }
