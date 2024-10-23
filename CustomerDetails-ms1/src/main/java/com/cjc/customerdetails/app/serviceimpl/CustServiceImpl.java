@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.cjc.customerdetails.app.exception.AgeException;
 import com.cjc.customerdetails.app.exception.EmailNotValidException;
+import com.cjc.customerdetails.app.exception.InvalidNameException;
 import com.cjc.customerdetails.app.exception.MobNoException;
 import com.cjc.customerdetails.app.model.Enquiry;
 import com.cjc.customerdetails.app.repoi.CustRepoI;
@@ -50,6 +51,35 @@ public class CustServiceImpl implements CustServiceI{
 		}else
 			throw new AgeException("Enter age above 18");
 		
+		String g = s.getFname();
+		char[]d=g.toCharArray();
+		for(int i=0;i<d.length;i++)
+		{
+		if (d[i]>='a'&&d[i]<='z'||d[i]>='A'&&d[i]<='Z'||d[i]==32)
+		{
+		    e.setFname(g);	
+		}
+		else
+		{
+			throw new InvalidNameException("Please Enter Valid Name");
+		}
+		
+		}
+		
+		String r = s.getLname();
+		char[]w=r.toCharArray();
+		for(int i=0;i<d.length;i++)
+		{
+		if (d[i]>='a'&&d[i]<='z'||d[i]>='A'&&d[i]<='Z'||d[i]==32)
+		{
+		    e.setLname(r);	
+		}
+		else
+		{
+			throw new InvalidNameException("Please Enter Valid Name");
+		}
+		
+		}
 		cri.save(e);
 		return e;
 	}
