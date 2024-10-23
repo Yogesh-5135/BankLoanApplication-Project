@@ -30,8 +30,7 @@ public class CustomerController {
 		return new ResponseEntity<Enquiry> (ss,HttpStatus.CREATED);
 	}
 	
-	
-	
+		
 	@PutMapping("/editCustomer/{customerid}")
 	public ResponseEntity<String> update(@PathVariable int customerid , @RequestBody Enquiry c)
 	{
