@@ -2,12 +2,10 @@ package com.cjc.customerdetails.app.serviceimpl;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.cjc.customerdetails.app.exception.AccNoException;
 import com.cjc.customerdetails.app.exception.EmailNotValidException;
+import com.cjc.customerdetails.app.exception.MobileNoInvalidException;
 import com.cjc.customerdetails.app.model.Enquiry;
 import com.cjc.customerdetails.app.repoi.CustRepoI;
 import com.cjc.customerdetails.app.servicei.CustServiceI;
@@ -30,7 +28,7 @@ public class CustServiceImpl implements CustServiceI{
 		}
 		if (count > 10 || count<10) 
 		{
-			throw new AccNoException("Acc no invalid ..Enter only 8 numbers");
+		   throw new MobileNoInvalidException("Please Enter Valid Mobile No");
 		}else 
 		{
 			e.setMobileno(s.getMobileno());

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import com.cjc.customerdetails.app.model.Enquiry;
 
 @Repository
-public interface CustRepoI extends JpaRepository<Enquiry, Integer>{
+public interface CustRepoI extends JpaRepository<Enquiry, Integer>
+{
 
 }
