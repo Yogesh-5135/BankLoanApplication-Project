@@ -23,7 +23,7 @@ public class CustomerController {
 	@Autowired
 	CustServiceI csi;
 	
-	@PostMapping("/add")
+	@PostMapping("/saveCustomer")
 	public ResponseEntity<Enquiry> addStudent(@RequestBody Enquiry s)
 	{
 		Enquiry ss=csi.saveStudent(s);
@@ -45,7 +45,7 @@ public class CustomerController {
 		return new ResponseEntity<Enquiry>(cd , HttpStatus.OK);
 	}
 	
-	@GetMapping("getAllCustomer")
+	@GetMapping("/getAllCustomer")
 	public ResponseEntity<List<Enquiry>> getAllCustomer( )
 	{
 		List<Enquiry> cd = csi.getAllData();
