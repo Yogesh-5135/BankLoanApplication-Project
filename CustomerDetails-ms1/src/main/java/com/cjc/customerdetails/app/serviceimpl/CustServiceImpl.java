@@ -51,7 +51,7 @@ public class CustServiceImpl implements CustServiceI{
 			throw new AgeException("Enter age above 18");
 		
 		cri.save(e);
-		return s;
+		return e;
 	}
 	
 	
