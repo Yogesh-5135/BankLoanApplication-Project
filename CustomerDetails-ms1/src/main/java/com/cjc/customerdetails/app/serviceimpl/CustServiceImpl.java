@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cjc.customerdetails.app.exception.AccNoException;
+import com.cjc.customerdetails.app.exception.AgeException;
 import com.cjc.customerdetails.app.exception.EmailNotValidException;
 import com.cjc.customerdetails.app.model.Enquiry;
 import com.cjc.customerdetails.app.repoi.CustRepoI;
@@ -42,6 +43,12 @@ public class CustServiceImpl implements CustServiceI{
 		}else {
 			throw new EmailNotValidException(" Email should end with @gmail.com or @yahoo.com ");
 		}
+		
+		int f = s.getAge();
+		if(f >18) {	
+			e.setAge(f);
+		}else
+			throw new AgeException("Enter age above 18");
 		
 		cri.save(e);
 		return s;
