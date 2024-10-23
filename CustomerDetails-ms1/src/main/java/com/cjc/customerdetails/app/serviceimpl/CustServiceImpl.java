@@ -6,6 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cjc.customerdetails.app.exception.AccNoException;
+import com.cjc.customerdetails.app.exception.EmailNotValidException;
 import com.cjc.customerdetails.app.model.Enquiry;
 import com.cjc.customerdetails.app.repoi.CustRepoI;
 import com.cjc.customerdetails.app.servicei.CustServiceI;
@@ -17,7 +19,31 @@ public class CustServiceImpl implements CustServiceI{
 
 	@Override
 	public Enquiry saveStudent(Enquiry s) {
-		cri.save(s);
+		
+		Enquiry e = null;
+		
+		long l = s.getMobileno();
+		int count = 0;
+		for (long no = l; no > 0; no = no / 10) 
+		{
+			count++;
+		}
+		if (count > 10 || count<10) 
+		{
+			throw new AccNoException("Acc no invalid ..Enter only 8 numbers");
+		}else 
+		{
+			e.setMobileno(s.getMobileno());
+		}
+		
+		
+		if(s.getEmail().endsWith("@gmail.com") || s.getEmail().endsWith("@yahoo.com")) {
+			e.setEmail(s.getEmail());
+		}else {
+			throw new EmailNotValidException(" Email should end with @gmail.com or @yahoo.com ");
+		}
+		
+		cri.save(e);
 		return s;
 	}
 	
