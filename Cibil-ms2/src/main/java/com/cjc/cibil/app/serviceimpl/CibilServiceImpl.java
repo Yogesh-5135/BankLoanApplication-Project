@@ -26,6 +26,7 @@ public class CibilServiceImpl implements CibilServiceI{
 			Enquiry e = o.get();
 			
 			e.setCibil(c);
+			eri.save(e);
 			return e;
 		}
 		else
