@@ -18,24 +18,24 @@ public class CustServiceImpl implements CustServiceI{
 
 	@Autowired
 	CustRepoI cri;
-
+	
 	@Override
 	public Enquiry saveStudent(Enquiry s) {
 		
-		Enquiry e = null;
+		Enquiry e = new Enquiry();
 		
 		long l = s.getMobileno();
 		int count = 0;
-		for (long no = l; no > 0; no = no / 10) 
+		for (long n = l; n >= 0; n = n / 10) 
 		{
 			count++;
 		}
-		if (count > 10 || count<10) 
+		if (count == 10) 
 		{
-			throw new MobNoException("Mobno invalid ..Enter only 10 numbers");
+			e.setMobileno(l);			
 		}else 
 		{
-			e.setMobileno(s.getMobileno());
+			throw new MobNoException("Mobno invalid ..Enter only 10 numbers");
 		}
 		
 		
