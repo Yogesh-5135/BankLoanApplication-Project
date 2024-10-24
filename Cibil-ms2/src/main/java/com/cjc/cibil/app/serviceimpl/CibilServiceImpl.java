@@ -1,5 +1,7 @@
 package com.cjc.cibil.app.serviceimpl;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +22,21 @@ public class CibilServiceImpl implements CibilServiceI{
 	EnquiryRepoI eri;
 
 	@Override
-	public Enquiry getCustomer(int customerid , Cibil c ) {
+	public Enquiry getCustomer(int customerid , Cibil c,Integer i ) 
+	{
+		LocalDate localDate = LocalDate.now();
+		Date d = Date.valueOf(localDate);
+		
 		Optional<Enquiry> o = eri.findById(customerid);
 		if(o.isPresent()) {
 			Enquiry e = o.get();
 			
 			e.setCibil(c);
+			
+			e.getCibil().setDate(d);
+			
+			e.getCibil().setCibilscore(i);
+			
 			eri.save(e);
 			return e;
 		}

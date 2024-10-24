@@ -15,4 +15,11 @@ public class CibilMs2Application {
 		SpringApplication.run(CibilMs2Application.class, args);
 	}
 	
+	@Bean
+	public RestTemplate rt()
+	{
+		RestTemplate rt = new RestTemplate();
+		
+		return rt;
+	}
 }
