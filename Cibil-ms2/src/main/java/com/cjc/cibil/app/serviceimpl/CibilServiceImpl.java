@@ -4,14 +4,18 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cjc.cibil.app.exception.CustomerNotFoundException;
 import com.cjc.cibil.app.model.Cibil;
 import com.cjc.cibil.app.model.Enquiry;
 import com.cjc.cibil.app.repoi.CibilRepoI;
 import com.cjc.cibil.app.repoi.EnquiryRepoI;
 import com.cjc.cibil.app.servicei.CibilServiceI;
+
 
 @Service
 public class CibilServiceImpl implements CibilServiceI{
@@ -20,6 +24,8 @@ public class CibilServiceImpl implements CibilServiceI{
 	CibilRepoI cri;
 	@Autowired
 	EnquiryRepoI eri;
+	
+	private static final Logger log = LoggerFactory.getLogger(CibilServiceImpl.class);
 
 	@Override
 	public Enquiry getCustomer(int customerid ,Integer i ) 
@@ -62,7 +68,8 @@ public class CibilServiceImpl implements CibilServiceI{
 		}
 		else
 		{
-			throw new RuntimeException("Id not found");
+			log.error("Please Enter Valid Customer Id");
+			throw new CustomerNotFoundException("Id not found");
 		}
 	}
 }
