@@ -3,11 +3,13 @@ package com.cjc.customerdetails.app.serviceimpl;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.cjc.customerdetails.app.exception.AgeException;
 import com.cjc.customerdetails.app.exception.EmailNotValidException;
+import com.cjc.customerdetails.app.exception.IdNotFountException;
 import com.cjc.customerdetails.app.exception.InvalidNameException;
 import com.cjc.customerdetails.app.exception.MobNoException;
 import com.cjc.customerdetails.app.exception.PanCardException;
@@ -19,6 +21,8 @@ public class CustServiceImpl implements CustServiceI{
 
 	@Autowired
 	CustRepoI cri;
+	
+	private static final Logger log = LoggerFactory.getLogger(CustServiceImpl.class);
 	
 	@Override
 	public Enquiry saveStudent(Enquiry s) {
@@ -33,6 +37,7 @@ public class CustServiceImpl implements CustServiceI{
 		}
 		if (count > 10 || count<10) 
 		{
+			log.error("please Enter valid Mobile No");
 			throw new MobNoException("Mobno invalid ..Enter only 10 numbers");
 		}else 
 		{
@@ -43,6 +48,7 @@ public class CustServiceImpl implements CustServiceI{
 		if(s.getEmail().endsWith("@gmail.com") || s.getEmail().endsWith("@yahoo.com")) {
 			e.setEmail(s.getEmail());
 		}else {
+			log.error("please Enter valid Email Id");
 			throw new EmailNotValidException(" Email should end with @gmail.com or @yahoo.com ");
 		}
 		
@@ -50,8 +56,10 @@ public class CustServiceImpl implements CustServiceI{
 		if(f >18) {	
 			e.setAge(f);
 		}else
+		{
+			log.error("Required Age is 18");
 			throw new AgeException("Enter age above 18");
-		
+		}
 		String g = s.getFname();
 		char[]d=g.toCharArray();
 		for(int i=0;i<d.length;i++)
@@ -62,6 +70,7 @@ public class CustServiceImpl implements CustServiceI{
 		}
 		else
 		{
+			log.error("Your Fname does not contain any special character");
 			throw new InvalidNameException("Please Enter Valid Name");
 		}
 		
@@ -77,6 +86,7 @@ public class CustServiceImpl implements CustServiceI{
 		}
 		else
 		{
+			log.error("Your Lname does not contain any special character");
 			throw new InvalidNameException("Please Enter Valid Name");
 		}
 		
@@ -115,6 +125,7 @@ public class CustServiceImpl implements CustServiceI{
 		if (isValid) {
 		    e.setPancard(pancard);
 		} else {
+			log.error("Your Pan no contain Capital Letters And digit Only");
 		    throw new PanCardException("Invalid PAN card number. Please enter a valid PAN card.");
 		}
 
@@ -154,7 +165,7 @@ public class CustServiceImpl implements CustServiceI{
 			}
 			else
 			{
-				throw new RuntimeException("Id not found");
+				throw new IdNotFountException("Id not found");
 			}
 		}
 
