@@ -16,7 +16,7 @@ public class CibilMs2Application {
 		SpringApplication.run(CibilMs2Application.class, args);
 	}
 	
-	@LoadBalanced
+	
 	@Bean
 	public RestTemplate rt()
 	{
