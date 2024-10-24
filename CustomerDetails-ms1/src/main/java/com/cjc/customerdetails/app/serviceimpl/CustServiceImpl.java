@@ -26,16 +26,16 @@ public class CustServiceImpl implements CustServiceI{
 		
 		long l = s.getMobileno();
 		int count = 0;
-		for (long n = l; n >= 0; n = n / 10) 
+		for (long no = l; no > 0; no = no / 10) 
 		{
 			count++;
 		}
-		if (count == 10) 
-		{
-			e.setMobileno(l);			
-		}else 
+		if (count > 10 || count<10) 
 		{
 			throw new MobNoException("Mobno invalid ..Enter only 10 numbers");
+		}else 
+		{
+			e.setMobileno(s.getMobileno());
 		}
 		
 		
@@ -80,11 +80,13 @@ public class CustServiceImpl implements CustServiceI{
 		}
 		
 		}
+		
+		
 		cri.save(e);
 		return e;
 	}
-	
-	
+
+
 	@Override
 	public void editCustomer(int customerid, Enquiry c)
 	{		
@@ -138,7 +140,5 @@ public class CustServiceImpl implements CustServiceI{
 		{
 			cri.deleteAll();
 		}
-
-	
 
 }	
