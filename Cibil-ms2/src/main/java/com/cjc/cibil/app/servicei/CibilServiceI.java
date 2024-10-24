@@ -1,5 +1,10 @@
 package com.cjc.cibil.app.servicei;
 
+import com.cjc.cibil.app.model.Cibil;
+import com.cjc.cibil.app.model.Enquiry;
+
 public interface CibilServiceI {
+
+	Enquiry getCustomer(int customerid, Cibil c);
 
 }
