@@ -22,7 +22,7 @@ public class CibilServiceImpl implements CibilServiceI{
 	EnquiryRepoI eri;
 
 	@Override
-	public Enquiry getCustomer(int customerid , Cibil c,Integer i ) 
+	public Enquiry getCustomer(int customerid ,Integer i ) 
 	{
 		LocalDate localDate = LocalDate.now();
 		Date d = Date.valueOf(localDate);
@@ -31,13 +31,33 @@ public class CibilServiceImpl implements CibilServiceI{
 		if(o.isPresent()) {
 			Enquiry e = o.get();
 			
+			Cibil c = new Cibil();
+			
+			c.setDate(d);
+			
+			c.setCibilscore(i);	
+
+			if (i >= 750) {
+			    c.setStatus("Excellent");
+			    c.setRemark("You will get loan as much as you want,Bank is Yours");
+			} else if (i >= 650) {
+			    c.setStatus("Good");
+			    c.setRemark("Good score, You will get Loan");
+			} else if (i >= 550) {
+			    c.setStatus("Average");
+			    c.setRemark("Score is little less, try next time");
+			} else if (i >= 300) {
+			    c.setStatus("Poor");
+			    c.setRemark("Better luck next time ");
+			} else {
+			   c.setStatus("Invalid Score");
+			    c.setRemark("You are Great, work hard and improve score");
+			}
+			
 			e.setCibil(c);
-			
-			e.getCibil().setDate(d);
-			
-			e.getCibil().setCibilscore(i);
-			
+						
 			eri.save(e);
+			
 			return e;
 		}
 		else

@@ -27,23 +27,15 @@ public class CibilController {
 	RestTemplate rt;
 	
 	@PutMapping("/editCibil/{customerid}")
-	public ResponseEntity<Enquiry> addCibil( @PathVariable int customerid , @RequestBody Cibil c)
+	public ResponseEntity<Enquiry> addCibil( @PathVariable int customerid )
 	{
 		
        String url = "http://localhost:9098/random/checkCibilScore";
 		
 		Integer i = rt.getForObject(url, Integer.class);
 		
-		Enquiry e = csi.getCustomer(customerid , c,i);
+		Enquiry e = csi.getCustomer(customerid ,i);
 		return new ResponseEntity<Enquiry> (e,HttpStatus.OK);
-	}
-	
-	@GetMapping("/checkCibilScore")
-	public void getCibilScore()
-	{
-		
-		
-		//return ne ;
 	}
 	
 }

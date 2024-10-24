@@ -15,7 +15,7 @@ public class RandomController
    @GetMapping("/checkCibilScore")
    public int create()
    {
-	   int i = r.nextInt(300,900);
+	   int i = r.nextInt(100,950);
 	   System.out.println(i);  
 	return i;
 	   

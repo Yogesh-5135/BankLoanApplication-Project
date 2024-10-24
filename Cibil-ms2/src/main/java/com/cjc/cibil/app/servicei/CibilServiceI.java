@@ -5,6 +5,6 @@ import com.cjc.cibil.app.model.Enquiry;
 
 public interface CibilServiceI {
 
-	public Enquiry getCustomer(int customerid, Cibil c, Integer i);
+	public Enquiry getCustomer(int customerid, Integer i);
 
 }

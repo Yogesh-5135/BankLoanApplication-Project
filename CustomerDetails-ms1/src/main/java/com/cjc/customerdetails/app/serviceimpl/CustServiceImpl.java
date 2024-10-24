@@ -10,6 +10,7 @@ import com.cjc.customerdetails.app.exception.AgeException;
 import com.cjc.customerdetails.app.exception.EmailNotValidException;
 import com.cjc.customerdetails.app.exception.InvalidNameException;
 import com.cjc.customerdetails.app.exception.MobNoException;
+import com.cjc.customerdetails.app.exception.PanCardException;
 import com.cjc.customerdetails.app.model.Enquiry;
 import com.cjc.customerdetails.app.repoi.CustRepoI;
 import com.cjc.customerdetails.app.servicei.CustServiceI;
@@ -81,6 +82,44 @@ public class CustServiceImpl implements CustServiceI{
 		
 		}
 		
+		
+		
+		String pancard = s.getPancard();
+		boolean isValid = true;
+
+		for (int i = 0; i < pancard.length(); i++) {
+			
+		    char ch = pancard.charAt(i);
+		    
+		    if (i < 5) {
+		    	
+		        if (ch < 'A' || ch > 'Z') {
+		            isValid = false;
+		            break;
+		        }
+		    } else if (i < 9) {
+		        
+		        if (ch < '0' || ch > '9') {
+		            isValid = false;
+		            break;
+		        }
+		    } else {
+		    	
+		        if (ch < 'A' || ch > 'Z') {
+		            isValid = false;
+		            break;
+		        }
+		    }
+		}
+
+		if (isValid) {
+		    e.setPancard(pancard);
+		} else {
+		    throw new PanCardException("Invalid PAN card number. Please enter a valid PAN card.");
+		}
+
+		
+				
 		
 		cri.save(e);
 		return e;
