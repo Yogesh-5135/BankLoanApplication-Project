@@ -27,17 +27,16 @@ public class LoanApplyServiceImpl implements LoanApplyServiceI{
 	public LoanApplication saveLoanApplication(LoanApplication ld, int loanid) 
 	{
 		List<Enquiry> en = csi.getAllApprovedData();
-		LoanApplication l = null;
 		
 		for (Enquiry enquiry : en) {
 			if(enquiry.getMobileno() == ld.getCustomerMobileNumber() ) {				
 				
-				lri.save(l);				
+				lri.save(ld);				
 			}	else {
 					throw new MobNoException("Enter valid mob number as like Loan Approved Customer ");
 			}		
 		}
-		return l;
+		return ld;
 	}
 		
 	
