@@ -4,7 +4,7 @@ import com.cjc.customerdetails.app.model.loanapplicationform.PermanentAddress;
 
 public interface PermanentAddressServiceI {
 
-	public PermanentAddress savePermanentAddress(PermanentAddress a, int loanid);
+	public PermanentAddress savePermanentAddress(PermanentAddress a, int customerAddressId);
 
 	public PermanentAddress getSinglePermanentAddress(int permanentAddressId);
 

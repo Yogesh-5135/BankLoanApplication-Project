@@ -10,6 +10,7 @@ import com.cjc.customerdetails.app.model.loanapplicationform.CustomerAddress;
 import com.cjc.customerdetails.app.model.loanapplicationform.LoanApplication;
 import com.cjc.customerdetails.app.model.loanapplicationform.LocalAddress;
 import com.cjc.customerdetails.app.model.loanapplicationform.PermanentAddress;
+import com.cjc.customerdetails.app.repoi.loanapplicationform.CustomerAddressRepoI;
 import com.cjc.customerdetails.app.repoi.loanapplicationform.LoanApplyRepoI;
 import com.cjc.customerdetails.app.repoi.loanapplicationform.LocalAddressRepoI;
 import com.cjc.customerdetails.app.servicei.loanapplicationform.LocalAddressServiceI;
@@ -21,14 +22,14 @@ public class LocalAddressServiceImpl implements LocalAddressServiceI
   LocalAddressRepoI lar;
 
   @Autowired
-  LoanApplyRepoI lri;
+  CustomerAddressRepoI car;
   
 @Override
-public LocalAddress saveLocalAddress(LocalAddress a,int loanid) 
+public LocalAddress saveLocalAddress(LocalAddress a,int customerAddressId) 
 {
-  LoanApplication l = null;
+	CustomerAddress l = null;
 	
-	Optional<LoanApplication> ol = lri.findById(loanid);
+	Optional<CustomerAddress> ol = car.findById(customerAddressId);
 	if(ol.isPresent())
 	{
 		 l = ol.get();
@@ -54,8 +55,9 @@ public LocalAddress saveLocalAddress(LocalAddress a,int loanid)
 	    {
 		  e.printStackTrace();
 	    }
-	l.getCustomerAddress().setLocalAddress(la);
-	lri.save(l);
+	lar.save(la);
+	l.setLocalAddress(la);
+	car.save(l);
 	
 	return la;
 }

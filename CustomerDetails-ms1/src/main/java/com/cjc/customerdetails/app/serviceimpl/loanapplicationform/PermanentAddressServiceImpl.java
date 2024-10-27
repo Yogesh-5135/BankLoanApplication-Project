@@ -6,10 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cjc.customerdetails.app.exception.IdNotFountException;
-import com.cjc.customerdetails.app.model.loanapplicationform.LoanApplication;
-import com.cjc.customerdetails.app.model.loanapplicationform.LocalAddress;
+import com.cjc.customerdetails.app.model.loanapplicationform.CustomerAddress;
 import com.cjc.customerdetails.app.model.loanapplicationform.PermanentAddress;
-import com.cjc.customerdetails.app.repoi.loanapplicationform.LoanApplyRepoI;
+import com.cjc.customerdetails.app.repoi.loanapplicationform.CustomerAddressRepoI;
 import com.cjc.customerdetails.app.repoi.loanapplicationform.PermanentAddressRepoI;
 import com.cjc.customerdetails.app.servicei.loanapplicationform.PermanentAddressServiceI;
 
@@ -20,14 +19,14 @@ public class PermanentAddressServiceImpl implements PermanentAddressServiceI
  PermanentAddressRepoI par;
  
  @Autowired
- LoanApplyRepoI lri;
+ CustomerAddressRepoI car;
 
 @Override
-public PermanentAddress savePermanentAddress(PermanentAddress a,int loanid) 
+public PermanentAddress savePermanentAddress(PermanentAddress a,int customerAddressId) 
 {
-	LoanApplication l = null;
+	CustomerAddress l = null;
 	
-	Optional<LoanApplication> ol = lri.findById(loanid);
+	Optional<CustomerAddress> ol = car.findById(customerAddressId);
 	if(ol.isPresent())
 	{
 		 l = ol.get();
@@ -53,8 +52,9 @@ public PermanentAddress savePermanentAddress(PermanentAddress a,int loanid)
 	    {
 		  e.printStackTrace();
 	    }
-	l.getCustomerAddress().setPermanentAddress(pa);
-	lri.save(l);
+	par.save(pa);
+	l.setPermanentAddress(pa);
+	car.save(l);
 	
 	return pa;
 }

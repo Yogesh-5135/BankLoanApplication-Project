@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import com.cjc.customerdetails.app.exception.IdNotFountException;
 import com.cjc.customerdetails.app.model.loanapplicationform.DependentInforamtion;
 import com.cjc.customerdetails.app.model.loanapplicationform.GuarantorDetails;
+import com.cjc.customerdetails.app.model.loanapplicationform.LoanApplication;
 import com.cjc.customerdetails.app.repoi.loanapplicationform.GuarantorDetailsRepoI;
+import com.cjc.customerdetails.app.repoi.loanapplicationform.LoanApplyRepoI;
 import com.cjc.customerdetails.app.servicei.loanapplicationform.GuarantorDetailsServiceI;
 
 @Service
@@ -16,12 +18,41 @@ public class GuarantorDetailsServiceImpl implements GuarantorDetailsServiceI
 {
   @Autowired
   GuarantorDetailsRepoI gdr;
-  
+  @Autowired
+  LoanApplyRepoI lri;
   
 	@Override
-	public GuarantorDetails saveData(GuarantorDetails s) 
+	public GuarantorDetails saveData(GuarantorDetails s ,int loanid) 
 	{
-		return gdr.save(s);
+		LoanApplication l = null;
+		
+		Optional<LoanApplication> oa = lri.findById(loanid);
+		if(oa.isPresent())
+		{
+			l = oa.get();
+		}
+		else
+		{
+			throw new IdNotFountException("Id Not Found");
+		}
+		
+		GuarantorDetails di = null;
+		
+		di.setGuarantorAdharCardNo(s.getGuarantorAdharCardNo());
+		di.setGuarantorDateOfBirth(s.getGuarantorDateOfBirth());
+		di.setGuarantorJobDetails(s.getGuarantorJobDetails());
+		di.setGuarantorLoaclAddress(s.getGuarantorLoaclAddress());
+		di.setGuarantorMobileNumber(s.getGuarantorMobileNumber());
+		di.setGuarantorMortgageDetails(s.getGuarantorMortgageDetails());
+		di.setGuarantorName(s.getGuarantorName());
+		di.setGuarantorPermanentAddress(s.getGuarantorPermanentAddress());
+		di.setGuarantorRelationshipwithCustomer(s.getGuarantorRelationshipwithCustomer());
+		
+		l.setGurantordetails(di);
+		lri.save(l);
+		gdr.save(di);
+		
+		return di;
 	}
 	
 	@Override

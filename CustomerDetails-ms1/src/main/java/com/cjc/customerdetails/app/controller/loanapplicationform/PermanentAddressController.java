@@ -21,10 +21,10 @@ public class PermanentAddressController
   @Autowired
   PermanentAddressServiceI pas;
   
-  @PostMapping("/savePermanentAddrerss/{loanid}")
-  public ResponseEntity<PermanentAddress> savePermanentAddress(@RequestBody PermanentAddress a,int loanid)
+  @PostMapping("/savePermanentAddrerss/{customerAddressId}")
+  public ResponseEntity<PermanentAddress> savePermanentAddress(@RequestBody PermanentAddress a,int customerAddressId)
   {
-	  PermanentAddress a1 = pas.savePermanentAddress(a,loanid);
+	  PermanentAddress a1 = pas.savePermanentAddress(a,customerAddressId);
 	  
 	  return new ResponseEntity<PermanentAddress>(a1,HttpStatus.CREATED);
   }

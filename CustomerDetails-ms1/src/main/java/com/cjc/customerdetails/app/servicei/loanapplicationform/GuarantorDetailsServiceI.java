@@ -4,7 +4,7 @@ import com.cjc.customerdetails.app.model.loanapplicationform.GuarantorDetails;
 
 public interface GuarantorDetailsServiceI {
 
-	GuarantorDetails saveData(GuarantorDetails s);
+	GuarantorDetails saveData(GuarantorDetails s, int loanid);
 
 	void editData(int guarantorId, GuarantorDetails c);
 

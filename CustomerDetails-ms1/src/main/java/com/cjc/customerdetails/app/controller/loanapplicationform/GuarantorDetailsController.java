@@ -22,10 +22,10 @@ public class GuarantorDetailsController
   GuarantorDetailsServiceI gds;
   
   
-  @PostMapping("/saveGuarantor")
- 	public ResponseEntity<GuarantorDetails> addGuarantor(@RequestBody GuarantorDetails s)
+  @PostMapping("/saveGuarantor/{loanid}")
+ 	public ResponseEntity<GuarantorDetails> addGuarantor(@RequestBody GuarantorDetails s , int loanid)
  	{
-	  GuarantorDetails ss=gds.saveData(s);
+	  GuarantorDetails ss=gds.saveData(s , loanid);
  		return new ResponseEntity<GuarantorDetails> (ss,HttpStatus.CREATED);
  	}
  	

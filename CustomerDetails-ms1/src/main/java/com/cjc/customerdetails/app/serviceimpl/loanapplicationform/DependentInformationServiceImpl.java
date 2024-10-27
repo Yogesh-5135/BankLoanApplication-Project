@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import com.cjc.customerdetails.app.exception.IdNotFountException;
 import com.cjc.customerdetails.app.model.Enquiry;
 import com.cjc.customerdetails.app.model.loanapplicationform.DependentInforamtion;
+import com.cjc.customerdetails.app.model.loanapplicationform.LoanApplication;
 import com.cjc.customerdetails.app.repoi.loanapplicationform.DependentInformationRepoI;
+import com.cjc.customerdetails.app.repoi.loanapplicationform.LoanApplyRepoI;
 import com.cjc.customerdetails.app.servicei.loanapplicationform.DependentInformationServiceI;
 
 @Service
@@ -16,11 +18,37 @@ public class DependentInformationServiceImpl implements DependentInformationServ
 {
  @Autowired
  DependentInformationRepoI dir;
+ 
+ @Autowired
+ LoanApplyRepoI lri;
 
 		@Override
-		public DependentInforamtion saveData(DependentInforamtion s) 
+		public DependentInforamtion saveData(DependentInforamtion s ,int loanid) 
 		{
-			return dir.save(s);
+			LoanApplication l = null;
+			
+			Optional<LoanApplication> oa = lri.findById(loanid);
+			if(oa.isPresent())
+			{
+				l = oa.get();
+			}
+			else
+			{
+				throw new IdNotFountException("Id Not Found");
+			}
+			
+			DependentInforamtion di = null;
+			
+			di.setDependentMember(s.getDependentMember());
+			di.setFamilyIncome(s.getFamilyIncome());
+			di.setMaritalStatus(s.getMaritalStatus());
+			di.setNoOfChild(s.getNoOfChild());
+			di.setDependentInfoId(s.getNoOfFamilyMember());
+			
+			l.setDependentInforamtion(di);
+			 dir.save(di);
+			 lri.save(l);
+			 return di;
 		}
 		
 		@Override

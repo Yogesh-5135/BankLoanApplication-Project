@@ -53,7 +53,7 @@ public AccountDetails saveAccountDetails(AccountDetails ad, int loanid)
 	}
 	l.setAccountdetails(ad1);
 	lri.save(l);
-	
+	adr.save(ad1);
 	return ad1;
 }
 

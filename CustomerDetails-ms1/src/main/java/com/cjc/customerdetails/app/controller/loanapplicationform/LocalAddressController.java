@@ -21,10 +21,10 @@ public class LocalAddressController
   @Autowired
   LocalAddressServiceI las ;
   
-  @PostMapping("/saveLocalAddrerss/{loanid}")
-  public ResponseEntity<LocalAddress> saveLocalAddress(@RequestBody LocalAddress a,int loanid)
+  @PostMapping("/saveLocalAddrerss/{customerAddressId}")
+  public ResponseEntity<LocalAddress> saveLocalAddress(@RequestBody LocalAddress a,int customerAddressId)
   {
-	  LocalAddress a1 = las.saveLocalAddress(a,loanid);
+	  LocalAddress a1 = las.saveLocalAddress(a,customerAddressId);
 	  
 	  return new ResponseEntity<LocalAddress>(a1,HttpStatus.CREATED);
   }

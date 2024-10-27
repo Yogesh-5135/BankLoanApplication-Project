@@ -38,21 +38,11 @@ LoanApplication l = null;
 		throw new IdNotFountException("Id Not Found");
 	}
 	
-	CustomerAddress ca1=null;
-	
-	try {
-		ca1.setPermanentAddress(ca.getPermanentAddress());
-		ca1.setLocalAddress(ca.getLocalAddress());
-	    } 
-	 catch (Exception e) 
-	    {
-		  e.printStackTrace();
-	    }
-	
-	l.setCustomerAddress(ca1);
+	car.save(ca);
+	l.setCustomerAddress(ca);
 	lri.save(l);
 	
-	return ca1;
+	return ca;
 }
 
 @Override

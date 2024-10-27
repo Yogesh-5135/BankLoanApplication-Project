@@ -24,10 +24,10 @@ public class DependentInformationController
   DependentInformationServiceI dis;
   
   
-  @PostMapping("/saveDependent")
-	public ResponseEntity<DependentInforamtion> addDependent(@RequestBody DependentInforamtion s)
+  @PostMapping("/saveDependent/{loanid}")
+	public ResponseEntity<DependentInforamtion> addDependent(@RequestBody DependentInforamtion s,int loanid)
 	{
-	  DependentInforamtion ss=dis.saveData(s);
+	  DependentInforamtion ss=dis.saveData(s ,  loanid);
 		return new ResponseEntity<DependentInforamtion> (ss,HttpStatus.CREATED);
 	}
 	

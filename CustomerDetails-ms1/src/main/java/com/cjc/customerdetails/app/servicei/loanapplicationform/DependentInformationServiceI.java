@@ -4,7 +4,7 @@ import com.cjc.customerdetails.app.model.loanapplicationform.DependentInforamtio
 
 public interface DependentInformationServiceI {
 
-	DependentInforamtion saveData(DependentInforamtion s);
+	DependentInforamtion saveData(DependentInforamtion s, int loanid);
 
 	void editData(int dependentInfoId, DependentInforamtion c);
 
