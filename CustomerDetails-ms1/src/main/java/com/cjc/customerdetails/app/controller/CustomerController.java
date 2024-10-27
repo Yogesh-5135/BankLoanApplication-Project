@@ -27,7 +27,7 @@ public class CustomerController {
 	@PostMapping("/saveCustomer")
 	public ResponseEntity<Enquiry> addStudent(@RequestBody Enquiry s)
 	{
-		Enquiry ss=csi.saveStudent(s);
+		Enquiry ss=csi.saveCustomer(s);
 		return new ResponseEntity<Enquiry> (ss,HttpStatus.CREATED);
 	}
 	
@@ -53,6 +53,20 @@ public class CustomerController {
 		return new ResponseEntity<List<Enquiry>>( cd , HttpStatus.OK);
 	}
 
+	@GetMapping("/getAllApprovedCustomer")
+	public ResponseEntity<List<Enquiry>> getAllApprovedCustomer()
+	{
+		List<Enquiry> cd = csi.getAllApprovedData();
+		return new ResponseEntity<List<Enquiry>>( cd , HttpStatus.OK);
+	}
+	
+	@GetMapping("/getAllRejectedCustomer")
+	public ResponseEntity<List<Enquiry>> getAllRejectedCustomer( )
+	{
+		List<Enquiry> cd = csi.getAllRejectedData();
+		return new ResponseEntity<List<Enquiry>>( cd , HttpStatus.OK);
+	}
+	
 	@DeleteMapping("/deleteCustomer/{customerid}")
 	public ResponseEntity<String> deleteSingleData(@PathVariable int customerid)
 	{

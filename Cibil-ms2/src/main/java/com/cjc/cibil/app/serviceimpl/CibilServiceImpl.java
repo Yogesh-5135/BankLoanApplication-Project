@@ -46,18 +46,24 @@ public class CibilServiceImpl implements CibilServiceI{
 			if (i >= 750) {
 			    c.setStatus("Excellent");
 			    c.setRemark("You will get loan as much as you want,Bank is Yours");
+			    
+			    e.setEnquiryStatus("Approved");
 			} else if (i >= 650) {
 			    c.setStatus("Good");
 			    c.setRemark("Good score, You will get Loan");
+			    e.setEnquiryStatus("Approved");
 			} else if (i >= 550) {
 			    c.setStatus("Average");
 			    c.setRemark("Score is little less, try next time");
+			    e.setEnquiryStatus("Rejected");
 			} else if (i >= 300) {
 			    c.setStatus("Poor");
 			    c.setRemark("Better luck next time ");
+			    e.setEnquiryStatus("Rejected");
 			} else {
 			   c.setStatus("Invalid Score");
 			    c.setRemark("You are Great, work hard and improve score");
+			    e.setEnquiryStatus("Rejected");
 			}
 			
 			e.setCibil(c);

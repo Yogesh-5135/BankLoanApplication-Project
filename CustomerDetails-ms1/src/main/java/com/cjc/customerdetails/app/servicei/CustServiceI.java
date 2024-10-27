@@ -6,8 +6,6 @@ import com.cjc.customerdetails.app.model.Enquiry;
 
 public interface CustServiceI {
 
-	Enquiry saveStudent(Enquiry s);
-
 	
 	void editCustomer(int customerid, Enquiry c);
 
@@ -20,5 +18,14 @@ public interface CustServiceI {
 
 
 	void deleteAllCustomer();
+
+
+	List<Enquiry> getAllApprovedData();
+
+
+	List<Enquiry> getAllRejectedData();
+
+
+	Enquiry saveCustomer(Enquiry s);
 
 }
