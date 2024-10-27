@@ -24,7 +24,7 @@ public class LoanApplyServiceImpl implements LoanApplyServiceI{
 	CustServiceI csi;
 
 	@Override
-	public LoanApplication saveLoanApplication(LoanApplication ld, int loanid) 
+	public LoanApplication saveLoanApplication(LoanApplication ld) 
 	{
 		List<Enquiry> en = csi.getAllApprovedData();
 		LoanApplication l = null;
@@ -40,7 +40,7 @@ public class LoanApplyServiceImpl implements LoanApplyServiceI{
 				l.setCustomerTotalLoanRequired(ld.getCustomerTotalLoanRequired());
 				l.setCustomerAmountPaidForHome(ld.getCustomerAmountPaidForHome());
 				l.setDob(ld.getDob());
-				l.setLoanStatus("Non-verfied");
+				l.setLoanStatus("Submitted");
 				l.setRequiredTenure(ld.getRequiredTenure());
 				l.setCustomerAdditionalMobileNumber(ld.getCustomerAdditionalMobileNumber());
 				

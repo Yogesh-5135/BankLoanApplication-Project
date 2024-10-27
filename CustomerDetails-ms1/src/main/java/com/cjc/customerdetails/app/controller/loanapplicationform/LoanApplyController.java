@@ -24,10 +24,10 @@ public class LoanApplyController {
 	@Autowired 
 	LoanApplyServiceI lsi;
 	
-	@PostMapping("/saveLoanApplication/{customerid}/{loanid}")
-	public ResponseEntity<LoanApplication> saveAccountDetails(@RequestBody LoanApplication ad,int loanid )
+	@PostMapping("/saveLoanApplication")
+	public ResponseEntity<LoanApplication> saveAccountDetails(@RequestBody LoanApplication ad )
 	{
-		LoanApplication l = lsi.saveLoanApplication(ad,loanid);
+		LoanApplication l = lsi.saveLoanApplication(ad);
 		
 		return new ResponseEntity<LoanApplication>(l,HttpStatus.CREATED);
 	}

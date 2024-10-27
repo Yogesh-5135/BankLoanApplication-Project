@@ -6,7 +6,7 @@ import com.cjc.customerdetails.app.model.loanapplicationform.LoanApplication;
 
 public interface LoanApplyServiceI {
 
-	LoanApplication saveLoanApplication(LoanApplication ad, int loanid);
+	LoanApplication saveLoanApplication(LoanApplication ad);
 
 	LoanApplication getSingleLoanApplication(int loanid);
 
