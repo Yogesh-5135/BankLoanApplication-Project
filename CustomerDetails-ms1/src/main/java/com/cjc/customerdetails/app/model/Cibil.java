@@ -20,4 +20,6 @@ public class Cibil {
 	private String status;
 	private String remark;
 	
+	
+	
 }
