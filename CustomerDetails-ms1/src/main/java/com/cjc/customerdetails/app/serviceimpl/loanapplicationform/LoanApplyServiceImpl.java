@@ -10,7 +10,6 @@ import com.cjc.customerdetails.app.exception.IdNotFountException;
 import com.cjc.customerdetails.app.exception.MobNoException;
 import com.cjc.customerdetails.app.model.Enquiry;
 import com.cjc.customerdetails.app.model.loanapplicationform.LoanApplication;
-import com.cjc.customerdetails.app.repoi.CustRepoI;
 import com.cjc.customerdetails.app.repoi.loanapplicationform.LoanApplyRepoI;
 import com.cjc.customerdetails.app.servicei.CustServiceI;
 import com.cjc.customerdetails.app.servicei.loanapplicationform.LoanApplyServiceI;
