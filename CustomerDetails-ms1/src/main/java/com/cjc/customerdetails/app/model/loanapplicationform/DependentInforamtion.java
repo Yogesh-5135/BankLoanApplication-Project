@@ -13,6 +13,7 @@ public class DependentInforamtion {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int dependentInfoId	;
+	
 	private int noOfFamilyMember;
 	private int noOfChild;
 	private String maritalStatus	;

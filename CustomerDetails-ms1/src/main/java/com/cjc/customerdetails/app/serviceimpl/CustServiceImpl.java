@@ -130,7 +130,7 @@ public class CustServiceImpl implements CustServiceI{
 		}
 
 		
-				
+		e.setEnquiryStatus(s.getEnquiryStatus());		
 		
 		cri.save(e);
 		return e;
