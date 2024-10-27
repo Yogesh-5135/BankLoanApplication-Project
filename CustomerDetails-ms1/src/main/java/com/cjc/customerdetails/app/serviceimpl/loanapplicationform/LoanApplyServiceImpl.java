@@ -32,18 +32,6 @@ public class LoanApplyServiceImpl implements LoanApplyServiceI{
 		for (Enquiry enquiry : en) {
 			if(enquiry.getMobileno() == ld.getCustomerMobileNumber() ) {				
 				
-				l.setCustomerName(ld.getCustomerName());
-				l.setCustomerAge(ld.getCustomerAge());
-				l.setCustomerEmail(ld.getCustomerEmail());
-				l.setCustomerGender(ld.getCustomerGender());
-				l.setCustomerMobileNumber(ld.getCustomerMobileNumber());
-				l.setCustomerTotalLoanRequired(ld.getCustomerTotalLoanRequired());
-				l.setCustomerAmountPaidForHome(ld.getCustomerAmountPaidForHome());
-				l.setDob(ld.getDob());
-				l.setLoanStatus("Non-verfied");
-				l.setRequiredTenure(ld.getRequiredTenure());
-				l.setCustomerAdditionalMobileNumber(ld.getCustomerAdditionalMobileNumber());
-				
 				lri.save(l);				
 			}	else {
 					throw new MobNoException("Enter valid mob number as like Loan Approved Customer ");
