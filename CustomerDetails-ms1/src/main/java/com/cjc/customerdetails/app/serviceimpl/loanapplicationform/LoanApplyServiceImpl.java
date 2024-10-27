@@ -29,14 +29,10 @@ public class LoanApplyServiceImpl implements LoanApplyServiceI{
 		
 		for (Enquiry enquiry : en) {
 			if(enquiry.getMobileno() == ld.getCustomerMobileNumber() ) 
-			{				
-				
-				lri.save(ld);									
+			{								
+				lri.save(ld);	
 			}	
-			else 
-			{
-					throw new MobNoException("Enter valid mob number as like Loan Approved Customer ");
-			}		
+			
 		}
 		return ld;
 	}
