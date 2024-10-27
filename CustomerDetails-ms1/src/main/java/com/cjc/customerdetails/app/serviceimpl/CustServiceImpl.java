@@ -196,31 +196,48 @@ public class CustServiceImpl implements CustServiceI{
 		@Override
 		public List<Enquiry> getAllApprovedData() 
 		{
-			List<Enquiry> l= new ArrayList<Enquiry>();
 			
 			List<Enquiry> en = cri.findAll();
-			for (Enquiry e : en) {
-				if(e.getEnquiryStatus()== "Approved") {
-					System.out.println("enquiry"+e);
-					l.add(e);
-				}
+			
+			List<Enquiry> l= new ArrayList<Enquiry>();
+			
+			for (Enquiry e : en) 
+			{
+				 String status = e.getEnquiryStatus();
+			    
+			     if ("Approved".equals(status.trim())) 
+			     {
+			            l.add(e);
+			            System.out.println("Approved enquiry: " + e);
+			     }
 			}
+			
 			System.out.println("List"+l);
 			return l;
 		}
 
 
 		@Override
-		public List<Enquiry> getAllRejectedData() {
-			List<Enquiry> l= null;
-			String s = "Rejected";
+		public List<Enquiry> getAllRejectedData() 
+		{
 			List<Enquiry> en = cri.findAll();
-			for (Enquiry e : en) {
-				if(e.getEnquiryStatus()==s) {
-					l.add(e);
-				}
+			
+			List<Enquiry> l= new ArrayList<Enquiry>();
+			
+			for (Enquiry e : en) 
+			{
+				 String status = e.getEnquiryStatus();
+				 
+			     if ("Rejected".equals(status.trim())) 
+			     {
+			            l.add(e);
+			            System.out.println("Approved enquiry: " + e);
+			     }
 			}
+			
+			System.out.println("List"+l);
 			return l;
+
 		}
 
 }	

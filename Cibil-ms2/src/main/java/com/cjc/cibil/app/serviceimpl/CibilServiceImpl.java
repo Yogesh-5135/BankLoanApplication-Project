@@ -66,8 +66,7 @@ public class CibilServiceImpl implements CibilServiceI{
 			    e.setEnquiryStatus("Rejected");
 			}
 			
-			e.setCibil(c);
-						
+			e.setCibil(c);			
 			eri.save(e);
 			
 			return e;

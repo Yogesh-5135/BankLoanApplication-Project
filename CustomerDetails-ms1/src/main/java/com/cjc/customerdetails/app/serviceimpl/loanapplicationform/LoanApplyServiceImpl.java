@@ -24,14 +24,30 @@ public class LoanApplyServiceImpl implements LoanApplyServiceI{
 	CustServiceI csi;
 
 	@Override
-	public LoanApplication saveLoanApplication(LoanApplication ld, int loanid) 
+	public LoanApplication saveLoanApplication(LoanApplication ld) 
 	{
 		List<Enquiry> en = csi.getAllApprovedData();
 		
 		for (Enquiry enquiry : en) {
 			if(enquiry.getMobileno() == ld.getCustomerMobileNumber() ) {				
 				
+<<<<<<< HEAD
 				lri.save(ld);				
+=======
+				l.setCustomerName(ld.getCustomerName());
+				l.setCustomerAge(ld.getCustomerAge());
+				l.setCustomerEmail(ld.getCustomerEmail());
+				l.setCustomerGender(ld.getCustomerGender());
+				l.setCustomerMobileNumber(ld.getCustomerMobileNumber());
+				l.setCustomerTotalLoanRequired(ld.getCustomerTotalLoanRequired());
+				l.setCustomerAmountPaidForHome(ld.getCustomerAmountPaidForHome());
+				l.setDob(ld.getDob());
+				l.setLoanStatus("Submitted");
+				l.setRequiredTenure(ld.getRequiredTenure());
+				l.setCustomerAdditionalMobileNumber(ld.getCustomerAdditionalMobileNumber());
+				
+				lri.save(l);				
+>>>>>>> branch 'master' of https://github.com/Yogesh-5135/BankLoanApplication-Project.git
 			}	else {
 					throw new MobNoException("Enter valid mob number as like Loan Approved Customer ");
 			}		
