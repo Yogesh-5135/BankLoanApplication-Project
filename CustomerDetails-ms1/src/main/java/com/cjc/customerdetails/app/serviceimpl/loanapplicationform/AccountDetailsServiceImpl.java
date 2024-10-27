@@ -51,9 +51,10 @@ public AccountDetails saveAccountDetails(AccountDetails ad, int loanid)
 	{
 	    e.printStackTrace();	
 	}
+	adr.save(ad1);
 	l.setAccountdetails(ad1);
 	lri.save(l);
-	adr.save(ad1);
+	
 	return ad1;
 }
 

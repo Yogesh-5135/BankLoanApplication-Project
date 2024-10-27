@@ -57,7 +57,7 @@ public class AllPersonalDocumentsServiceImpl implements AllPersonalDocumentsServ
 		} catch (IOException e) {
 			e.printStackTrace();
 			}		
-	
+	apd.save(ap);
 	l.setAllPersonalDocuments(ap);
 	lri.save(l);
   		

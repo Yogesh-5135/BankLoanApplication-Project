@@ -45,9 +45,10 @@ public class DependentInformationServiceImpl implements DependentInformationServ
 			di.setNoOfChild(s.getNoOfChild());
 			di.setDependentInfoId(s.getNoOfFamilyMember());
 			
-			l.setDependentInforamtion(di);
 			 dir.save(di);
+			l.setDependentInforamtion(di);
 			 lri.save(l);
+			 
 			 return di;
 		}
 		

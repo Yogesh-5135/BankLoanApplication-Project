@@ -48,9 +48,10 @@ public class GuarantorDetailsServiceImpl implements GuarantorDetailsServiceI
 		di.setGuarantorPermanentAddress(s.getGuarantorPermanentAddress());
 		di.setGuarantorRelationshipwithCustomer(s.getGuarantorRelationshipwithCustomer());
 		
+		gdr.save(di);
 		l.setGurantordetails(di);
 		lri.save(l);
-		gdr.save(di);
+		
 		
 		return di;
 	}
