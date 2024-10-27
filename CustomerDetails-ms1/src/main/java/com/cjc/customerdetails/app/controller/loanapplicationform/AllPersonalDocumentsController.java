@@ -24,7 +24,7 @@ public class AllPersonalDocumentsController
 	@Autowired
 	AllPersonalDocumentsServiceI apd;
 	
-<<<<<<< HEAD
+
 	@PostMapping("/saveDocuments/{loanid}")
 	public ResponseEntity<String> addDocument(@RequestPart ("ap") MultipartFile addressProof ,
 				@RequestPart ("pc") MultipartFile panCard ,@RequestPart ("it") MultipartFile IncomeTax,
@@ -60,8 +60,5 @@ public class AllPersonalDocumentsController
 		return new ResponseEntity<String>( HttpStatus.NO_CONTENT);
 	}
 	
-	
-	
-=======
->>>>>>> branch 'master' of https://github.com/Yogesh-5135/BankLoanApplication-Project.git
+
 }
