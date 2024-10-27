@@ -15,7 +15,7 @@ public class AccountDetails {
 	private int accountId;
 	private String accounType	;
 	private double accountBalance;
-	private String 	String;
+	private String 	accountHolderName;
 	private String accountStatus;
 	private long accountNumber;
 
