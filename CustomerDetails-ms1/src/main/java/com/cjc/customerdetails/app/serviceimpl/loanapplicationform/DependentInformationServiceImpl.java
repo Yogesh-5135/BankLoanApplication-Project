@@ -43,7 +43,7 @@ public class DependentInformationServiceImpl implements DependentInformationServ
 			di.setFamilyIncome(s.getFamilyIncome());
 			di.setMaritalStatus(s.getMaritalStatus());
 			di.setNoOfChild(s.getNoOfChild());
-			di.setDependentInfoId(s.getNoOfFamilyMember());
+			di.setNoOfFamilyMember(s.getNoOfFamilyMember());
 			
 			 dir.save(di);
 			l.setDependentInforamtion(di);
@@ -56,7 +56,8 @@ public class DependentInformationServiceImpl implements DependentInformationServ
 		public void editData(int dependentInfoId, DependentInforamtion c) 		
 		{
 			Optional<DependentInforamtion> o = dir.findById(dependentInfoId);
-			if(o.isPresent()) {
+			if(o.isPresent()) 
+			{
 				DependentInforamtion cd = o.get();
 				
 				cd.setDependentMember(c.getDependentMember());
@@ -66,7 +67,8 @@ public class DependentInformationServiceImpl implements DependentInformationServ
 				cd.setNoOfFamilyMember(c.getNoOfFamilyMember());
 				
 				dir.save(cd);			
-			}else
+			}
+			else
 			{
 				throw new RuntimeException("Id not found");
 			}	
@@ -95,6 +97,5 @@ public class DependentInformationServiceImpl implements DependentInformationServ
 			dir.deleteById(dependentInfoId);
 			
 		}
-		 
- 	
+		 	
 }

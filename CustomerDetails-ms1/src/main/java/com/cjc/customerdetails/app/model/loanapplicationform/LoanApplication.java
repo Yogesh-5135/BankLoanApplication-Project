@@ -36,9 +36,6 @@ public class LoanApplication {
 	private AllPersonalDocuments allPersonalDocuments;
 	
 	@OneToOne(cascade=CascadeType.ALL)
-	private DependentInforamtion familydependentInfo ;	
-	
-	@OneToOne(cascade=CascadeType.ALL)
 	private CustomerAddress customerAddress	;
 
 	@OneToOne(cascade=CascadeType.ALL)

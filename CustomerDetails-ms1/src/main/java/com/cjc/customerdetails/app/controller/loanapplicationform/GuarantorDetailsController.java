@@ -37,7 +37,7 @@ public class GuarantorDetailsController
  		return new ResponseEntity<String>("Data Updated" , HttpStatus.OK);
  	}
  	
- 	@GetMapping("/getGuarantor/{dependentInfoId}")
+ 	@GetMapping("/getGuarantor/{GuarantorId}")
  	public ResponseEntity<GuarantorDetails> getSingleGuarantor(@PathVariable int GuarantorId )
  	{
  		GuarantorDetails cd = gds.getData(GuarantorId);
