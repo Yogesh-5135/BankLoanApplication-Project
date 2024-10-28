@@ -49,8 +49,11 @@ public class CibilController {
 		LoanApplication[] arr = rt.getForObject(url , LoanApplication[].class);
 		
 		List<LoanApplication> l = Arrays.asList(arr);
-		
-		System.out.println(l);
+		for(LoanApplication s:l)
+		{
+			System.out.println(s);
+		}
+
 		return l;
 		
 	}
