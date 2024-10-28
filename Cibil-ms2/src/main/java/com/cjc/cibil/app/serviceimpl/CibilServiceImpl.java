@@ -75,6 +75,7 @@ public class CibilServiceImpl implements CibilServiceI {
 
 			e.setCibil(c);
 			eri.save(e);
+			
 
 			String customeremail = e.getEmail();
 			String enquirystatus = e.getEnquiryStatus();
