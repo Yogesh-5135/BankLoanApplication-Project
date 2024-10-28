@@ -42,6 +42,7 @@ public class GuarantorDetailsServiceImpl implements GuarantorDetailsServiceI
 		
 		GuarantorDetails di = new GuarantorDetails();
 		
+		
 		di.setGuarantorAdharCardNo(s.getGuarantorAdharCardNo());
 		di.setGuarantorDateOfBirth(s.getGuarantorDateOfBirth());
 		di.setGuarantorJobDetails(s.getGuarantorJobDetails());
