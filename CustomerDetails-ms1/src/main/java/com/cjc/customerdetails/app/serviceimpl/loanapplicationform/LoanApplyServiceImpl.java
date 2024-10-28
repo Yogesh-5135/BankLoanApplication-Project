@@ -6,7 +6,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cjc.customerdetails.app.exception.EmailNotValidException;
 import com.cjc.customerdetails.app.exception.IdNotFountException;
+import com.cjc.customerdetails.app.exception.InvalidDataException;
 import com.cjc.customerdetails.app.exception.MobNoException;
 import com.cjc.customerdetails.app.model.Enquiry;
 import com.cjc.customerdetails.app.model.loanapplicationform.LoanApplication;
@@ -25,15 +27,133 @@ public class LoanApplyServiceImpl implements LoanApplyServiceI{
 	@Override
 	public void saveLoanApplication(LoanApplication ld) 
 	{
+		LoanApplication la = null;
+		
+		String a = ld.getCustomerName();
+		char[]b = a.toCharArray();
+		for(int i=0;i<b.length;i++)
+		{
+		if (b[i]>='a'&& b[i]<='z'|| b[i]>='A'&& b[i]<='Z'|| b[i]==32)
+		{
+			la.setCustomerName(a); 	
+		}
+		else
+		{
+			throw new InvalidDataException("Customer Name does not contain any special character or Number");
+		}
+		}
+		
+		String c = ld.getDob();
+		if(c!=null)
+		{
+			la.setDob(c);
+		}
+		else
+		{
+			throw new InvalidDataException("Please Enter Valid Dob");
+		}
+		
+		int d = ld.getCustomerAge();
+		if(d >= 21 && d <= 58)
+		{
+			la.setCustomerAge(d);
+		}
+		else
+		{
+			throw new InvalidDataException("Customer Age is between 21 to 58 years");
+		}
+		
+		int e = ld.getRequiredTenure();
+		if(e>=1 && e<=30)
+		{
+			la.setRequiredTenure(e);
+		}
+		else
+		{
+			throw new InvalidDataException("You paid Your Insatallments between 1 to 30");
+		}
+
+		String f = ld.getCustomerGender();
+		if(f.equals("Male")||f.equals("Female")||f.equals("male")||f.equals("female")||f.equals("M")||f.equals("F")
+		  ||f.equals("m")||f.equals("f")||f.equals("MALE")||f.equals("FEMALE"))
+		{
+			la.setCustomerGender(f);
+		}
+		else
+		{
+			throw new InvalidDataException("Please Enter Valid Gender");
+		}
+		
+		String g = ld.getCustomerEmail();
+		if(g.endsWith("@gmail.com") || g.endsWith("@yahoo.com")) 
+		{
+			la.setCustomerEmail(g);
+		}
+		else 
+		{
+		
+			throw new EmailNotValidException(" Email should end with @gmail.com or @yahoo.com ");
+			
+		}
+		
+		double h = ld.getCustomerMobileNumber();
+		int count = 0;
+		for (double no = h; no > 0; no = no / 10) 
+		{
+			count++;
+		}
+		if (count > 10 || count<10) 
+		{
+			throw new MobNoException("Mobno invalid ..Enter only 10 numbers");
+		}
+		else 
+		{
+			la.setCustomerMobileNumber(h);
+		}
+	
+		double k = ld.getCustomerAdditionalMobileNumber();
+        int count1 = 0;
+		for (double no = k; no > 0; no = no / 10) 
+		{
+			count1++;
+		}
+		if (count1 > 10 || count1<10) 
+		{
+			throw new MobNoException("Mobno invalid ..Enter only 10 numbers");
+		}
+		else 
+		{
+			la.setCustomerAdditionalMobileNumber(k);
+		}
+		
+		double l = ld.getCustomerAmountPaidForHome();
+		if(l>=1000000 && l<=5000000)
+		{
+			la.setCustomerAmountPaidForHome(l);
+		}
+		else
+		{
+			throw new InvalidDataException("Customer must paid between 1000000 to 5000000 for home");
+		}
+		
+		double m = ld.getCustomerTotalLoanRequired();
+		if(m>=1000000 && m<=4000000)
+		{
+			la.setCustomerAmountPaidForHome(m);
+		}
+		else
+		{
+			throw new InvalidDataException(" Customer is Eligible to get loan between 1000000 to 4000000 ");
+		}
 		List<Enquiry> en = csi.getAllApprovedData();
-		LoanApplication la = ld;
 		for (Enquiry enquiry : en) {
 			if(enquiry.getMobileno() == la.getCustomerMobileNumber() ) 
 			{		
 				la.setLoanStatus("Submitted");
 				lri.save(la);					
 			}	
-			else {
+			else 
+			{
 				throw new MobNoException("Invalid Mobile no..It should match with customer mobno");
 			}
 		}
