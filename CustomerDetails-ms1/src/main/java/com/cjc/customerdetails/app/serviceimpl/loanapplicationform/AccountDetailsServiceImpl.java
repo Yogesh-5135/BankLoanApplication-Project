@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cjc.customerdetails.app.exception.IdNotFountException;
+import com.cjc.customerdetails.app.exception.InvalidDataException;
+import com.cjc.customerdetails.app.exception.MobNoException;
 import com.cjc.customerdetails.app.model.loanapplicationform.AccountDetails;
 import com.cjc.customerdetails.app.model.loanapplicationform.CustomerAddress;
 import com.cjc.customerdetails.app.model.loanapplicationform.LoanApplication;
@@ -39,18 +41,74 @@ public AccountDetails saveAccountDetails(AccountDetails ad, int loanid)
 	
 	AccountDetails ad1 = new AccountDetails();
 	
-	try {
-		ad1.setAccounType(ad.getAccounType());
-		ad1.setAccountBalance(ad.getAccountBalance());
-		ad1.setAccountHolderName(ad.getAccountHolderName());
-		ad1.setAccountStatus(ad.getAccountStatus());
-		ad1.setAccountNumber(ad.getAccountNumber());
-		
-	} 
-	catch (Exception e)
+	String a = ad.getAccounType();
+	char[]b = a.toCharArray();
+	for(int i=0;i<b.length;i++)
 	{
-	    e.printStackTrace();	
+	if (b[i]>='a'&& b[i]<='z'|| b[i]>='A'&& b[i]<='Z'|| b[i]==32)
+	{
+		ad1.setAccounType(a); 	
 	}
+	else
+	{
+		throw new InvalidDataException("Account type does not contain any special character or Number");
+	}
+	}
+	
+	double c = ad.getAccountBalance();
+	
+	if(c >= 1000 || c <= 100000)
+	{
+		ad1.setAccountBalance(c);
+	}
+	else
+	{
+		throw new InvalidDataException("Your Account Balance Ranges Between 1000 to 100000");
+	}
+	
+	String d = ad.getAccountHolderName();
+	char[]e = d.toCharArray();
+	for(int i=0;i<e.length;i++)
+	{
+	if (e[i]>='a'&& e[i]<='z'|| e[i]>='A'&& e[i]<='Z'|| e[i]==32)
+	{
+		ad1.setAccountHolderName(d);
+	}
+	else
+	{
+		throw new InvalidDataException("AccountHolder Name does not contain any special character or number");
+	}
+	}
+		
+	String f = ad1.getAccountStatus();
+	char[]g = f.toCharArray();
+	for(int i=0;i<g.length;i++)
+	{
+	if (g[i]>='a'&& g[i]<='z'|| g[i]>='A'&& g[i]<='Z'|| g[i]==32)
+	{
+		ad1.setAccountStatus(f); 	
+	}
+	else
+	{
+		throw new InvalidDataException("Account status does not contain any special character or Number");
+	}
+	}
+
+	long h = ad1.getAccountNumber();
+	int count = 0;
+	for (long no = h; no > 0; no = no / 10) 
+	{
+		count++;
+	}
+	if (count > 12 || count<12) 
+	{
+		throw new InvalidDataException("Account No Is Invalid ..Enter only 12 numbers");
+	}
+	else 
+	{
+		ad1.setAccountNumber(h);
+	}
+	
 	adr.save(ad1);
 	l.setAccountdetails(ad1);
 	lri.save(l);

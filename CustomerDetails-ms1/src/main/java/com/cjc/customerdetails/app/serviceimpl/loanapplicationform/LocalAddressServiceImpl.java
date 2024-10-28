@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cjc.customerdetails.app.exception.IdNotFountException;
+import com.cjc.customerdetails.app.exception.InvalidDataException;
 import com.cjc.customerdetails.app.model.loanapplicationform.CustomerAddress;
 import com.cjc.customerdetails.app.model.loanapplicationform.LoanApplication;
 import com.cjc.customerdetails.app.model.loanapplicationform.LocalAddress;
@@ -41,20 +42,101 @@ public LocalAddress saveLocalAddress(LocalAddress a,int customerAddressId)
 	
 	LocalAddress la = new LocalAddress();
 	
-	try {
-		la.setAreaname(a.getAreaname());
-		la.setCityname(a.getCityname());
-		la.setDistrict(a.getDistrict());
-		la.setState(a.getState());
-		la.setPincode(a.getPincode());
-		la.setHouseNumber(a.getHouseNumber());
-		la.setStreetName(a.getStreetName());
+	String a1 = a.getAreaname();
+	char[]b = a1.toCharArray();
+	for(int i=0;i<b.length;i++)
+	{
+	if (b[i]>='a'&& b[i]<='z'|| b[i]>='A'&& b[i]<='Z'|| b[i]==32)
+	{
+		la.setAreaname(a1); 	
+	}
+	else
+	{
+		throw new InvalidDataException("Areaname does not contain any special character or Number");
+	}
+	}
+	
+	String c = a.getCityname();
+	char[]d = c.toCharArray();
+	for(int i=0;i<d.length;i++)
+	{
+	if (d[i]>='a'&& d[i]<='z'|| d[i]>='A'&& d[i]<='Z'|| d[i]==32)
+	{
+		la.setCityname(c); 	
+	}
+	else
+	{
+		throw new InvalidDataException("Cityname does not contain any special character or Number");
+	}
+	}
+    
+	String e = a.getDistrict();
+	char[]f = e.toCharArray();
+	for(int i=0;i<f.length;i++)
+	{
+	if (f[i]>='a'&& f[i]<='z'|| f[i]>='A'&& f[i]<='Z'|| f[i]==32)
+	{
+		la.setDistrict(e); 	
+	}
+	else
+	{
+		throw new InvalidDataException("District Name does not contain any special character or Number");
+	}
+	}
+    
+	String g = a.getState();
+	char[]h = g.toCharArray();
+	for(int i=0;i<h.length;i++)
+	{
+	if (h[i]>='a'&& h[i]<='z'|| h[i]>='A'&& h[i]<='Z'|| h[i]==32)
+	{
+		la.setState(g); 	
+	}
+	else
+	{
+		throw new InvalidDataException("State Name does not contain any special character or Number");
+	}
+	}
+	
+	long i = a.getPincode();
+	int count = 0;
+	for (long no = i; no > 0; no = no / 10) 
+	{
+		count++;
+	}
+	if (count > 6 || count<6) 
+	{
+		throw new InvalidDataException("Pincode Is Invalid ..Enter only 6 numbers");
+	}
+	else 
+	{
+		a.setPincode(i);
+	}
+	
+	int j = a.getHouseNumber();
+	if (j <= 1 || j >= 99) 
+	{ 
+        throw new InvalidDataException("House number must be between 1 and 99.");
+    }
+	else
+	{
+		a.setHouseNumber(j);
+	}
+	
+	String k = a.getStreetName();
+	char[]m = k.toCharArray();
+	for(int i1=0;i1<m.length;i++)
+	{
+	if (m[i1]>='a'&& m[i1]<='z'|| m[i1]>='A'&& m[i1]<='Z'|| m[i1]==32)
+	{
+		la.setStreetName(k); 	
+	}
+	else
+	{
+		throw new InvalidDataException("StreetName does not contain any special character or Number");
+	}
+	}
 		
-	    } 
-	 catch (Exception e) 
-	    {
-		  e.printStackTrace();
-	    }
 	lar.save(la);
 	l.setLocalAddress(la);
 	car.save(l);
