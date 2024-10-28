@@ -216,8 +216,5 @@ public class LoanApplyServiceImpl implements LoanApplyServiceI{
 	{
 		List<LoanApplication> l = lri.findAll();
 		return l;
-	}
-
-	
-	
+	}	
 }
