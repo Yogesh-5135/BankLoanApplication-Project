@@ -24,9 +24,10 @@ public class CustomerAddressServiceImpl implements CustomerAddressServiceI
  LoanApplyRepoI lri;
  
 @Override
-public CustomerAddress saveCustomerAddress(CustomerAddress ca,int loanid) 
+public CustomerAddress saveCustomerAddress(int loanid) 
 {
-LoanApplication l = null;
+	LoanApplication l = null;
+	CustomerAddress ca = new CustomerAddress();
 	
 	Optional<LoanApplication> ol = lri.findById(loanid);
 	if(ol.isPresent())

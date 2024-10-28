@@ -37,7 +37,7 @@ public class DependentInformationServiceImpl implements DependentInformationServ
 				throw new IdNotFountException("Id Not Found");
 			}
 			
-			DependentInforamtion di = null;
+			DependentInforamtion di = new DependentInforamtion();
 			
 			di.setDependentMember(s.getDependentMember());
 			di.setFamilyIncome(s.getFamilyIncome());

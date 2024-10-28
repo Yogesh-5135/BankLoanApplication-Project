@@ -25,11 +25,11 @@ public class LoanApplyController {
 	LoanApplyServiceI lsi;
 	
 	@PostMapping("/saveLoanApplication")
-	public ResponseEntity<LoanApplication> saveAccountDetails(@RequestBody LoanApplication ad )
+	public ResponseEntity<String> saveAccountDetails(@RequestBody LoanApplication ad )
 	{
-		LoanApplication l = lsi.saveLoanApplication(ad);
+		 lsi.saveLoanApplication(ad);
 		
-		return new ResponseEntity<LoanApplication>(l,HttpStatus.CREATED);
+		return new ResponseEntity<String>("Data added",HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/getSingleLoanApplication/{loanid}")
@@ -42,7 +42,7 @@ public class LoanApplyController {
 	
 	
 	@GetMapping("/getAllLoanApplication")
-	public ResponseEntity<List<LoanApplication>> getSingleAccountDetails()
+	public ResponseEntity<List<LoanApplication>> getAllAccountDetails()
 	{
 		List<LoanApplication> l = lsi.getAllLoanApplication();
 		

@@ -36,7 +36,7 @@ public class GuarantorDetailsServiceImpl implements GuarantorDetailsServiceI
 			throw new IdNotFountException("Id Not Found");
 		}
 		
-		GuarantorDetails di = null;
+		GuarantorDetails di = new GuarantorDetails();
 		
 		di.setGuarantorAdharCardNo(s.getGuarantorAdharCardNo());
 		di.setGuarantorDateOfBirth(s.getGuarantorDateOfBirth());

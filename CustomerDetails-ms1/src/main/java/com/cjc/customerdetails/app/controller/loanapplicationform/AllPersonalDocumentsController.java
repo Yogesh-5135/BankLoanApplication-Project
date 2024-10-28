@@ -32,7 +32,7 @@ public class AllPersonalDocumentsController
 				@RequestPart ("pc") MultipartFile panCard ,@RequestPart ("it") MultipartFile IncomeTax,
 				@RequestPart ("ac") MultipartFile addharCard,@RequestPart ("ph") MultipartFile photo,
 				@RequestPart ("sig") MultipartFile signature, @RequestPart ("bc") MultipartFile bankCheque,
-				@RequestPart ("ss") MultipartFile salarySlips , int loanid)	
+				@RequestPart ("ss") MultipartFile salarySlips ,@PathVariable int loanid)	
 	{
 		
 		apd.saveDocument(addressProof,panCard,IncomeTax,addharCard,photo,signature,bankCheque,salarySlips,loanid);

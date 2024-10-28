@@ -1,4 +1,4 @@
-package com.cjc.customerdetails.app.model.loanapplicationform;
+package com.cjc.cibil.app.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

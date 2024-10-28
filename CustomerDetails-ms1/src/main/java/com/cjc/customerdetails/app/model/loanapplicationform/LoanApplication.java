@@ -1,10 +1,13 @@
 package com.cjc.customerdetails.app.model.loanapplicationform;
 
+import java.util.List;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import lombok.Data;
 
@@ -46,5 +49,17 @@ public class LoanApplication {
 	
 	@OneToOne(cascade=CascadeType.ALL)
 	private DependentInforamtion dependentInforamtion;
+	
+	@OneToOne(cascade=CascadeType.ALL)
+	private LoanDisbursement loanDisbursement; 
+	
+	@OneToOne(cascade=CascadeType.ALL)
+    private SanctionLetter sanctionLetter; 
+	
+	@OneToOne(cascade=CascadeType.ALL)
+    private CustomerVerification customerVerification; 
+
+	@OneToMany(cascade=CascadeType.ALL)
+    private List<Ledger> ledger; 
 
 }

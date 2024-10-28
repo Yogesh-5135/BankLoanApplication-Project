@@ -4,7 +4,7 @@ import com.cjc.customerdetails.app.model.loanapplicationform.CustomerAddress;
 
 public interface CustomerAddressServiceI {
 
-	public CustomerAddress saveCustomerAddress(CustomerAddress ca, int loanid);
+	public CustomerAddress saveCustomerAddress(int loanid);
 
 	public CustomerAddress getSingleCustomerAddress(int customerAddressId);
 

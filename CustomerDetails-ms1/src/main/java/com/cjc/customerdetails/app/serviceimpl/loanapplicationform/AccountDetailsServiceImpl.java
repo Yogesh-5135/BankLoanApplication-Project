@@ -37,7 +37,7 @@ public AccountDetails saveAccountDetails(AccountDetails ad, int loanid)
 		throw new IdNotFountException("Id Not Found");
 	}
 	
-	AccountDetails ad1 = null;
+	AccountDetails ad1 = new AccountDetails();
 	
 	try {
 		ad1.setAccounType(ad.getAccounType());

@@ -39,7 +39,7 @@ public LocalAddress saveLocalAddress(LocalAddress a,int customerAddressId)
 		throw new IdNotFountException("Id Not Found");
 	}
 	
-	LocalAddress la = null;
+	LocalAddress la = new LocalAddress();
 	
 	try {
 		la.setAreaname(a.getAreaname());

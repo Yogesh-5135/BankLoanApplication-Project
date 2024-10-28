@@ -1,5 +1,8 @@
 package com.cjc.cibil.app.controller;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +16,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.cjc.cibil.app.model.Cibil;
 import com.cjc.cibil.app.model.Enquiry;
+import com.cjc.cibil.app.model.LoanApplication;
 import com.cjc.cibil.app.servicei.CibilServiceI;
 
 
@@ -38,4 +42,24 @@ public class CibilController {
 		return new ResponseEntity<Enquiry> (e,HttpStatus.OK);
 	}
 	
+	@GetMapping("/getAllDocumentVerfiedList")
+	public List<LoanApplication> getDocumentVerifiedList()
+	{
+		String url = "http://localhost:9090/applyLoan/getAllLoanApplication";
+		LoanApplication[] arr = rt.getForObject(url , LoanApplication[].class);
+		
+		List<LoanApplication> l = Arrays.asList(arr);
+		
+		System.out.println(l);
+		return l;
+		
+	}
+	
 }
+
+
+
+
+
+
+

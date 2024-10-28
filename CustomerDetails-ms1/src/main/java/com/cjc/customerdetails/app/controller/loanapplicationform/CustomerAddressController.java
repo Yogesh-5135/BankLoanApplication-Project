@@ -21,9 +21,9 @@ public class CustomerAddressController
   CustomerAddressServiceI cas;
   
   @PostMapping("/saveCustomerAddrerss/{loanid}")
-  public ResponseEntity<CustomerAddress> saveCustomerAddress(@RequestBody CustomerAddress ca,int loanid)
+  public ResponseEntity<CustomerAddress> saveCustomerAddress(@PathVariable int loanid)
   {
-	  CustomerAddress ca1 = cas.saveCustomerAddress(ca,loanid);
+	  CustomerAddress ca1 = cas.saveCustomerAddress(loanid);
 	  
 	  return new ResponseEntity<CustomerAddress>(ca1,HttpStatus.CREATED);
   }

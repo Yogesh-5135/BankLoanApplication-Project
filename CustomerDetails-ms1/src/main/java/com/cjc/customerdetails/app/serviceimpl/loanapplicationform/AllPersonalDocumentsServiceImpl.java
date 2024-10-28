@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.cjc.customerdetails.app.exception.IdNotFountException;
@@ -27,7 +28,7 @@ public class AllPersonalDocumentsServiceImpl implements AllPersonalDocumentsServ
 
 
   @Override
-	public void saveDocument(MultipartFile addressProof, MultipartFile panCard, MultipartFile incomeTax,
+	public void saveDocument( MultipartFile addressProof, MultipartFile panCard, MultipartFile incomeTax,
 			MultipartFile addharCard, MultipartFile photo, MultipartFile signature, MultipartFile bankCheque,
 			MultipartFile salarySlips ,int  loanid) 
   {
@@ -41,9 +42,8 @@ public class AllPersonalDocumentsServiceImpl implements AllPersonalDocumentsServ
 		{
 			throw new RuntimeException("Id not found");
 		}
-
 	  
-	AllPersonalDocuments ap = null;
+	AllPersonalDocuments ap = new AllPersonalDocuments();
 	  			
 	try {
 			ap.setAddressProof(addressProof.getBytes());
@@ -59,6 +59,7 @@ public class AllPersonalDocumentsServiceImpl implements AllPersonalDocumentsServ
 			}		
 	apd.save(ap);
 	l.setAllPersonalDocuments(ap);
+	l.setLoanStatus("Verified");
 	lri.save(l);
   		
 	}

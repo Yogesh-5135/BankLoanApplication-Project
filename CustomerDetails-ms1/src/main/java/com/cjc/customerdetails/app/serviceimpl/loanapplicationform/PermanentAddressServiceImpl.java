@@ -36,7 +36,7 @@ public PermanentAddress savePermanentAddress(PermanentAddress a,int customerAddr
 		throw new IdNotFountException("Id Not Found");
 	}
 	
-	PermanentAddress pa = null;
+	PermanentAddress pa = new PermanentAddress();
 	
 	try {
 		pa.setAreaname(a.getAreaname());

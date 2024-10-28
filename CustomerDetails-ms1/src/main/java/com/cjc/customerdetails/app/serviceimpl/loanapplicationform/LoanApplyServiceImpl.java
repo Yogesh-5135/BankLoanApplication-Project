@@ -23,18 +23,21 @@ public class LoanApplyServiceImpl implements LoanApplyServiceI{
 	CustServiceI csi;
 
 	@Override
-	public LoanApplication saveLoanApplication(LoanApplication ld) 
+	public void saveLoanApplication(LoanApplication ld) 
 	{
 		List<Enquiry> en = csi.getAllApprovedData();
-		
+		LoanApplication la = ld;
 		for (Enquiry enquiry : en) {
-			if(enquiry.getMobileno() == ld.getCustomerMobileNumber() ) 
-			{								
-				lri.save(ld);	
+			if(enquiry.getMobileno() == la.getCustomerMobileNumber() ) 
+			{		
+				la.setLoanStatus("Submitted");
+				lri.save(la);					
 			}	
-			
+			else {
+				throw new MobNoException("Invalid Mobile no..It should match with customer mobno");
+			}
 		}
-		return ld;
+		
 	}
 		
 	
@@ -71,9 +74,11 @@ public class LoanApplyServiceImpl implements LoanApplyServiceI{
 			l.setCustomerTotalLoanRequired(ld.getCustomerTotalLoanRequired());
 			l.setCustomerAmountPaidForHome(ld.getCustomerAmountPaidForHome());
 			l.setDob(ld.getDob());
-			l.setLoanStatus(ld.getLoanStatus());
+			l.setLoanStatus("Submitted");
 			l.setRequiredTenure(ld.getRequiredTenure());
 			l.setCustomerAdditionalMobileNumber(ld.getCustomerAdditionalMobileNumber());
+			
+			lri.save(l);
 			
 		}
 		return ld;
