@@ -110,7 +110,7 @@ public LocalAddress saveLocalAddress(LocalAddress a,int customerAddressId)
 	}
 	else 
 	{
-		a.setPincode(i);
+		la.setPincode(i);
 	}
 	
 	int j = a.getHouseNumber();
@@ -120,7 +120,7 @@ public LocalAddress saveLocalAddress(LocalAddress a,int customerAddressId)
     }
 	else
 	{
-		a.setHouseNumber(j);
+		la.setHouseNumber(j);
 	}
 	
 	String k = a.getStreetName();
