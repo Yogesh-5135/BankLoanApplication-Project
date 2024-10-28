@@ -38,6 +38,7 @@ public PermanentAddress savePermanentAddress(PermanentAddress a,int customerAddr
 	}
 	else
 	{
+		log.error("Please Enter Valid Id");
 		throw new IdNotFountException("Id Not Found");
 	}
 	
@@ -53,6 +54,7 @@ public PermanentAddress savePermanentAddress(PermanentAddress a,int customerAddr
 	}
 	else
 	{
+		log.error("Please Use Letters Only");
 		throw new InvalidDataException("Areaname does not contain any special character or Number");
 	}
 	}
@@ -67,6 +69,7 @@ public PermanentAddress savePermanentAddress(PermanentAddress a,int customerAddr
 	}
 	else
 	{
+		log.error("Please Use Letters Only");
 		throw new InvalidDataException("Cityname does not contain any special character or Number");
 	}
 	}
@@ -81,6 +84,7 @@ public PermanentAddress savePermanentAddress(PermanentAddress a,int customerAddr
 	}
 	else
 	{
+		log.error("Please Use Letters Only");
 		throw new InvalidDataException("District Name does not contain any special character or Number");
 	}
 	}
@@ -95,6 +99,7 @@ public PermanentAddress savePermanentAddress(PermanentAddress a,int customerAddr
 	}
 	else
 	{
+		log.error("Please Use Letters Only");
 		throw new InvalidDataException("State Name does not contain any special character or Number");
 	}
 	}
@@ -107,6 +112,7 @@ public PermanentAddress savePermanentAddress(PermanentAddress a,int customerAddr
 	}
 	if (count > 6 || count<6) 
 	{
+		log.error("Please Enter Valid Pincode");
 		throw new InvalidDataException("Pincode Is Invalid ..Enter only 6 numbers");
 	}
 	else 
@@ -117,6 +123,7 @@ public PermanentAddress savePermanentAddress(PermanentAddress a,int customerAddr
 	int j = a.getHouseNumber();
 	if (j <= 1 || j >= 99) 
 	{ 
+		log.error("Please Enter Valid House Number");
         throw new InvalidDataException("House number must be between 1 and 99.");
     }
 	else
@@ -134,6 +141,7 @@ public PermanentAddress savePermanentAddress(PermanentAddress a,int customerAddr
 	}
 	else
 	{
+		log.error("Please Use Letters Only");
 		throw new InvalidDataException("StreetName does not contain any special character or Number");
 	}
 	}
@@ -157,6 +165,7 @@ public PermanentAddress getSinglePermanentAddress(int permanentAddressId)
 	}
 	else
 	{
+		log.error("Please Enter Valid Id");
 		throw new IdNotFountException("Permanent Address Not Found");
 	}
 }
@@ -182,6 +191,7 @@ public PermanentAddress updatePermanentAddress(int permanentAddressId, Permanent
 	}
 	else
 	{
+		log.error("Please Enter Valid Id");
 		throw new IdNotFountException("Permanent Address Not Found");
 	}
 }

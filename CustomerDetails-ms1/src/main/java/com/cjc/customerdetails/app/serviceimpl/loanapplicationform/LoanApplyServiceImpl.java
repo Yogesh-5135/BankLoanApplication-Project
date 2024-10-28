@@ -43,6 +43,7 @@ public class LoanApplyServiceImpl implements LoanApplyServiceI{
 		}
 		else
 		{
+			log.error("please Use Letters Only");
 			throw new InvalidDataException("Customer Name does not contain any special character or Number");
 		}
 		}
@@ -53,7 +54,8 @@ public class LoanApplyServiceImpl implements LoanApplyServiceI{
 			la.setDob(c);
 		}
 		else
-		{
+		{ 
+			log.error("Please Enter valid Dob");
 			throw new InvalidDataException("Please Enter Valid Dob");
 		}
 		
@@ -64,6 +66,7 @@ public class LoanApplyServiceImpl implements LoanApplyServiceI{
 		}
 		else
 		{
+			log.error("Please Enter valid Age");
 			throw new InvalidDataException("Customer Age is between 21 to 58 years");
 		}
 		
@@ -74,6 +77,7 @@ public class LoanApplyServiceImpl implements LoanApplyServiceI{
 		}
 		else
 		{
+			log.error("Please Enter valid Tenure");
 			throw new InvalidDataException("You paid Your Insatallments between 1 to 30");
 		}
 
@@ -85,6 +89,7 @@ public class LoanApplyServiceImpl implements LoanApplyServiceI{
 		}
 		else
 		{
+			log.error("Please Enter Valid Gender");
 			throw new InvalidDataException("Please Enter Valid Gender");
 		}
 		
@@ -95,7 +100,7 @@ public class LoanApplyServiceImpl implements LoanApplyServiceI{
 		}
 		else 
 		{
-		
+		    log.error("Please Enter Valid Email");
 			throw new EmailNotValidException(" Email should end with @gmail.com or @yahoo.com ");
 			
 		}
@@ -108,6 +113,7 @@ public class LoanApplyServiceImpl implements LoanApplyServiceI{
 		}
 		if (count > 10 || count<10) 
 		{
+			log.error("Please Enter Valid Mobile No");
 			throw new MobNoException("Mobno invalid ..Enter only 10 numbers");
 		}
 		else 
@@ -123,6 +129,7 @@ public class LoanApplyServiceImpl implements LoanApplyServiceI{
 		}
 		if (count1 > 10 || count1<10) 
 		{
+			log.error("Please Enter Valid Mobile No");
 			throw new MobNoException("Mobno invalid ..Enter only 10 numbers");
 		}
 		else 
@@ -137,6 +144,7 @@ public class LoanApplyServiceImpl implements LoanApplyServiceI{
 		}
 		else
 		{
+			log.error("Please Enter Valid Amount");
 			throw new InvalidDataException("Customer must paid between 1000000 to 5000000 for home");
 		}
 		
@@ -147,6 +155,7 @@ public class LoanApplyServiceImpl implements LoanApplyServiceI{
 		}
 		else
 		{
+			log.error("Please Enter Valid Amount");
 			throw new InvalidDataException(" Customer is Eligible to get loan between 1000000 to 4000000 ");
 		}
 		List<Enquiry> en = csi.getAllApprovedData();
@@ -158,6 +167,7 @@ public class LoanApplyServiceImpl implements LoanApplyServiceI{
 			}	
 			else 
 			{
+				log.error("Please Enter Valid Mobile No");
 				throw new MobNoException("Invalid Mobile no..It should match with customer mobno");
 			}
 		}
@@ -178,6 +188,7 @@ public class LoanApplyServiceImpl implements LoanApplyServiceI{
 		}
 		else
 		{
+			log.error("Please Enter Valid Id");
 			throw new IdNotFountException("LoanApplication Not Found");
 		}
 	}
@@ -203,9 +214,15 @@ public class LoanApplyServiceImpl implements LoanApplyServiceI{
 			l.setCustomerAdditionalMobileNumber(ld.getCustomerAdditionalMobileNumber());
 			
 			lri.save(l);
+			return l;
 			
 		}
-		return ld;
+		else
+		{
+			log.error("Please Enter Valid Id");
+			throw new IdNotFountException("LoanApplication Not Found");
+		}
+		
 		
 	}
 

@@ -44,6 +44,7 @@ public class AllPersonalDocumentsServiceImpl implements AllPersonalDocumentsServ
 		}
 		else
 		{
+			log.error("Please Enter Valid Id");
 			throw new RuntimeException("Id not found");
 		}
 	  
@@ -80,7 +81,8 @@ public class AllPersonalDocumentsServiceImpl implements AllPersonalDocumentsServ
 			}
 			else
 			{
-				throw new RuntimeException("Id not found");
+				log.error("Please Enter Valid Id");
+				throw new IdNotFountException("Id not found");
 			}
 
 		try {	
@@ -101,7 +103,8 @@ public class AllPersonalDocumentsServiceImpl implements AllPersonalDocumentsServ
 			}
 			else
 			{
-				throw new RuntimeException("Id not present");
+				log.error("Please Enter Valid Id");
+				throw new IdNotFountException("Id not present");
 			}
 			return l;
 

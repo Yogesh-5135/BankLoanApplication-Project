@@ -38,6 +38,7 @@ public AccountDetails saveAccountDetails(AccountDetails ad, int loanid)
 	}
 	else
 	{
+		log.error("Please Enter Valid Id");
 		throw new IdNotFountException("Id Not Found");
 	}
 	
@@ -53,6 +54,7 @@ public AccountDetails saveAccountDetails(AccountDetails ad, int loanid)
 	}
 	else
 	{
+		log.error("Please Use Letters Only");
 		throw new InvalidDataException("Account type does not contain any special character or Number");
 	}
 	}
@@ -65,6 +67,7 @@ public AccountDetails saveAccountDetails(AccountDetails ad, int loanid)
 	}
 	else
 	{
+		log.error("please use Numbers Only");
 		throw new InvalidDataException("Your Account Balance Ranges Between 1000 to 100000");
 	}
 	
@@ -78,6 +81,7 @@ public AccountDetails saveAccountDetails(AccountDetails ad, int loanid)
 	}
 	else
 	{
+		log.error("Please Use Letters Only");
 		throw new InvalidDataException("AccountHolder Name does not contain any special character or number");
 	}
 	}
@@ -92,6 +96,7 @@ public AccountDetails saveAccountDetails(AccountDetails ad, int loanid)
 	}
 	else
 	{
+		log.error("Please Use Letters Only");
 		throw new InvalidDataException("Account status does not contain any special character or Number");
 	}
 	}
@@ -104,6 +109,7 @@ public AccountDetails saveAccountDetails(AccountDetails ad, int loanid)
 	}
 	if (count > 12 || count<12) 
 	{
+		log.error("Please Use Numbers Only");
 		throw new InvalidDataException("Account No Is Invalid ..Enter only 12 numbers");
 	}
 	else 
@@ -130,6 +136,7 @@ public AccountDetails getSingleAccountDetails(int accountId)
 	}
 	else
 	{
+		log.error("Please Enter Valid Id");
 		throw new IdNotFountException("AccountDetails Not Found");
 	}
 	
@@ -155,6 +162,7 @@ public AccountDetails updateAccountDetails(int accountId,AccountDetails ad)
 	}
 	else
 	{
+		log.error("Please Enter Valid Id");
 		throw new IdNotFountException("AccountDetails Not Found");
 	}
 	

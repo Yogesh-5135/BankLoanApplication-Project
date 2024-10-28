@@ -38,6 +38,7 @@ public LocalAddress saveLocalAddress(LocalAddress a,int customerAddressId)
 	}
 	else
 	{
+		log.error("Please Enter Valid Id");
 		throw new IdNotFountException("Id Not Found");
 	}
 	
@@ -53,6 +54,7 @@ public LocalAddress saveLocalAddress(LocalAddress a,int customerAddressId)
 	}
 	else
 	{
+		log.error("Please Use Letters Only");
 		throw new InvalidDataException("Areaname does not contain any special character or Number");
 	}
 	}
@@ -67,6 +69,7 @@ public LocalAddress saveLocalAddress(LocalAddress a,int customerAddressId)
 	}
 	else
 	{
+		log.error("please Use Letters Only");
 		throw new InvalidDataException("Cityname does not contain any special character or Number");
 	}
 	}
@@ -81,6 +84,7 @@ public LocalAddress saveLocalAddress(LocalAddress a,int customerAddressId)
 	}
 	else
 	{
+		log.error("please Use Letters Only");
 		throw new InvalidDataException("District Name does not contain any special character or Number");
 	}
 	}
@@ -95,6 +99,7 @@ public LocalAddress saveLocalAddress(LocalAddress a,int customerAddressId)
 	}
 	else
 	{
+		log.error("please Use Letters Only");
 		throw new InvalidDataException("State Name does not contain any special character or Number");
 	}
 	}
@@ -107,6 +112,7 @@ public LocalAddress saveLocalAddress(LocalAddress a,int customerAddressId)
 	}
 	if (count > 6 || count<6) 
 	{
+		log.error("Please Enter Valid Pincode");
 		throw new InvalidDataException("Pincode Is Invalid ..Enter only 6 numbers");
 	}
 	else 
@@ -117,6 +123,7 @@ public LocalAddress saveLocalAddress(LocalAddress a,int customerAddressId)
 	int j = a.getHouseNumber();
 	if (j <= 1 || j >= 99) 
 	{ 
+		log.error("Please Enter Valid House Number");
         throw new InvalidDataException("House number must be between 1 and 99.");
     }
 	else
@@ -134,6 +141,7 @@ public LocalAddress saveLocalAddress(LocalAddress a,int customerAddressId)
 	}
 	else
 	{
+		log.error("please Use Letters Only");
 		throw new InvalidDataException("StreetName does not contain any special character or Number");
 	}
 	}
@@ -156,7 +164,8 @@ public LocalAddress getSingleLocalAddress(int localAddressId)
 		return a;
 	}
 	else
-	{
+	{ 
+		log.error("Please Enter Valid Id");
 		throw new IdNotFountException("Local Address Not Found");
 	}
 	
@@ -183,6 +192,7 @@ public LocalAddress updateLocalAddress(int localAddressId, LocalAddress a)
 	}
 	else
 	{
+		log.error("Please Enter Valid Id");
 		throw new IdNotFountException("Local Address Not Found");
 	}
 }

@@ -40,6 +40,7 @@ public CustomerAddress saveCustomerAddress(int loanid)
 	}
 	else
 	{
+		log.error("Please Enter Valid Id");
 		throw new IdNotFountException("Id Not Found");
 	}
 	
@@ -62,6 +63,7 @@ public CustomerAddress getSingleCustomerAddress(int customerAddressId)
 	}
 	else
 	{
+		log.error("Please Enter Valid Id");
 		throw new IdNotFountException("Customer Address Not Found");
 	}
 	
@@ -82,6 +84,7 @@ public CustomerAddress updateCustomerAddress(int customerAddressId, CustomerAddr
 	}
 	else
 	{
+		log.error("Please Enter Valid Id");
 		throw new IdNotFountException("Customer Address Not Found");
 	}
 	
