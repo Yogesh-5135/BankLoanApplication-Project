@@ -7,6 +7,9 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import com.cjc.cibil.app.exception.CustomerNotFoundException;
@@ -22,8 +25,16 @@ public class CibilServiceImpl implements CibilServiceI{
 
 	@Autowired
 	CibilRepoI cri;
+	
 	@Autowired
 	EnquiryRepoI eri;
+	
+	@Autowired
+	JavaMailSender jms;
+	
+	@Value("${spring.mail.username}")
+	public static String FROM_MAIL;
+	
 	
 	private static final Logger log = LoggerFactory.getLogger(CibilServiceImpl.class);
 
@@ -43,24 +54,32 @@ public class CibilServiceImpl implements CibilServiceI{
 			
 			c.setCibilscore(i);	
 
-			if (i >= 750) {
+			if (i >= 750) 
+			{
 			    c.setStatus("Excellent");
-			    c.setRemark("You will get loan as much as you want,Bank is Yours");
-			    
+			    c.setRemark("You will get loan as much as you want,Bank is Yours");	    
 			    e.setEnquiryStatus("Approved");
-			} else if (i >= 650) {
+			} 
+			else if (i >= 650)
+			{
 			    c.setStatus("Good");
 			    c.setRemark("Good score, You will get Loan");
 			    e.setEnquiryStatus("Approved");
-			} else if (i >= 550) {
+			} 
+			else if (i >= 550) 
+			{
 			    c.setStatus("Average");
 			    c.setRemark("Score is little less, try next time");
 			    e.setEnquiryStatus("Rejected");
-			} else if (i >= 300) {
+			}
+			else if (i >= 300) 
+			{
 			    c.setStatus("Poor");
 			    c.setRemark("Better luck next time ");
 			    e.setEnquiryStatus("Rejected");
-			} else {
+			} 
+			else 
+			{
 			   c.setStatus("Invalid Score");
 			    c.setRemark("You are Great, work hard and improve score");
 			    e.setEnquiryStatus("Rejected");
@@ -68,6 +87,17 @@ public class CibilServiceImpl implements CibilServiceI{
 			
 			e.setCibil(c);			
 			eri.save(e);
+			
+			String customeremail = e.getEmail();
+			String enquirystatus = e.getEnquiryStatus();
+			String remark = e.getCibil().getRemark();
+			
+			SimpleMailMessage message = new SimpleMailMessage();
+			message.setFrom(FROM_MAIL);
+			message.setTo(customeremail);
+			message.setSubject("Your Enquiry Status");
+		    message.setText("Your enquiry status is: " + enquirystatus + "\n" + remark);
+		    jms.send(message);
 			
 			return e;
 		}
