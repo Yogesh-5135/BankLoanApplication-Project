@@ -18,10 +18,10 @@ public class GlobalExceptionHandler
 			ApiResponse error = new ApiResponse();
 			error.setDate(new Date());
 			error.setMsg(e.getMessage());
-			error.setStatusCode(HttpStatus.NOT_ACCEPTABLE.value());
-			error.setErrorMessage(HttpStatus.NOT_ACCEPTABLE);
+			error.setStatusCode(HttpStatus.BAD_REQUEST.value());
+			error.setErrorMessage(HttpStatus.BAD_REQUEST);
 			error.setUrl(request.getRequestURI());
-			return new ResponseEntity<ApiResponse>(error,HttpStatus.NOT_ACCEPTABLE);
+			return new ResponseEntity<ApiResponse>(error,HttpStatus.BAD_REQUEST);
 	   }
 	
 	@ExceptionHandler(EmailNotValidException.class)
@@ -30,10 +30,10 @@ public class GlobalExceptionHandler
 			ApiResponse error = new ApiResponse();
 			error.setDate(new Date());
 			error.setMsg(e.getMessage());
-			error.setStatusCode(HttpStatus.NOT_ACCEPTABLE.value());
-			error.setErrorMessage(HttpStatus.NOT_ACCEPTABLE);
+			error.setStatusCode(HttpStatus.BAD_REQUEST.value());
+			error.setErrorMessage(HttpStatus.BAD_REQUEST);
 			error.setUrl(request.getRequestURI());
-			return new ResponseEntity<ApiResponse>(error,HttpStatus.NOT_ACCEPTABLE);
+			return new ResponseEntity<ApiResponse>(error,HttpStatus.BAD_REQUEST);
 	   }
 	
 	@ExceptionHandler(AgeException.class)
@@ -42,10 +42,10 @@ public class GlobalExceptionHandler
 			ApiResponse error = new ApiResponse();
 			error.setDate(new Date());
 			error.setMsg(e.getMessage());
-			error.setStatusCode(HttpStatus.NOT_ACCEPTABLE.value());
-			error.setErrorMessage(HttpStatus.NOT_ACCEPTABLE);
+			error.setStatusCode(HttpStatus.BAD_REQUEST.value());
+			error.setErrorMessage(HttpStatus.BAD_REQUEST);
 			error.setUrl(request.getRequestURI());
-			return new ResponseEntity<ApiResponse>(error,HttpStatus.NOT_ACCEPTABLE);
+			return new ResponseEntity<ApiResponse>(error,HttpStatus.BAD_REQUEST);
 	   }
 	
 	@ExceptionHandler(InvalidNameException.class)
@@ -54,10 +54,10 @@ public class GlobalExceptionHandler
 			ApiResponse error = new ApiResponse();
 			error.setDate(new Date());
 			error.setMsg(e.getMessage());
-			error.setStatusCode(HttpStatus.NOT_ACCEPTABLE.value());
-			error.setErrorMessage(HttpStatus.NOT_ACCEPTABLE);
+			error.setStatusCode(HttpStatus.BAD_REQUEST.value());
+			error.setErrorMessage(HttpStatus.BAD_REQUEST);
 			error.setUrl(request.getRequestURI());
-			return new ResponseEntity<ApiResponse>(error,HttpStatus.NOT_ACCEPTABLE);
+			return new ResponseEntity<ApiResponse>(error,HttpStatus.BAD_REQUEST);
 	   }
 	
 
@@ -67,10 +67,10 @@ public class GlobalExceptionHandler
 			ApiResponse error = new ApiResponse();
 			error.setDate(new Date());
 			error.setMsg(e.getMessage());
-			error.setStatusCode(HttpStatus.NOT_ACCEPTABLE.value());
-			error.setErrorMessage(HttpStatus.NOT_ACCEPTABLE);
+			error.setStatusCode(HttpStatus.BAD_REQUEST.value());
+			error.setErrorMessage(HttpStatus.BAD_REQUEST);
 			error.setUrl(request.getRequestURI());
-			return new ResponseEntity<ApiResponse>(error,HttpStatus.NOT_ACCEPTABLE);
+			return new ResponseEntity<ApiResponse>(error,HttpStatus.BAD_REQUEST);
 	   }
 	
 	@ExceptionHandler(IdNotFountException.class)
@@ -83,5 +83,17 @@ public class GlobalExceptionHandler
 			error.setErrorMessage(HttpStatus.NOT_FOUND);
 			error.setUrl(request.getRequestURI());
 			return new ResponseEntity<ApiResponse>(error,HttpStatus.NOT_FOUND);
+	   }
+	
+	@ExceptionHandler(InvalidDataException.class)
+	   public ResponseEntity<ApiResponse> InvalidDataExceptionHandler(InvalidDataException e,HttpServletRequest request)
+	   {
+			ApiResponse error = new ApiResponse();
+			error.setDate(new Date());
+			error.setMsg(e.getMessage());
+			error.setStatusCode(HttpStatus.BAD_REQUEST.value());
+			error.setErrorMessage(HttpStatus.BAD_REQUEST);
+			error.setUrl(request.getRequestURI());
+			return new ResponseEntity<ApiResponse>(error,HttpStatus.BAD_REQUEST);
 	   }
 }

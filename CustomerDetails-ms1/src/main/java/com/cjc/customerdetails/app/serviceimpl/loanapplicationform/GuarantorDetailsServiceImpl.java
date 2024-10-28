@@ -2,6 +2,8 @@ package com.cjc.customerdetails.app.serviceimpl.loanapplicationform;
 
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,8 @@ public class GuarantorDetailsServiceImpl implements GuarantorDetailsServiceI
   GuarantorDetailsRepoI gdr;
   @Autowired
   LoanApplyRepoI lri;
+  
+  private static final Logger log = LoggerFactory.getLogger(GuarantorDetailsServiceImpl.class);
   
 	@Override
 	public GuarantorDetails saveData(GuarantorDetails s ,int loanid) 

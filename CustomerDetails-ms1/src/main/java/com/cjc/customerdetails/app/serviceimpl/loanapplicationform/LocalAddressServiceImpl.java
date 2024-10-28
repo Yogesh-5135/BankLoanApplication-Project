@@ -2,17 +2,16 @@ package com.cjc.customerdetails.app.serviceimpl.loanapplicationform;
 
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cjc.customerdetails.app.exception.IdNotFountException;
 import com.cjc.customerdetails.app.exception.InvalidDataException;
 import com.cjc.customerdetails.app.model.loanapplicationform.CustomerAddress;
-import com.cjc.customerdetails.app.model.loanapplicationform.LoanApplication;
 import com.cjc.customerdetails.app.model.loanapplicationform.LocalAddress;
-import com.cjc.customerdetails.app.model.loanapplicationform.PermanentAddress;
 import com.cjc.customerdetails.app.repoi.loanapplicationform.CustomerAddressRepoI;
-import com.cjc.customerdetails.app.repoi.loanapplicationform.LoanApplyRepoI;
 import com.cjc.customerdetails.app.repoi.loanapplicationform.LocalAddressRepoI;
 import com.cjc.customerdetails.app.servicei.loanapplicationform.LocalAddressServiceI;
 
@@ -24,6 +23,8 @@ public class LocalAddressServiceImpl implements LocalAddressServiceI
 
   @Autowired
   CustomerAddressRepoI car;
+  
+  private static final Logger log = LoggerFactory.getLogger(LocalAddressServiceImpl.class);
   
 @Override
 public LocalAddress saveLocalAddress(LocalAddress a,int customerAddressId) 

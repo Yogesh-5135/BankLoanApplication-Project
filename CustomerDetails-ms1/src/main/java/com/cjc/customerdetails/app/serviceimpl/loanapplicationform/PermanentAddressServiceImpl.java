@@ -2,6 +2,8 @@ package com.cjc.customerdetails.app.serviceimpl.loanapplicationform;
 
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,8 @@ public class PermanentAddressServiceImpl implements PermanentAddressServiceI
  
  @Autowired
  CustomerAddressRepoI car;
+ 
+ private static final Logger log = LoggerFactory.getLogger(PermanentAddressServiceImpl.class);
 
 @Override
 public PermanentAddress savePermanentAddress(PermanentAddress a,int customerAddressId) 

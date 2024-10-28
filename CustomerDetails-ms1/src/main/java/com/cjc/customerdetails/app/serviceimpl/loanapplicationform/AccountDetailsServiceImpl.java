@@ -2,14 +2,14 @@ package com.cjc.customerdetails.app.serviceimpl.loanapplicationform;
 
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cjc.customerdetails.app.exception.IdNotFountException;
 import com.cjc.customerdetails.app.exception.InvalidDataException;
-import com.cjc.customerdetails.app.exception.MobNoException;
 import com.cjc.customerdetails.app.model.loanapplicationform.AccountDetails;
-import com.cjc.customerdetails.app.model.loanapplicationform.CustomerAddress;
 import com.cjc.customerdetails.app.model.loanapplicationform.LoanApplication;
 import com.cjc.customerdetails.app.repoi.loanapplicationform.AccountDetailsRepoI;
 import com.cjc.customerdetails.app.repoi.loanapplicationform.LoanApplyRepoI;
@@ -23,6 +23,8 @@ public class AccountDetailsServiceImpl implements AccountDetailsServiceI
 
  @Autowired
  LoanApplyRepoI lri;
+ 
+ private static final Logger log = LoggerFactory.getLogger(AccountDetailsServiceImpl.class);
   
 @Override
 public AccountDetails saveAccountDetails(AccountDetails ad, int loanid) 
