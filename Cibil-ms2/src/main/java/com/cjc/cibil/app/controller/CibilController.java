@@ -1,5 +1,6 @@
 package com.cjc.cibil.app.controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -49,12 +50,18 @@ public class CibilController {
 		LoanApplication[] arr = rt.getForObject(url , LoanApplication[].class);
 		
 		List<LoanApplication> l = Arrays.asList(arr);
+		
+		List<LoanApplication> la1 = new ArrayList<LoanApplication>();
+		
 		for(LoanApplication s:l)
 		{
-			System.out.println(s);
+			if(s.getLoanStatus().equals("Verified"))
+			{
+				la1.add(s);
+			}
 		}
 
-		return l;
+		return la1;
 		
 	}
 	
