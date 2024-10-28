@@ -99,6 +99,8 @@ public class CibilServiceImpl implements CibilServiceI{
 		    message.setText("Your enquiry status is: " + enquirystatus + "\n" + remark);
 		    jms.send(message);
 			
+		    
+		    
 			return e;
 		}
 		else
