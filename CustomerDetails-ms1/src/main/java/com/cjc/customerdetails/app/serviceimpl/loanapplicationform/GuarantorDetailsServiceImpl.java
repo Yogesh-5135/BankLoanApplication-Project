@@ -62,24 +62,9 @@ public class GuarantorDetailsServiceImpl implements GuarantorDetailsServiceI
 
 		
 		String guarantorDateOfBirth = s.getGuarantorDateOfBirth();
-		if (guarantorDateOfBirth != null && !guarantorDateOfBirth.isEmpty() && guarantorDateOfBirth.length() == 10) {
-		    // Check if the date follows "YYYY-MM-DD" format
-		    if (Character.isDigit(guarantorDateOfBirth.charAt(0)) &&
-		        Character.isDigit(guarantorDateOfBirth.charAt(1)) &&
-		        Character.isDigit(guarantorDateOfBirth.charAt(2)) &&
-		        Character.isDigit(guarantorDateOfBirth.charAt(3)) &&
-		        guarantorDateOfBirth.charAt(4) == '-' &&
-		        Character.isDigit(guarantorDateOfBirth.charAt(5)) &&
-		        Character.isDigit(guarantorDateOfBirth.charAt(6)) &&
-		        guarantorDateOfBirth.charAt(7) == '-' &&
-		        Character.isDigit(guarantorDateOfBirth.charAt(8)) &&
-		        Character.isDigit(guarantorDateOfBirth.charAt(9))) {
-		        
+		if (guarantorDateOfBirth != null  ) {
+		    	        
 		        di.setGuarantorDateOfBirth(guarantorDateOfBirth);
-		    } else {
-		        log.error("Invalid date of birth format");
-		        throw new InvalidDataException("Guarantor date of birth must be in the format YYYY-MM-DD");
-		    }
 		} else {
 		    log.error("Date of birth cannot be null or empty");
 		    throw new InvalidDataException("Guarantor date of birth cannot be null or empty");
