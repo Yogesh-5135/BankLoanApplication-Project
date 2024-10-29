@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cjc.customerdetails.app.exception.IdNotFountException;
+import com.cjc.customerdetails.app.exception.InvalidDataException;
 import com.cjc.customerdetails.app.model.loanapplicationform.DependentInforamtion;
 import com.cjc.customerdetails.app.model.loanapplicationform.GuarantorDetails;
 import com.cjc.customerdetails.app.model.loanapplicationform.LoanApplication;
@@ -43,15 +44,146 @@ public class GuarantorDetailsServiceImpl implements GuarantorDetailsServiceI
 		GuarantorDetails di = new GuarantorDetails();
 		
 		
-		di.setGuarantorAdharCardNo(s.getGuarantorAdharCardNo());
-		di.setGuarantorDateOfBirth(s.getGuarantorDateOfBirth());
-		di.setGuarantorJobDetails(s.getGuarantorJobDetails());
-		di.setGuarantorLoaclAddress(s.getGuarantorLoaclAddress());
-		di.setGuarantorMobileNumber(s.getGuarantorMobileNumber());
-		di.setGuarantorMortgageDetails(s.getGuarantorMortgageDetails());
-		di.setGuarantorName(s.getGuarantorName());
-		di.setGuarantorPermanentAddress(s.getGuarantorPermanentAddress());
-		di.setGuarantorRelationshipwithCustomer(s.getGuarantorRelationshipwithCustomer());
+	
+		String guarantorName = s.getGuarantorName();
+		boolean validGuarantorName = true;
+		for (char c : guarantorName.toCharArray()) {
+		    if (!(Character.isLetter(c) || Character.isWhitespace(c))) {
+		        validGuarantorName = false;
+		        break;
+		    }
+		}
+		if (validGuarantorName) {
+		    di.setGuarantorName(guarantorName);
+		} else {
+		    log.error("Invalid guarantor name");
+		    throw new InvalidDataException("Guarantor name should only contain letters and spaces");
+		}
+
+		
+		String guarantorDateOfBirth = s.getGuarantorDateOfBirth();
+		if (guarantorDateOfBirth != null && !guarantorDateOfBirth.isEmpty() && guarantorDateOfBirth.length() == 10) {
+		    // Check if the date follows "YYYY-MM-DD" format
+		    if (Character.isDigit(guarantorDateOfBirth.charAt(0)) &&
+		        Character.isDigit(guarantorDateOfBirth.charAt(1)) &&
+		        Character.isDigit(guarantorDateOfBirth.charAt(2)) &&
+		        Character.isDigit(guarantorDateOfBirth.charAt(3)) &&
+		        guarantorDateOfBirth.charAt(4) == '-' &&
+		        Character.isDigit(guarantorDateOfBirth.charAt(5)) &&
+		        Character.isDigit(guarantorDateOfBirth.charAt(6)) &&
+		        guarantorDateOfBirth.charAt(7) == '-' &&
+		        Character.isDigit(guarantorDateOfBirth.charAt(8)) &&
+		        Character.isDigit(guarantorDateOfBirth.charAt(9))) {
+		        
+		        di.setGuarantorDateOfBirth(guarantorDateOfBirth);
+		    } else {
+		        log.error("Invalid date of birth format");
+		        throw new InvalidDataException("Guarantor date of birth must be in the format YYYY-MM-DD");
+		    }
+		} else {
+		    log.error("Date of birth cannot be null or empty");
+		    throw new InvalidDataException("Guarantor date of birth cannot be null or empty");
+		}
+
+	
+		String guarantorRelationship = s.getGuarantorRelationshipwithCustomer();
+		boolean validRelationship = true;
+		for (char c : guarantorRelationship.toCharArray()) {
+		    if (!(Character.isLetter(c) || Character.isWhitespace(c))) {
+		        validRelationship = false;
+		        break;
+		    }
+		}
+		if (validRelationship) {
+		    di.setGuarantorRelationshipwithCustomer(guarantorRelationship);
+		} else {
+		    log.error("Invalid relationship with customer");
+		    throw new InvalidDataException("Guarantor relationship with customer should only contain letters and spaces");
+		}
+
+		
+		long guarantorMobileNumber = s.getGuarantorMobileNumber();
+		if (String.valueOf(guarantorMobileNumber).length() == 10) {
+		    di.setGuarantorMobileNumber(guarantorMobileNumber);
+		} else {
+		    log.error("Invalid mobile number");
+		    throw new InvalidDataException("Guarantor mobile number must be a 10-digit number");
+		}
+
+		
+		long guarantorAadharCardNo = s.getGuarantorAdharCardNo();
+		if (String.valueOf(guarantorAadharCardNo).length() == 12) {
+		    di.setGuarantorAdharCardNo(guarantorAadharCardNo);
+		} else {
+		    log.error("Invalid Aadhar card number");
+		    throw new InvalidDataException("Guarantor Aadhar card number must be a 12-digit number");
+		}
+
+	
+		String guarantorMortgageDetails = s.getGuarantorMortgageDetails();
+		boolean validMortgageDetails = true;
+		for (char c : guarantorMortgageDetails.toCharArray()) {
+		    if (!(Character.isLetter(c) || Character.isDigit(c) || Character.isWhitespace(c) || c == ',' || c == '.' || c == '-')) {
+		        validMortgageDetails = false;
+		        break;
+		    }
+		}
+		if (validMortgageDetails) {
+		    di.setGuarantorMortgageDetails(guarantorMortgageDetails);
+		} else {
+		    log.error("Invalid mortgage details");
+		    throw new InvalidDataException("Guarantor mortgage details contain invalid characters");
+		}
+
+		
+		String guarantorJobDetails = s.getGuarantorJobDetails();
+		boolean validJobDetails = true;
+		for (char c : guarantorJobDetails.toCharArray()) {
+		    if (!(Character.isLetter(c) || Character.isDigit(c) || Character.isWhitespace(c))) {
+		        validJobDetails = false;
+		        break;
+		    }
+		}
+		if (validJobDetails) {
+		    di.setGuarantorJobDetails(guarantorJobDetails);
+		} else {
+		    log.error("Invalid job details");
+		    throw new InvalidDataException("Guarantor job details should only contain letters, numbers, and spaces");
+		}
+
+		
+		String guarantorLocalAddress = s.getGuarantorLoaclAddress();
+		boolean validLocalAddress = true;
+		for (char c : guarantorLocalAddress.toCharArray()) {
+		    if (!(Character.isLetter(c) || Character.isDigit(c) || Character.isWhitespace(c) || c == ',' || c == '.' || c == '-')) {
+		        validLocalAddress = false;
+		        break;
+		    }
+		}
+		if (validLocalAddress) {
+		    di.setGuarantorLoaclAddress(guarantorLocalAddress);
+		} else {
+		    log.error("Invalid local address");
+		    throw new InvalidDataException("Guarantor local address contains invalid characters");
+		}
+
+		
+		String guarantorPermanentAddress = s.getGuarantorPermanentAddress();
+		boolean validPermanentAddress = true;
+		for (char c : guarantorPermanentAddress.toCharArray()) {
+		    if (!(Character.isLetter(c) || Character.isDigit(c) || Character.isWhitespace(c) || c == ',' || c == '.' || c == '-')) {
+		        validPermanentAddress = false;
+		        break;
+		    }
+		}
+		if (validPermanentAddress) {
+		    di.setGuarantorPermanentAddress(guarantorPermanentAddress);
+		} else {
+		    log.error("Invalid permanent address");
+		    throw new InvalidDataException("Guarantor permanent address contains invalid characters");
+		}
+
+		
 		
 		gdr.save(di);
 		l.setGurantordetails(di);

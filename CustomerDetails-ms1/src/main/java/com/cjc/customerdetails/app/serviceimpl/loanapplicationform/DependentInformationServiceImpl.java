@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cjc.customerdetails.app.exception.IdNotFountException;
+import com.cjc.customerdetails.app.exception.InvalidDataException;
 import com.cjc.customerdetails.app.model.Enquiry;
 import com.cjc.customerdetails.app.model.loanapplicationform.DependentInforamtion;
 import com.cjc.customerdetails.app.model.loanapplicationform.LoanApplication;
@@ -43,12 +44,70 @@ public class DependentInformationServiceImpl implements DependentInformationServ
 			
 			DependentInforamtion di = new DependentInforamtion();
 			
-			di.setDependentMember(s.getDependentMember());
-			di.setFamilyIncome(s.getFamilyIncome());
-			di.setMaritalStatus(s.getMaritalStatus());
-			di.setNoOfChild(s.getNoOfChild());
-			di.setNoOfFamilyMember(s.getNoOfFamilyMember());
 			
+
+			String dependentMember = s.getDependentMember();
+			char[] dependentChars = dependentMember.toCharArray();
+			boolean validDependent = true;
+
+			for (char c : dependentChars) {
+			    if (!(Character.isLetter(c) || Character.isWhitespace(c))) {
+			        validDependent = false;
+			        break;
+			    }
+			}
+
+			if (validDependent) {
+			    di.setDependentMember(dependentMember);
+			} else {
+			    log.error("Please Use Letters Only");
+			    throw new InvalidDataException("Dependent member should not contain any special character or Number");
+			}
+
+			
+			double familyIncome = s.getFamilyIncome();
+			if (familyIncome < 0) {
+			    log.error("Family income must be a non-negative value");
+			    throw new InvalidDataException("Family income should be non-negative");
+			}
+			di.setFamilyIncome(familyIncome);
+
+			
+			String maritalStatus = s.getMaritalStatus();
+			char[] maritalChars = maritalStatus.toCharArray();
+			boolean validMarital = true;
+
+			for (char c : maritalChars) {
+			    if (!(Character.isLetter(c) || Character.isWhitespace(c))) {
+			        validMarital = false;
+			        break;
+			    }
+			}
+
+			if (validMarital) {
+			    di.setMaritalStatus(maritalStatus);
+			} else {
+			    log.error("Please Use Letters Only");
+			    throw new InvalidDataException("Marital status should not contain any special character or Number");
+			}
+
+			
+			int noOfChild = s.getNoOfChild();
+			if (noOfChild < 0) {
+			    log.error("Number of children must be a non-negative value");
+			    throw new InvalidDataException("Number of children should be non-negative");
+			}
+			di.setNoOfChild(noOfChild);
+
+			
+			int noOfFamilyMember = s.getNoOfFamilyMember();
+			if (noOfFamilyMember < 1) { 
+			    log.error("Number of family members must be at least 1");
+			    throw new InvalidDataException("Number of family members should be at least 1");
+			}
+			di.setNoOfFamilyMember(noOfFamilyMember);
+
+						
 			 dir.save(di);
 			l.setDependentInforamtion(di);
 			 lri.save(l);
