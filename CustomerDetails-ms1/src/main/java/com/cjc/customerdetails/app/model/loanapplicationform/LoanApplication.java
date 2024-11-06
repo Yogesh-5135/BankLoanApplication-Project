@@ -24,6 +24,7 @@ public class LoanApplication {
 	private String dob;	
 	private int customerAge	;
 	private int requiredTenure	;
+	private int cibil;
 	private String customerGender	;
 	private String customerEmail ;	
 	private double customerMobileNumber ;	

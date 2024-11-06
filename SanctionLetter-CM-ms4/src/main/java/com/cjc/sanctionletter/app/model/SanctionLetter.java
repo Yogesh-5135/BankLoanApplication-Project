@@ -20,7 +20,7 @@ public class SanctionLetter {
 	    private Date sanctionDate;
 	    private String applicantName;
 	    private Double contactDetails;
-	    private String productHomeEquityOrOnRoadPrice;
+
 	    private Double loanAmtSanctioned;
 	    private String interestType;
 	    private float rateOfInterest;
