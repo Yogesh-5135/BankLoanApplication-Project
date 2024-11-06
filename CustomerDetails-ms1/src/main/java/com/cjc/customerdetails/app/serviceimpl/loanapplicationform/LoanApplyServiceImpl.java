@@ -31,7 +31,7 @@ public class LoanApplyServiceImpl implements LoanApplyServiceI{
 	@Override
 	public void saveLoanApplication(LoanApplication ld) 
 	{
-		LoanApplication la = null;
+		LoanApplication la = new LoanApplication();
 		
 		String a = ld.getCustomerName();
 		char[]b = a.toCharArray();
@@ -71,7 +71,7 @@ public class LoanApplyServiceImpl implements LoanApplyServiceI{
 		}
 		
 		int e = ld.getRequiredTenure();
-		if(e>=1 && e<=30)
+		if(e>=1 && e<=60)
 		{
 			la.setRequiredTenure(e);
 		}

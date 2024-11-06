@@ -1,7 +1,6 @@
 package com.cjc.sanctionletter.app.controller;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,14 +8,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.cjc.sanctionletter.app.model.LoanApplication;
-import com.cjc.sanctionletter.app.model.SanctionLetter;
 import com.cjc.sanctionletter.app.servicei.SanctionLetterI;
 
 @RestController
@@ -65,5 +62,15 @@ public class SanctionLetterController
 	  
 	  sli.getMonthlyEmi( sanctionId);
 	  return new ResponseEntity<String>("Monthly emi generated",HttpStatus.OK);
+  }
+  
+  @GetMapping("/generateSanctionLetter/{loanid}/{sanctionId}")
+  public ResponseEntity<String> generateSanctionLetter(@PathVariable int loanid,@PathVariable int sanctionId)
+  {
+	  
+	  sli.generateSanctionLetter(loanid,l,sanctionId);
+	  
+	return new ResponseEntity<String>("SanctionLetter Generated Successfully",HttpStatus.OK);
+	  
   }
 }

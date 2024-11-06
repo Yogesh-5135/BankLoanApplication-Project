@@ -33,6 +33,7 @@ public class LoanApplication {
 	private double customerTotalLoanRequired ;
 	private String loanStatus	;
 	
+	
 	@OneToOne(cascade=CascadeType.ALL)
 	private AllPersonalDocuments allPersonalDocuments;
 	
