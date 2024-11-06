@@ -29,7 +29,6 @@ public class SanctionLetterController
 	@Autowired
 	RestTemplate rt;
 	
-<<<<<<< HEAD
 	 List<LoanApplication> l =null;	 
   
   @GetMapping("/getAllVerified")
@@ -58,13 +57,7 @@ public class SanctionLetterController
   {
 	  sli.generateIntRate( sanctionId);
 	  return new ResponseEntity<String>("Interest rate generated",HttpStatus.OK);
-  }
-=======
-	 List<LoanApplication> l =null;
-	 
-	 
-	 
->>>>>>> branch 'master' of https://github.com/Yogesh-5135/BankLoanApplication-Project.git
+  }	 
   
   @PutMapping("/getmonthlyEmi/{loanid}/{sanctionId}")
   public ResponseEntity<String> monthlyEmi(@PathVariable int loanid ,@PathVariable int sanctionId)
