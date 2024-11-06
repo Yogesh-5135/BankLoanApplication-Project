@@ -49,7 +49,7 @@ public class SanctionLetterController
 	  {
 		if( la.getLoanid() == loanid)
 		{
-			
+		   
 		}
 	  }
 	  return null;
