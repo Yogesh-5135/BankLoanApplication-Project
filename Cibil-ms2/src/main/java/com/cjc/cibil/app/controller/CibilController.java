@@ -43,7 +43,7 @@ public class CibilController {
 		return new ResponseEntity<Enquiry> (e,HttpStatus.OK);
 	}
 	
-	@GetMapping("/getAllDocumentVerfiedList")
+	@GetMapping("/getAllDocumentVerifiedList")
 	public List<LoanApplication> getDocumentVerifiedList()
 	{
 		String url = "http://localhost:9090/applyLoan/getAllLoanApplication";

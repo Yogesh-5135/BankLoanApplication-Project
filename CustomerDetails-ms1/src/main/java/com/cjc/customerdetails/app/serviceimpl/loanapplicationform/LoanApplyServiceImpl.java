@@ -162,6 +162,8 @@ public class LoanApplyServiceImpl implements LoanApplyServiceI{
 		for (Enquiry enquiry : en) {
 			if(enquiry.getMobileno() == la.getCustomerMobileNumber() ) 
 			{		
+				int i = enquiry.getCibil().getCibilscore();
+				la.setCibil(i);
 				la.setLoanStatus("Submitted");
 				lri.save(la);					
 			}	
