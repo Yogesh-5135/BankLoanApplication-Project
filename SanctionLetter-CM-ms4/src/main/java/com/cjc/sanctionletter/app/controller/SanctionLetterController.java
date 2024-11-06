@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,6 +29,7 @@ public class SanctionLetterController
 	@Autowired
 	RestTemplate rt;
 	
+<<<<<<< HEAD
 	 List<LoanApplication> l =null;	 
   
   @GetMapping("/getAllVerified")
@@ -57,6 +59,12 @@ public class SanctionLetterController
 	  sli.generateIntRate( sanctionId);
 	  return new ResponseEntity<String>("Interest rate generated",HttpStatus.OK);
   }
+=======
+	 List<LoanApplication> l =null;
+	 
+	 
+	 
+>>>>>>> branch 'master' of https://github.com/Yogesh-5135/BankLoanApplication-Project.git
   
   @PutMapping("/getmonthlyEmi/{loanid}/{sanctionId}")
   public ResponseEntity<String> monthlyEmi(@PathVariable int loanid ,@PathVariable int sanctionId)

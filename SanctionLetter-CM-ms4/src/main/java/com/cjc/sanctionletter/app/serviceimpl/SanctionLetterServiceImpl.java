@@ -13,6 +13,7 @@ import com.cjc.sanctionletter.app.repoi.SanctionLetterRepoI;
 import com.cjc.sanctionletter.app.servicei.SanctionLetterI;
 
 @Service
+<<<<<<< HEAD
 public class SanctionLetterServiceImpl implements SanctionLetterI {
 	@Autowired
 	SanctionLetterRepoI slr;
@@ -127,3 +128,12 @@ public class SanctionLetterServiceImpl implements SanctionLetterI {
 	}
 	
 
+=======
+public class SanctionLetterServiceImpl implements SanctionLetterI
+{
+ @Autowired 
+ SanctionLetterRepoI slr;
+
+
+}
+>>>>>>> branch 'master' of https://github.com/Yogesh-5135/BankLoanApplication-Project.git
