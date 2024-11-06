@@ -28,9 +28,7 @@ public class SanctionLetterController
 	@Autowired
 	RestTemplate rt;
 	
-	 List<LoanApplication> l =null;
-	 
-	 SanctionLetter sl = null;
+	 List<LoanApplication> l =null;	 
   
   @GetMapping("/getAllVerified")
   public ResponseEntity<List<LoanApplication>> getAllVerified()
@@ -40,8 +38,7 @@ public class SanctionLetterController
 	  LoanApplication[] arr = rt.getForObject(url , LoanApplication[].class);
 		
 	  l = Arrays.asList(arr);
-	
-		
+			
 	  return new ResponseEntity<List<LoanApplication>>(l,HttpStatus.OK);
 	  
   }
@@ -49,57 +46,23 @@ public class SanctionLetterController
   @PutMapping("/generateCreditLimit/{loanid}")
   public ResponseEntity<String> generateCreditLimit(@PathVariable int loanid)
   {
-	  for(LoanApplication la:l)
-	  {
-		if( la.getLoanid() == loanid)
-		{
-		   if(la.getCibil()>=750)
-		   {
-			   sl.setLoanAmtSanctioned(la.getCustomerTotalLoanRequired());
-		   }
-		   else if(la.getCibil()>=700)
-		   {
-			   double d = la.getCustomerTotalLoanRequired()-50000;
-			   sl.setLoanAmtSanctioned(d);
-		   }
-		   else if(la.getCibil()>=650)
-		   {
-			   double s = la.getCustomerTotalLoanRequired()-100000;
-			   sl.setLoanAmtSanctioned(s);
-		   }
-		   
-		}
-		
-		sl.setSanctionDate(new Date());
-		sl.setApplicantName(la.getCustomerName());
-		sl.setContactDetails(la.getCustomerMobileNumber());
-		sl.setInterestType("Simple");
-		
-		if(sl.getLoanAmtSanctioned()>=2500000)
-		{
-			sl.setRateOfInterest(7.2f);
-		}
-		else if(sl.getLoanAmtSanctioned()>=1000000)
-		{
-			sl.setRateOfInterest(9.2f);
-		}
-		else
-		{
-			sl.setRateOfInterest(11.2f);
-		}
-		
-		sl.setLoanTenureInMonth(la.getRequiredTenure());
-		sl.setModeOfPayment("In Cash");
-		sl.setRemarks("Ok");
-		sl.setTermsCondition("loan ghe kelya");
-		sl.setStatus("Offered");
-	  }
-	      
-	    
+	 sli.generateLimit(loanid , l);
 	  
-	  return null;
+	 return new ResponseEntity<String>("Credit limit generated",HttpStatus.OK);
   }
   
+  @PutMapping("/getIntRate/{sanctionId}")
+  public ResponseEntity<String> getInterestrate(@PathVariable int sanctionId)
+  {
+	  sli.generateIntRate( sanctionId);
+	  return new ResponseEntity<String>("Interest rate generated",HttpStatus.OK);
+  }
   
-  
+  @PutMapping("/getmonthlyEmi/{loanid}/{sanctionId}")
+  public ResponseEntity<String> monthlyEmi(@PathVariable int loanid ,@PathVariable int sanctionId)
+  {
+	  
+	  sli.getMonthlyEmi( sanctionId);
+	  return new ResponseEntity<String>("Monthly emi generated",HttpStatus.OK);
+  }
 }
