@@ -71,4 +71,12 @@ public class SanctionLetterController
 	return new ResponseEntity<String>("SanctionLetter Generated Successfully",HttpStatus.OK);
 	  
   }
+  
+  @PutMapping("/add/{loanStatus}/{loanid}")
+  public ResponseEntity<String> loanStatusChange(@PathVariable String loanStatus,@PathVariable int loanid)
+  {
+	  sli.loanStatusChange(loanStatus,loanid);
+	  
+	  return new ResponseEntity<String>("Loan Status Change",HttpStatus.OK);
+  }
 }

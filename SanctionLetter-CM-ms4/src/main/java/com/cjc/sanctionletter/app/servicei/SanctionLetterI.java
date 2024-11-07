@@ -15,4 +15,6 @@ public interface SanctionLetterI {
 
 	void generateSanctionLetter(List<LoanApplication> l, int sanctionId, int loanid);
 
+	void loanStatusChange(String loanStatus, int loanid);
+
 }

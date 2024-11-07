@@ -268,6 +268,7 @@ public class SanctionLetterServiceImpl implements SanctionLetterI {
 	        	        return;
 	        	    }
 	        	    la.setSanctionLetter(sanctionLetter);
+	        	    la.setLoanStatus("Sanctioned");
 	        	    lri.save(la);
 	        	        
 	                
@@ -298,15 +299,31 @@ public class SanctionLetterServiceImpl implements SanctionLetterI {
 
 	        			mimemessageHelper.addAttachment("loanSanctionLetter.pdf", new ByteArrayResource(sanctionLetter1));
 	        			sender.send(mimemessage);
-
+                        
 	        		} catch (Exception e) {
 	        			System.out.println("Email Failed to Send!!!!!!");
 	        			e.printStackTrace();
 	        		}
 	        	
-	    }	
-	          
-	 
+	    }
+
+	@Override
+	public void loanStatusChange(String loanStatus, int loanid)
+	{
+		Optional<LoanApplication> ol = lri.findById(loanid);
+		if(ol.isPresent())
+		{
+			LoanApplication l = ol.get();
+			l.setLoanStatus(loanStatus);
+			lri.save(l);
+		}
+		else
+		{
+			throw new RuntimeException("Data Not Found");
+		}
+		
+	}	
+	         
 }	
 	
 	
