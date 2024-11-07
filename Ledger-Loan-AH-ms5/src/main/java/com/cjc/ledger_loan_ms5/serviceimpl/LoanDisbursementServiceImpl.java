@@ -41,7 +41,7 @@ public class LoanDisbursementServiceImpl implements LoanDisbursementI  {
 			ld.setBankName("Axis Bank");
 			ld.setIFSCCode("AXIS2011");
 			ld.setAmountPayType("By Cash");
-			ld.setPaymentStatus("Loading");
+			ld.setPaymentStatus("Paid");
 			
 			ldi.save(ld);
 			l.setLoanDisbursement(ld);
