@@ -8,10 +8,14 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-
+import org.springframework.core.io.ByteArrayResource;
 import com.cjc.sanctionletter.app.model.LoanApplication;
 import com.cjc.sanctionletter.app.model.SanctionLetter;
+import com.cjc.sanctionletter.app.repoi.LoanApplyRepoI;
 import com.cjc.sanctionletter.app.repoi.SanctionLetterRepoI;
 import com.cjc.sanctionletter.app.servicei.SanctionLetterI;
 import com.lowagie.text.BadElementException;
@@ -28,10 +32,20 @@ import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 
+import jakarta.mail.internet.MimeMessage;
+
 @Service
 public class SanctionLetterServiceImpl implements SanctionLetterI {
+	
 	@Autowired
 	SanctionLetterRepoI slr;
+	
+	@Value("${spring.mail.username}")
+	String from;
+	@Autowired
+	JavaMailSender sender;
+	@Autowired
+	LoanApplyRepoI lri;
 	
 	@Override
 	public void generateLimit(int loanid, List<LoanApplication> l) 
@@ -140,120 +154,147 @@ public class SanctionLetterServiceImpl implements SanctionLetterI {
 		slr.save(sl);
 		}
 
+	
 	@Override
-	public void generateSanctionLetter(int loanid,List<LoanApplication> l,int sanctionId) 
+	public void generateSanctionLetter(int loanid, List<LoanApplication> l, int sanctionId) 
 	{
-		Optional<SanctionLetter> ol = slr.findById(sanctionId);
-		SanctionLetter s  = new SanctionLetter();
-		if(ol.isPresent())
-		{
-			 s = ol.get();
-		}
-		for(LoanApplication la:l)
-		  {
-			if( la.getLoanid() == loanid)
-			{
-				String title = "Axis Bank Ltd.";
+	    Optional<SanctionLetter> ol = slr.findById(sanctionId);
+	    SanctionLetter sanctionLetter = new SanctionLetter();
+	    
+	    if (ol.isPresent()) {
+	        sanctionLetter = ol.get();
+	    } else {
+	        System.out.println("Sanction letter not found for sanctionId: " + sanctionId);
+	        return;
+	    }
 
-				Document document = new Document(PageSize.A4);
+	    for (LoanApplication loanApplication : l) {
+	        if (loanApplication.getLoanid() == loanid) {
+	        	
+	            String title = "Axis Bank Ltd.";
 
-				String content1 = "\n\n Dear " +la.getCustomerName()
-						+ ","
-						+ "\nAxis Bank Ltd. is Happy to informed you that your loan application has been approved. ";
+	            Document document = new Document(PageSize.A4);
 
-				String content2 = "\n\nWe hope that you find the terms and conditions of this loan satisfactory "
-						+ "and that it will help you meet your financial needs.\n\nIf you have any questions or need any assistance regarding your loan, "
-						+ "please do not hesitate to contact us.\n\nWe wish you all the best and thank you for choosing us."
-						+ "\n\nSincerely,\n\n" + "Vijay Chaudhari (Credit Manager)";
+	            String content1 = "\n\n Dear " + loanApplication.getCustomerName() +
+	                    ",\nAxis Bank Ltd. is happy to inform you that your loan application has been approved.";
+	            String content2 = "\n\nWe hope that you find the terms and conditions of this loan satisfactory " +
+	                    "and that it will help you meet your financial needs.\n\n" +
+	                    "If you have any questions or need any assistance regarding your loan, please do not hesitate to contact us.\n\n" +
+	                    "We wish you all the best and thank you for choosing us.\n\n" +
+	                    "Sincerely,\n\n" + "Vijay Chaudhari (Credit Manager)";
 
-				ByteArrayOutputStream opt = new ByteArrayOutputStream();
-				
-				PdfWriter.getInstance(document, opt);
-				document.open();
-               
-				Image img = null;
-				
-				try {
-					img = Image.getInstance("C:\\Users\\Akshay\\Downloads\\images\\house-building-or-home-flat-style-2H3BC0F.jpg");
-					img.scalePercent(50, 50);
-					img.setAlignment(Element.ALIGN_RIGHT);
-					document.add(img);
+	            ByteArrayOutputStream opt = new ByteArrayOutputStream();
+	            try {
+	                PdfWriter.getInstance(document, opt);
+	                document.open();
 
-				} catch (BadElementException e1) {
-					e1.printStackTrace();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-				Font titlefont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 25);
-				Paragraph titlepara = new Paragraph(title, titlefont);
-				titlepara.setAlignment(Element.ALIGN_CENTER);
-				document.add(titlepara);
+	                try {
+	                    Image img = Image.getInstance("C:\\Users\\Dell\\Desktop\\istockphoto-1492732089-612x612.jpg");
+	                    img.scalePercent(50, 50);
+	                    img.setAlignment(Element.ALIGN_RIGHT);
+	                    document.add(img);
+	                } catch (BadElementException | IOException e) {
+	                    e.printStackTrace();
+	                }
 
-				Font titlefont2 = FontFactory.getFont(FontFactory.TIMES_ROMAN, 10);
-				Paragraph paracontent1 = new Paragraph(content1, titlefont2);
-				document.add(paracontent1);
+	                Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 25);
+	                Paragraph titlePara = new Paragraph(title, titleFont);
+	                titlePara.setAlignment(Element.ALIGN_CENTER);
+	                document.add(titlePara);
 
-				PdfPTable table = new PdfPTable(2);
-				table.setWidthPercentage(100f);
-				table.setWidths(new int[] { 2, 2 });
-				table.setSpacingBefore(10);
+	                Font contentFont1 = FontFactory.getFont(FontFactory.TIMES_ROMAN, 10);
+	                Paragraph contentPara1 = new Paragraph(content1, contentFont1);
+	                document.add(contentPara1);
 
-				PdfPCell cell = new PdfPCell();
-				cell.setBackgroundColor(CMYKColor.WHITE);
-				cell.setPadding(5);
+	                PdfPTable table = new PdfPTable(2);
+	                table.setWidthPercentage(100f);
+	                table.setWidths(new int[]{2, 2});
+	                table.setSpacingBefore(10);
 
-				Font font = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
-				font.setColor(5, 5, 161);
+	                Font headerFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
+	                Font valueFont = FontFactory.getFont(FontFactory.HELVETICA);
 
-				Font font1 = FontFactory.getFont(FontFactory.HELVETICA);
-				font.setColor(5, 5, 161);
+	                PdfPCell cell = new PdfPCell();
+	                cell.setBackgroundColor(CMYKColor.WHITE);
+	                cell.setPadding(5);
+	                cell.setPhrase(new Phrase("Loan amount Sanctioned", headerFont));
+	                table.addCell(cell);
+	                cell.setPhrase(new Phrase("₹ " + sanctionLetter.getLoanAmtSanctioned(), valueFont));
+	                table.addCell(cell);
 
-				cell.setPhrase(new Phrase("Loan amount Sanctioned", font));
-				table.addCell(cell);
+	                cell.setPhrase(new Phrase("Loan Tenure", headerFont));
+	                table.addCell(cell);
+	                cell.setPhrase(new Phrase(String.valueOf(sanctionLetter.getLoanTenureInMonth()), valueFont));
+	                table.addCell(cell);
 
-				cell.setPhrase(new Phrase(String.valueOf("₹ " + s.getLoanAmtSanctioned()),font1));
-				table.addCell(cell);
+	                cell.setPhrase(new Phrase("Interest Rate", headerFont));
+	                table.addCell(cell);
+	                cell.setPhrase(new Phrase(sanctionLetter.getRateOfInterest() + " %", valueFont));
+	                table.addCell(cell);
 
-				cell.setPhrase(new Phrase("loan tenure", font));
-				table.addCell(cell);
+	                cell.setPhrase(new Phrase("Sanction Date", headerFont));
+	                table.addCell(cell);
+	                cell.setPhrase(new Phrase(String.valueOf(sanctionLetter.getSanctionDate()), valueFont));
+	                table.addCell(cell);
 
-				cell.setPhrase(new Phrase(String.valueOf(s.getLoanTenureInMonth()), font1));
-				table.addCell(cell);
+	                cell.setPhrase(new Phrase("Monthly EMI", headerFont));
+	                table.addCell(cell);
+	                cell.setPhrase(new Phrase(String.valueOf(sanctionLetter.getMonthlyEmiAmount()), valueFont));
+	                table.addCell(cell);
 
-				cell.setPhrase(new Phrase("interest rate", font));
-				table.addCell(cell);
+	                document.add(table);
 
-				cell.setPhrase(new Phrase(String.valueOf(s.getRateOfInterest()) + " %", font1));
-				table.addCell(cell);
+	                Font contentFont2 = FontFactory.getFont(FontFactory.TIMES_ROMAN, 10);
+	                Paragraph contentPara2 = new Paragraph(content2, contentFont2);
+	                document.add(contentPara2);
 
-				cell.setPhrase(new Phrase("Sanction Date", font));
-				table.addCell(cell);
-				
-				cell.setPhrase(new Phrase(String.valueOf(s.getSanctionDate()), font));
-				table.addCell(cell);
-				
-				cell.setPhrase(new Phrase("Monthly EMI", font));
-			    table.addCell(cell);
-				 
-				cell.setPhrase(new Phrase(String.valueOf(s.getMonthlyEmiAmount()), font1));
-				table.addCell(cell);
-				
-				document.add(table);
+	                document.close();
 
-				Font titlefont3 = FontFactory.getFont(FontFactory.TIMES_ROMAN, 10);
-				Paragraph paracontent2 = new Paragraph(content2, titlefont3);
-				document.add(paracontent2);
-				document.close();
-				
-				ByteArrayInputStream byt = new ByteArrayInputStream(opt.toByteArray());
-				byte[] bytes = byt.readAllBytes();
-				la.getSanctionLetter().setSanctionLetter(bytes);
-		
-				 slr.save(s);
-			}
-				
-			}
-		  }
-	}
-		  
+	                ByteArrayInputStream byt = new ByteArrayInputStream(opt.toByteArray());
+	                byte[] bytes = byt.readAllBytes();
+	                loanApplication.getSanctionLetter().setSanctionLetter(bytes);
+	                sanctionLetter.setSanctionLetter(bytes);
+
+	                slr.save(sanctionLetter);	               
+	                lri.save(loanApplication);
+	                
+	                System.out.println("Sanction Letter generated and saved.");
+	            } catch (Exception e) {
+	                e.printStackTrace();
+	            }
+	        }       
+	        
+	                MimeMessage mimemessage = sender.createMimeMessage();
+	                byte[] sanctionLetter1 = sanctionLetter.getSanctionLetter();
+	        
+	        		try {
+	        			MimeMessageHelper mimemessageHelper = new MimeMessageHelper(mimemessage, true);
+	        			mimemessageHelper.setFrom(from);
+	        			mimemessageHelper.setTo("yogeshwadje3@gmail.com");
+	        			mimemessageHelper.setSubject("Axis Bank Sanction Letter");
+	        			String text = "Dear " + loanApplication.getCustomerName()
+	        					+ ",\n" + "\n"
+	        					+ "This letter is to inform you that we have reviewed your request for a loan . We are pleased to offer you a credit loan of "
+	        					+ sanctionLetter.getLoanAmtSanctioned() + " for "
+	        					+ sanctionLetter.getLoanTenureInMonth()+ ".\n" + "\n"
+	        					+ "We are confident that you will manage your loan responsibly, and we look forward to your continued business.\n"
+	        					+ "\n"
+	        					+ "Should you have any questions about yourloan, please do not hesitate to contact us.\n"
+	        					+ "\n" + "Thank you for your interest in our services.";
+
+	        			mimemessageHelper.setText(text);
+
+	        			mimemessageHelper.addAttachment("loanSanctionLetter.pdf", new ByteArrayResource(sanctionLetter1));
+	        			sender.send(mimemessage);
+
+	        		} catch (Exception e) {
+	        			System.out.println("Email Failed to Send!!!!!!");
+	        			e.printStackTrace();
+	        		}
+	        	
+	    }	
+	          
+	 }
+}	
+	
 	

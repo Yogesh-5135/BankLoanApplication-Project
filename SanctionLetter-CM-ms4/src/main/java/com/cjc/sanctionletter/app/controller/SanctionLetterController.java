@@ -1,5 +1,6 @@
 package com.cjc.sanctionletter.app.controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -26,17 +27,17 @@ public class SanctionLetterController
 	@Autowired
 	RestTemplate rt;
 	
-	 List<LoanApplication> l =null;	 
+	 List<LoanApplication> l =new ArrayList<LoanApplication>();	 
   
   @GetMapping("/getAllVerified")
   public ResponseEntity<List<LoanApplication>> getAllVerified()
   {
-	  String url = "http://localhost:9099/api/v3/getAllDocumentVerifiedList";  
+	  String url = "http://localhost:9095/api/v2/getAllDocumentVerifiedList";  
 	  
 	  LoanApplication[] arr = rt.getForObject(url , LoanApplication[].class);
 		
 	  l = Arrays.asList(arr);
-			
+	  System.out.println(l);
 	  return new ResponseEntity<List<LoanApplication>>(l,HttpStatus.OK);
 	  
   }
@@ -58,18 +59,15 @@ public class SanctionLetterController
   
   @PutMapping("/getmonthlyEmi/{loanid}/{sanctionId}")
   public ResponseEntity<String> monthlyEmi(@PathVariable int loanid ,@PathVariable int sanctionId)
-  {
-	  
+  {	  
 	  sli.getMonthlyEmi( sanctionId);
 	  return new ResponseEntity<String>("Monthly emi generated",HttpStatus.OK);
   }
   
-  @GetMapping("/generateSanctionLetter/{loanid}/{sanctionId}")
+  @PutMapping("/generateSanctionLetter/{loanid}/{sanctionId}")
   public ResponseEntity<String> generateSanctionLetter(@PathVariable int loanid,@PathVariable int sanctionId)
   {
-	  
-	  sli.generateSanctionLetter(loanid,l,sanctionId);
-	  
+	 sli.generateSanctionLetter(loanid,l,sanctionId);	  
 	return new ResponseEntity<String>("SanctionLetter Generated Successfully",HttpStatus.OK);
 	  
   }

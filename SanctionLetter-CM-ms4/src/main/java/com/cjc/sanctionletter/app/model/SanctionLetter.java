@@ -20,7 +20,7 @@ public class SanctionLetter {
 	 private int sanctionId;
 	    private Date sanctionDate;
 	    private String applicantName;
-	    private Double contactDetails;
+	    private long contactDetails;
 	    private Double loanAmtSanctioned;
 	    private String interestType;
 	    private float rateOfInterest;
@@ -33,5 +33,6 @@ public class SanctionLetter {
 	    @Lob
 		@Column(length = 9000000)
 		private byte[] sanctionLetter;
+		
 }
 

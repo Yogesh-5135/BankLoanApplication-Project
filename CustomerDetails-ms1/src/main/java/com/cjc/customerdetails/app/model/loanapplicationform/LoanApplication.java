@@ -27,8 +27,8 @@ public class LoanApplication {
 	private int cibil;
 	private String customerGender	;
 	private String customerEmail ;	
-	private double customerMobileNumber ;	
-	private double customerAdditionalMobileNumber ;
+	private long customerMobileNumber ;	
+	private long customerAdditionalMobileNumber ;
 	private double customerAmountPaidForHome ;
 	private double customerTotalLoanRequired ;
 	private String loanStatus	;

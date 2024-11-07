@@ -105,25 +105,24 @@ public class LoanApplyServiceImpl implements LoanApplyServiceI{
 			
 		}
 		
-		double h = ld.getCustomerMobileNumber();
+		long mb = ld.getCustomerMobileNumber();
 		int count = 0;
-		for (double no = h; no > 0; no = no / 10) 
+		for (long no = mb; no > 0; no = no / 10) 
 		{
 			count++;
 		}
 		if (count > 10 || count<10) 
 		{
-			log.error("Please Enter Valid Mobile No");
+			log.error("please Enter valid Mobile No");
 			throw new MobNoException("Mobno invalid ..Enter only 10 numbers");
-		}
-		else 
+		}else 
 		{
-			la.setCustomerMobileNumber(h);
+			la.setCustomerMobileNumber(mb);
 		}
 	
-		double k = ld.getCustomerAdditionalMobileNumber();
+		long k = ld.getCustomerAdditionalMobileNumber();
         int count1 = 0;
-		for (double no = k; no > 0; no = no / 10) 
+		for (long no = k; no > 0; no = no / 10) 
 		{
 			count1++;
 		}
@@ -151,33 +150,30 @@ public class LoanApplyServiceImpl implements LoanApplyServiceI{
 		double m = ld.getCustomerTotalLoanRequired();
 		if(m>=1000000 && m<=4000000)
 		{
-			la.setCustomerAmountPaidForHome(m);
+			la.setCustomerTotalLoanRequired(m);
 		}
 		else
 		{
 			log.error("Please Enter Valid Amount");
 			throw new InvalidDataException(" Customer is Eligible to get loan between 1000000 to 4000000 ");
 		}
+		
+		
 		List<Enquiry> en = csi.getAllApprovedData();
 		for (Enquiry enquiry : en) {
-			if(enquiry.getMobileno() == la.getCustomerMobileNumber() ) 
-			{		
+			
+			if(enquiry.getMobileno() == mb) {
+				
 				int i = enquiry.getCibil().getCibilscore();
 				la.setCibil(i);
 				la.setLoanStatus("Submitted");
-				lri.save(la);					
-			}	
-			else 
-			{
-				log.error("Please Enter Valid Mobile No");
-				throw new MobNoException("Invalid Mobile no..It should match with customer mobno");
-			}
+				lri.save(la);
+			} 
 		}
-		
+									
 	}
 		
 	
-
 	@Override
 	public LoanApplication getSingleLoanApplication(int loanid) 
 	{

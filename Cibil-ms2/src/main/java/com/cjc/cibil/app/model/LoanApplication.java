@@ -22,9 +22,10 @@ public class LoanApplication {
 	private int customerAge	;
 	private int requiredTenure	;
 	private String customerGender	;
-	private String customerEmail ;	
-	private double customerMobileNumber ;	
-	private double customerAdditionalMobileNumber ;
+	private String customerEmail ;
+	private int cibil;
+	private long customerMobileNumber ;	
+	private long customerAdditionalMobileNumber ;
 	private double customerAmountPaidForHome ;
 	private double customerTotalLoanRequired ;
 	private String loanStatus	;

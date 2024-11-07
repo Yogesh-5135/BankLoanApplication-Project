@@ -52,7 +52,7 @@ public class CibilController {
 		List<LoanApplication> l = Arrays.asList(arr);
 		
 		List<LoanApplication> la1 = new ArrayList<LoanApplication>();
-		
+		System.out.println(l);
 		for(LoanApplication s:l)
 		{
 			if(s.getLoanStatus().equals("Verified"))

@@ -22,7 +22,7 @@ public class LoanApplication {
 	private int cibil;
 	private String customerGender	;
 	private String customerEmail ;	
-	private double customerMobileNumber ;	
+	private long customerMobileNumber ;	
 	private double customerAdditionalMobileNumber ;
 	private double customerAmountPaidForHome ;
 	private double customerTotalLoanRequired ;

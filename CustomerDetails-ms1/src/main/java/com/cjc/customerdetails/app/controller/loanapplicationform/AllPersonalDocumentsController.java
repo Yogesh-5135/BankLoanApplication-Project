@@ -24,9 +24,6 @@ public class AllPersonalDocumentsController
 	@Autowired
 	AllPersonalDocumentsServiceI apd;
 	
-	
-	
-
 	@PostMapping("/saveDocuments/{loanid}")
 	public ResponseEntity<String> addDocument(@RequestPart ("ap") MultipartFile addressProof ,
 				@RequestPart ("pc") MultipartFile panCard ,@RequestPart ("it") MultipartFile IncomeTax,
