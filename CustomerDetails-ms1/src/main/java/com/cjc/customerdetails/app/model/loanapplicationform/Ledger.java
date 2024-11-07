@@ -1,5 +1,7 @@
 package com.cjc.customerdetails.app.model.loanapplicationform;
 
+import java.util.Date;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,7 +15,7 @@ public class Ledger {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 		private Integer ledgerId;
-	    private String ledgerCreatedDate;
+	    private Date ledgerCreatedDate;
 	    private Double totalLoanAmount;
 	    private Double payableAmountWithInterest;
 	    private Integer tenure;

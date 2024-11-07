@@ -4,6 +4,7 @@ import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -37,8 +38,8 @@ public class LoanApplication {
 	@OneToOne(cascade=CascadeType.ALL)
 	private LoanDisbursement loanDisbursement; 
 
-	@OneToMany(cascade=CascadeType.ALL)
-    private List<Ledger> ledger; 
+	@OneToMany(fetch = FetchType.EAGER)
+	private List<Ledger> ledger;
 	
 	@OneToOne(cascade=CascadeType.ALL)
     private SanctionLetter sanctionLetter; 
