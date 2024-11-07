@@ -267,6 +267,7 @@ public class SanctionLetterServiceImpl implements SanctionLetterI {
 	        	        System.out.println("Loan Application not found for loanid: " + loanid);
 	        	        return;
 	        	    }
+	        	    la.setSanctionLetter(sanctionLetter);
 	        	    lri.save(la);
 	        	        
 	                
