@@ -79,4 +79,6 @@ public class SanctionLetterController
 	  
 	  return new ResponseEntity<String>("Loan Status Change",HttpStatus.OK);
   }
+  
+
 }

@@ -16,4 +16,6 @@ public interface LoanApplyServiceI {
 
 	List<LoanApplication> getAllLoanApplication();
 
+	List<LoanApplication> getAccepted();
+
 }

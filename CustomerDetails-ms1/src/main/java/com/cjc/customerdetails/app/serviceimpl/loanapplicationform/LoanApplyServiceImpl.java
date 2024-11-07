@@ -1,5 +1,6 @@
 package com.cjc.customerdetails.app.serviceimpl.loanapplicationform;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -235,5 +236,20 @@ public class LoanApplyServiceImpl implements LoanApplyServiceI{
 	{
 		List<LoanApplication> l = lri.findAll();
 		return l;
+	}	
+	
+	@Override
+	public List<LoanApplication> getAccepted() {
+		
+		 List<LoanApplication> l = lri.findAll();
+		 
+		 List<LoanApplication> lp = new ArrayList<LoanApplication>(); 
+		 for (LoanApplication la : l) {
+			if(la.getLoanStatus().equals("Accepted")) {
+				lp.add(la);
+			}
+		}
+		 
+		return lp;
 	}	
 }

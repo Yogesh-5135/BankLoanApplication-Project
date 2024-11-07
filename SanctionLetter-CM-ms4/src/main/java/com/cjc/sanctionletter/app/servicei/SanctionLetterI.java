@@ -17,4 +17,6 @@ public interface SanctionLetterI {
 
 	void loanStatusChange(String loanStatus, int loanid);
 
+
+
 }

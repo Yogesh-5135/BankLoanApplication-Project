@@ -66,4 +66,12 @@ public class LoanApplyController {
 		
 		return new ResponseEntity<String>("LoanApplication Deleted Successfully",HttpStatus.OK);
 	}
+	
+	 @GetMapping("/getAllAccepted")
+	  public ResponseEntity<List<LoanApplication>> getAllaccpted()
+	  {
+		List<LoanApplication> l =  lsi.getAccepted();
+		  return new ResponseEntity<List<LoanApplication>>(l,HttpStatus.OK);
+		  
+	  }
 }

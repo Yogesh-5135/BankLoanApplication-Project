@@ -80,4 +80,6 @@ public class CustomerController {
 		csi.deleteAllCustomer();
 		return new ResponseEntity<String>( HttpStatus.NO_CONTENT);
 	}
+	
+	 
 }
