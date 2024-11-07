@@ -42,7 +42,7 @@ public class LoanDisbursementController
 	 }
 	
 	
-	 @PutMapping("update/{loanid}")
+	 @PutMapping("/update/{loanid}")
 	 public ResponseEntity<String> updateloandiburse(@PathVariable int loanid)
 	 {
 		 ldi.updateLoan(loanid );
