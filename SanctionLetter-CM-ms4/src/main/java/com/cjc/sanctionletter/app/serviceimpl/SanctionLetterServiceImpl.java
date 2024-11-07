@@ -282,7 +282,7 @@ public class SanctionLetterServiceImpl implements SanctionLetterI {
 	        		try {
 	        			MimeMessageHelper mimemessageHelper = new MimeMessageHelper(mimemessage, true);
 	        			mimemessageHelper.setFrom(from);
-	        			mimemessageHelper.setTo("yogeshwadje3@gmail.com");
+	        			mimemessageHelper.setTo("9373502538os@gmail.com");
 	        			mimemessageHelper.setSubject("Axis Bank Sanction Letter");
 	        			String text = "Dear " + sanctionLetter.getApplicantName()
 	        					+ ",\n" + "\n"
