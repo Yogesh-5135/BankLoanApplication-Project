@@ -146,9 +146,10 @@ public class SanctionLetterServiceImpl implements SanctionLetterI {
 		 slr.save(sl);
 	}
 
+	@Override
 	public void getMonthlyEmi(int sanctionId) {
 	    Optional<SanctionLetter> o = slr.findById(sanctionId);
-	    
+
 	    if (!o.isPresent()) {
 	        System.out.println("Sanction Letter not found.");
 	        return;
@@ -160,49 +161,60 @@ public class SanctionLetterServiceImpl implements SanctionLetterI {
 	    float rateOfInterest = sl.getRateOfInterest();
 	    int loanTenureInMonths = sl.getLoanTenureInMonth();
 
+	    
 	    float monthlyInterestRate = rateOfInterest / 12 / 100;
-	    
-	    
-	    double emi = (loanAmount * monthlyInterestRate * Math.pow(1 + monthlyInterestRate, loanTenureInMonths)) / 
+
+	    // Calculate the standard EMI using the formula
+	    double emi = (loanAmount * monthlyInterestRate * Math.pow(1 + monthlyInterestRate, loanTenureInMonths)) /
 	                 (Math.pow(1 + monthlyInterestRate, loanTenureInMonths) - 1);
 
-	   
 	    sl.setMonthlyEmiAmount(emi);
 
-	    double remainingBalance = loanAmount;
+	    double remainingBalance = loanAmount;  // Set initial remaining balance as the loan amount
 
 	    System.out.println("Loan Amount: ₹" + loanAmount);
 	    System.out.println("Annual Interest Rate: " + rateOfInterest + "%");
 	    System.out.println("Loan Tenure: " + loanTenureInMonths + " months");
 	    System.out.println("EMI: ₹" + emi);
 
-	  
+	    // Loop through each month and calculate the EMI breakdown
 	    for (int month = 1; month <= loanTenureInMonths; month++) {
+	        // Calculate the interest payment for this month
 	        double interestPayment = remainingBalance * monthlyInterestRate;
+
+	        // Calculate the principal repayment (EMI - interest payment)
 	        double principalRepayment = emi - interestPayment;
 
+	        // Reduce the remaining balance by the principal repayment
 	        remainingBalance -= principalRepayment;
 
-	        
+	        // Round to two decimal places to avoid precision errors
 	        interestPayment = Math.round(interestPayment * 100.0) / 100.0;
 	        principalRepayment = Math.round(principalRepayment * 100.0) / 100.0;
 	        remainingBalance = Math.round(remainingBalance * 100.0) / 100.0;
 
-	     
+	        // If this is the final month, we need to adjust the EMI to match the remaining balance
 	        if (month == loanTenureInMonths && remainingBalance > 0) {
-	            emi = remainingBalance + interestPayment;  
-	            principalRepayment = remainingBalance;     
-	            remainingBalance = 0;                    
+	            emi = remainingBalance + interestPayment;  // Adjust EMI to the exact remaining balance
+	            principalRepayment = remainingBalance;     // All of the remaining balance is principal repayment
+	            remainingBalance = 0;                      // No remaining balance after the final payment
 	        }
 
-	        
+	        // If remainingBalance is negative due to rounding errors, reset it to 0
 	        if (remainingBalance < 0) {
 	            remainingBalance = 0;
 	        }
-	    }	  
+
+	        // Optionally, you could log the EMI breakdown for each month
+	        System.out.println("Month: " + month);
+	        System.out.println("Interest Payment: ₹" + interestPayment);
+	        System.out.println("Principal Repayment: ₹" + principalRepayment);
+	        System.out.println("Remaining Balance: ₹" + remainingBalance);
+	    }
+
+	    // Save the updated SanctionLetter with the new EMI and other details
 	    slr.save(sl);
 	}
-
 
 	
 	@Override

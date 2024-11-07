@@ -38,6 +38,7 @@ public class LedgerServiceImpl implements LedgerServiceI {
         LoanApplication loan = loanOpt.get();
         int tenureInMonths = loan.getSanctionLetter().getLoanTenureInMonth();
 
+
         // Initializing loan details
         double loanAmount = loan.getSanctionLetter().getLoanAmtSanctioned();
         double rateOfInterest = loan.getSanctionLetter().getRateOfInterest();
@@ -64,18 +65,8 @@ public class LedgerServiceImpl implements LedgerServiceI {
             ledger.setAmountPaidTillDate(amountPaidTillDate);
 
             // Calculate the remaining amount
-            remainingAmount = totalAmountWithInterest - amountPaidTillDate;
+            remainingAmount = totalAmountWithInterest - amountPaidTillDate ;
             ledger.setRemainingAmount(remainingAmount);
-
-            // Adjust remaining balance for the final month to ensure it becomes 0
-            if (i == tenureInMonths) {
-                // In the last month, the EMI may overpay the loan, so we adjust it
-                if (remainingAmount > 0) {
-                    monthlyEMI = remainingAmount;  // Adjust the EMI for the final month to match the remaining amount
-                    amountPaidTillDate = totalAmountWithInterest; // Total payment till date is the full amount with interest
-                    remainingAmount = 0; // Final remaining balance should be 0
-                }
-            }
 
             // Calculate defaulter count (for simplicity, keeping it as 0)
             int defaulterCount = getDefaulterCount(i, loan);
