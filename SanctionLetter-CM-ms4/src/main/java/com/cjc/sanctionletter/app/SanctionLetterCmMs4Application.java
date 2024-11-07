@@ -9,6 +9,8 @@ import org.springframework.web.client.RestTemplate;
 @EnableDiscoveryClient
 @SpringBootApplication
 public class SanctionLetterCmMs4Application {
+	
+	
 
 	public static void main(String[] args) {
 		SpringApplication.run(SanctionLetterCmMs4Application.class, args);
