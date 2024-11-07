@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import com.cjc.sanctionletter.app.model.LoanApplication;
 import com.cjc.sanctionletter.app.model.SanctionLetter;
+import com.cjc.sanctionletter.app.repoi.LoanApplyRepoI;
 import com.cjc.sanctionletter.app.repoi.SanctionLetterRepoI;
 import com.cjc.sanctionletter.app.servicei.SanctionLetterI;
 import com.lowagie.text.BadElementException;
@@ -44,6 +45,8 @@ public class SanctionLetterServiceImpl implements SanctionLetterI {
 	String from;
 	@Autowired
 	JavaMailSender sender;
+	@Autowired
+	LoanApplyRepoI lri; 
 	
 	
 	@Override
@@ -155,7 +158,7 @@ public class SanctionLetterServiceImpl implements SanctionLetterI {
 
 	
 	@Override
-	public void generateSanctionLetter( List<LoanApplication> l, int sanctionId) 
+	public void generateSanctionLetter( List<LoanApplication> l, int sanctionId ,int loanid) 
 	{
 	    Optional<SanctionLetter> ol = slr.findById(sanctionId);
 	    SanctionLetter sanctionLetter = new SanctionLetter();
@@ -251,10 +254,22 @@ public class SanctionLetterServiceImpl implements SanctionLetterI {
 	              
 	                sanctionLetter.setSanctionLetter(bytes);
 
-	                slr.save(sanctionLetter);	               
-	               
-	                
+	                slr.save(sanctionLetter);	  
+	                    
 	                System.out.println("Sanction Letter generated and saved.");
+	                
+	                Optional<LoanApplication> o = lri.findById(loanid);
+	                LoanApplication la = new LoanApplication();
+	        	    
+	        	    if (o.isPresent()) {
+	        	    	la = o.get();
+	        	    } else {
+	        	        System.out.println("Loan Application not found for loanid: " + loanid);
+	        	        return;
+	        	    }
+	        	    lri.save(la);
+	        	        
+	                
 	            } catch (Exception e) {
 	                e.printStackTrace();
 	            }
