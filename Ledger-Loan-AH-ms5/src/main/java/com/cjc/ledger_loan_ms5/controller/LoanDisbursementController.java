@@ -1,9 +1,10 @@
-package com.cjc.customerdetails.app.controller.loanapplicationform;
+package com.cjc.ledger_loan_ms5.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cjc.customerdetails.app.servicei.loanapplicationform.LoanDisbursementI;
+import com.cjc.ledger_loan_ms5.servicei.LoanDisbursementI;
+
 
 @RestController
 public class LoanDisbursementController 
