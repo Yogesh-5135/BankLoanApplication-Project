@@ -64,10 +64,10 @@ public class SanctionLetterController
 	  return new ResponseEntity<String>("Monthly emi generated",HttpStatus.OK);
   }
   
-  @PutMapping("/generateSanctionLetter/{loanid}/{sanctionId}")
-  public ResponseEntity<String> generateSanctionLetter(@PathVariable int loanid,@PathVariable int sanctionId)
+  @PutMapping("/generateSanctionLetter/{sanctionId}")
+  public ResponseEntity<String> generateSanctionLetter(@PathVariable int sanctionId)
   {
-	 sli.generateSanctionLetter(loanid,l,sanctionId);	  
+	 sli.generateSanctionLetter(l,sanctionId);	  
 	return new ResponseEntity<String>("SanctionLetter Generated Successfully",HttpStatus.OK);
 	  
   }

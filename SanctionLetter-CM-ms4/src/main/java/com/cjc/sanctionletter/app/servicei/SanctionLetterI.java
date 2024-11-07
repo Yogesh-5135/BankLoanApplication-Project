@@ -13,6 +13,6 @@ public interface SanctionLetterI {
 
 	void getMonthlyEmi(int sanctionId);
 
-	void generateSanctionLetter(int loanid, List<LoanApplication> l, int sanctionId);
+	void generateSanctionLetter(List<LoanApplication> l, int sanctionId);
 
 }

@@ -9,13 +9,13 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import org.springframework.core.io.ByteArrayResource;
+
 import com.cjc.sanctionletter.app.model.LoanApplication;
 import com.cjc.sanctionletter.app.model.SanctionLetter;
-import com.cjc.sanctionletter.app.repoi.LoanApplyRepoI;
 import com.cjc.sanctionletter.app.repoi.SanctionLetterRepoI;
 import com.cjc.sanctionletter.app.servicei.SanctionLetterI;
 import com.lowagie.text.BadElementException;
@@ -44,8 +44,7 @@ public class SanctionLetterServiceImpl implements SanctionLetterI {
 	String from;
 	@Autowired
 	JavaMailSender sender;
-	@Autowired
-	LoanApplyRepoI lri;
+	
 	
 	@Override
 	public void generateLimit(int loanid, List<LoanApplication> l) 
@@ -156,7 +155,7 @@ public class SanctionLetterServiceImpl implements SanctionLetterI {
 
 	
 	@Override
-	public void generateSanctionLetter(int loanid, List<LoanApplication> l, int sanctionId) 
+	public void generateSanctionLetter( List<LoanApplication> l, int sanctionId) 
 	{
 	    Optional<SanctionLetter> ol = slr.findById(sanctionId);
 	    SanctionLetter sanctionLetter = new SanctionLetter();
@@ -167,15 +166,12 @@ public class SanctionLetterServiceImpl implements SanctionLetterI {
 	        System.out.println("Sanction letter not found for sanctionId: " + sanctionId);
 	        return;
 	    }
-
-	    for (LoanApplication loanApplication : l) {
-	        if (loanApplication.getLoanid() == loanid) {
 	        	
 	            String title = "Axis Bank Ltd.";
 
 	            Document document = new Document(PageSize.A4);
 
-	            String content1 = "\n\n Dear " + loanApplication.getCustomerName() +
+	            String content1 = "\n\n Dear " + sanctionLetter.getApplicantName() +
 	                    ",\nAxis Bank Ltd. is happy to inform you that your loan application has been approved.";
 	            String content2 = "\n\nWe hope that you find the terms and conditions of this loan satisfactory " +
 	                    "and that it will help you meet your financial needs.\n\n" +
@@ -252,17 +248,17 @@ public class SanctionLetterServiceImpl implements SanctionLetterI {
 
 	                ByteArrayInputStream byt = new ByteArrayInputStream(opt.toByteArray());
 	                byte[] bytes = byt.readAllBytes();
-	                loanApplication.getSanctionLetter().setSanctionLetter(bytes);
+	              
 	                sanctionLetter.setSanctionLetter(bytes);
 
 	                slr.save(sanctionLetter);	               
-	                lri.save(loanApplication);
+	               
 	                
 	                System.out.println("Sanction Letter generated and saved.");
 	            } catch (Exception e) {
 	                e.printStackTrace();
 	            }
-	        }       
+	               
 	        
 	                MimeMessage mimemessage = sender.createMimeMessage();
 	                byte[] sanctionLetter1 = sanctionLetter.getSanctionLetter();
@@ -272,7 +268,7 @@ public class SanctionLetterServiceImpl implements SanctionLetterI {
 	        			mimemessageHelper.setFrom(from);
 	        			mimemessageHelper.setTo("yogeshwadje3@gmail.com");
 	        			mimemessageHelper.setSubject("Axis Bank Sanction Letter");
-	        			String text = "Dear " + loanApplication.getCustomerName()
+	        			String text = "Dear " + sanctionLetter.getApplicantName()
 	        					+ ",\n" + "\n"
 	        					+ "This letter is to inform you that we have reviewed your request for a loan . We are pleased to offer you a credit loan of "
 	        					+ sanctionLetter.getLoanAmtSanctioned() + " for "
@@ -294,7 +290,7 @@ public class SanctionLetterServiceImpl implements SanctionLetterI {
 	        	
 	    }	
 	          
-	 }
+	 
 }	
 	
 	
