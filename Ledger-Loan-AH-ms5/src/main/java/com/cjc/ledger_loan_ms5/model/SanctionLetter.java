@@ -22,7 +22,7 @@ public class SanctionLetter {
 	    private Double loanAmtSanctioned;
 	    private String interestType;
 	    private float rateOfInterest;
-	    private double principalRepayment;
+	  
 	    private int loanTenureInMonth;
 	    private Double monthlyEmiAmount;
 	    private String modeOfPayment;

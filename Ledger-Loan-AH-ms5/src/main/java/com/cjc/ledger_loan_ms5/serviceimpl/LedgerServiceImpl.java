@@ -27,6 +27,7 @@ public class LedgerServiceImpl implements LedgerServiceI {
     private static final String STATUS_PAID = "Paid";
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
+
     @Override
     public void updateLedger(int loanid) {
         Optional<LoanApplication> loanOpt = lri.findById(loanid);
@@ -38,18 +39,23 @@ public class LedgerServiceImpl implements LedgerServiceI {
         LoanApplication loan = loanOpt.get();
         int tenureInMonths = loan.getSanctionLetter().getLoanTenureInMonth();
 
-
         // Initializing loan details
         double loanAmount = loan.getSanctionLetter().getLoanAmtSanctioned();
         double rateOfInterest = loan.getSanctionLetter().getRateOfInterest();
-        double monthlyEMI = loan.getSanctionLetter().getMonthlyEmiAmount();
         double totalAmountWithInterest = loanAmount + (loanAmount * rateOfInterest * tenureInMonths / 1200.0);
 
         // Track the total and remaining balance
         double amountPaidTillDate = 0;
         double remainingAmount = totalAmountWithInterest;
+        
+        // Monthly interest rate
+        double monthlyRate = rateOfInterest / 12 / 100; // Converting annual rate to monthly decimal
 
+        // Loop through each month to create ledger entries
         for (int i = 1; i <= tenureInMonths; i++) {
+            // Recalculate the EMI based on the current remaining balance
+            double monthlyEMI = calculateEMI(remainingAmount, monthlyRate, tenureInMonths - (i - 1));
+
             Ledger ledger = new Ledger();
             ledger.setLedgerCreatedDate(java.sql.Date.valueOf(LocalDate.now()));
             ledger.setTotalLoanAmount(loanAmount);
@@ -65,7 +71,20 @@ public class LedgerServiceImpl implements LedgerServiceI {
             ledger.setAmountPaidTillDate(amountPaidTillDate);
 
             // Calculate the remaining amount
-            remainingAmount = totalAmountWithInterest - amountPaidTillDate ;
+            remainingAmount = totalAmountWithInterest - amountPaidTillDate;
+
+            // Adjust remaining balance for the final month to ensure it becomes 0
+            if (i == tenureInMonths) {
+                if (remainingAmount > 0) {
+                    monthlyEMI = remainingAmount;  // Adjust the EMI for the final month to match the remaining amount
+                    amountPaidTillDate = totalAmountWithInterest; // Total payment till date is the full amount with interest
+                    remainingAmount = 0; // Final remaining balance should be 0
+                }
+            }
+
+            // Log the updated remaining amount for debugging purposes
+            System.out.println("Month " + i + ": Remaining Amount: " + remainingAmount);
+
             ledger.setRemainingAmount(remainingAmount);
 
             // Calculate defaulter count (for simplicity, keeping it as 0)
@@ -98,6 +117,18 @@ public class LedgerServiceImpl implements LedgerServiceI {
         // Save the updated loan application
         lri.save(loan);
     }
+
+    // Method to calculate EMI based on remaining loan balance, interest rate, and remaining tenure
+    private double calculateEMI(double remainingAmount, double monthlyRate, int remainingMonths) {
+        if (remainingMonths <= 0) {
+            return 0;
+        }
+
+        double emi = (remainingAmount * monthlyRate * Math.pow(1 + monthlyRate, remainingMonths)) / 
+                     (Math.pow(1 + monthlyRate, remainingMonths) - 1);
+        return emi;
+    }
+
 
     private int getDefaulterCount(int monthIndex, LoanApplication loan) {
         int missedPayments = 0;
