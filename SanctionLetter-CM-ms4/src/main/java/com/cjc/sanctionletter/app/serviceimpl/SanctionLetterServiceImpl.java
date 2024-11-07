@@ -54,10 +54,13 @@ public class SanctionLetterServiceImpl implements SanctionLetterI {
 	{
 		SanctionLetter sl = new SanctionLetter();
 		
-		 for(LoanApplication la:l)
-		  {
-			if( la.getLoanid() == loanid)
+		 LoanApplication la = new LoanApplication();
+		  
+			Optional<LoanApplication> ol = lri.findById(loanid);
+			if(ol.isPresent())
 			{
+				la = ol.get();
+			
 			   if(la.getCibil()>=750)
 			   {
 				   sl.setLoanAmtSanctioned(la.getCustomerTotalLoanRequired());
@@ -74,6 +77,10 @@ public class SanctionLetterServiceImpl implements SanctionLetterI {
 			   }
 			   
 			}
+			else
+			{
+				throw new RuntimeException("Data Not Found");
+			}
 			
 			sl.setSanctionDate(new Date());
 			sl.setApplicantName(la.getCustomerName());
@@ -87,8 +94,10 @@ public class SanctionLetterServiceImpl implements SanctionLetterI {
 			sl.setStatus("Offered");
 			
 			slr.save(sl);
+			la.setSanctionLetter(sl);
+			lri.save(la);
 		  }		
-	}
+	
 
 	@Override
 	public void generateIntRate( int sanctionId) 
@@ -315,6 +324,7 @@ public class SanctionLetterServiceImpl implements SanctionLetterI {
 		{
 			LoanApplication l = ol.get();
 			l.setLoanStatus(loanStatus);
+			l.getSanctionLetter().setStatus(loanStatus);;
 			lri.save(l);
 		}
 		else
