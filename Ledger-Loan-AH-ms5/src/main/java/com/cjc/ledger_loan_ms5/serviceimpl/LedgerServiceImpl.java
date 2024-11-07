@@ -38,51 +38,73 @@ public class LedgerServiceImpl implements LedgerServiceI {
         LoanApplication loan = loanOpt.get();
         int tenureInMonths = loan.getSanctionLetter().getLoanTenureInMonth();
 
-        for (int i = 0; i <= tenureInMonths; i++) {
+        // Initializing loan details
+        double loanAmount = loan.getSanctionLetter().getLoanAmtSanctioned();
+        double rateOfInterest = loan.getSanctionLetter().getRateOfInterest();
+        double monthlyEMI = loan.getSanctionLetter().getMonthlyEmiAmount();
+        double totalAmountWithInterest = loanAmount + (loanAmount * rateOfInterest * tenureInMonths / 1200.0);
+
+        // Track the total and remaining balance
+        double amountPaidTillDate = 0;
+        double remainingAmount = totalAmountWithInterest;
+
+        for (int i = 1; i <= tenureInMonths; i++) {
             Ledger ledger = new Ledger();
-            
             ledger.setLedgerCreatedDate(java.sql.Date.valueOf(LocalDate.now()));
-            ledger.setTotalLoanAmount(loan.getSanctionLetter().getLoanAmtSanctioned());
+            ledger.setTotalLoanAmount(loanAmount);
             ledger.setTenure(tenureInMonths);
             ledger.setLoanStatus(STATUS_PENDING);
-
-            double loanAmount = loan.getSanctionLetter().getLoanAmtSanctioned();
-            double rateOfInterest = loan.getSanctionLetter().getRateOfInterest();
-            double monthlyEMI = loan.getSanctionLetter().getMonthlyEmiAmount();
-            double totalAmountWithInterest = loanAmount + (loanAmount * rateOfInterest * tenureInMonths / 1200.0);
 
             ledger.setRateOfInterest(rateOfInterest);
             ledger.setMonthlyEMI(monthlyEMI);
             ledger.setPayableAmountWithInterest(totalAmountWithInterest);
 
-            double amountPaidTillDate = monthlyEMI * i;
+            // Calculate the amount paid till the current month
+            amountPaidTillDate = monthlyEMI * i;
             ledger.setAmountPaidTillDate(amountPaidTillDate);
 
-            double remainingAmount = totalAmountWithInterest - amountPaidTillDate;
+            // Calculate the remaining amount
+            remainingAmount = totalAmountWithInterest - amountPaidTillDate;
             ledger.setRemainingAmount(remainingAmount);
 
+            // Adjust remaining balance for the final month to ensure it becomes 0
+            if (i == tenureInMonths) {
+                // In the last month, the EMI may overpay the loan, so we adjust it
+                if (remainingAmount > 0) {
+                    monthlyEMI = remainingAmount;  // Adjust the EMI for the final month to match the remaining amount
+                    amountPaidTillDate = totalAmountWithInterest; // Total payment till date is the full amount with interest
+                    remainingAmount = 0; // Final remaining balance should be 0
+                }
+            }
+
+            // Calculate defaulter count (for simplicity, keeping it as 0)
             int defaulterCount = getDefaulterCount(i, loan);
             ledger.setDefaulterCount(defaulterCount);
 
+            // Get EMI status for previous and current months
             String previousEmiStatus = getEmiStatus(i - 1, loan);
             ledger.setPreviousEmiStatus(previousEmiStatus);
 
             String currentMonthEmiStatus = getEmiStatus(i, loan);
             ledger.setCurrentMonthEmiStatus(currentMonthEmiStatus);
 
+            // Calculate and set next EMI date start and end
             String nextEmiDateStart = getNextEmiDateStart(i);
             ledger.setNextEmiDateStart(nextEmiDateStart);
 
             String nextEmiDateEnd = getNextEmiDateEnd(i);
             ledger.setNextEmiDateEnd(nextEmiDateEnd);
 
+            // Set loan end date
             String loanEndDate = calculateLoanEndDate(i, tenureInMonths);
             ledger.setLoanEndDate(loanEndDate);
 
+            // Save the ledger entry
             ldri.save(ledger);
             loan.getLedger().add(ledger);
         }
 
+        // Save the updated loan application
         lri.save(loan);
     }
 
@@ -97,7 +119,7 @@ public class LedgerServiceImpl implements LedgerServiceI {
     }
 
     private boolean isPaymentMissed(int monthIndex, LoanApplication loan) {
-        return false;
+        return false;  // Simulating that no payment is missed (you can modify this with actual logic)
     }
 
     private String getEmiStatus(int monthIndex, LoanApplication loan) {

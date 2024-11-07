@@ -146,24 +146,63 @@ public class SanctionLetterServiceImpl implements SanctionLetterI {
 		 slr.save(sl);
 	}
 
-	@Override
-	public void getMonthlyEmi( int sanctionId) 
-	{
-		Optional<SanctionLetter> o = slr.findById(sanctionId);
-				
-		SanctionLetter sl = new SanctionLetter();
-		if(o.isPresent()) {
-			sl = o.get();
-		}
-				
-		float monthlyInterestRate = sl.getRateOfInterest() / 12 / 100;
-				 
-		double emi = (sl.getLoanAmtSanctioned() * monthlyInterestRate * Math.pow(1 + monthlyInterestRate, sl.getLoanTenureInMonth())) /
-			                (Math.pow(1 + monthlyInterestRate, sl.getLoanTenureInMonth()) - 1);
-			        
-		sl.setMonthlyEmiAmount(emi);
-		slr.save(sl);
-		}
+	public void getMonthlyEmi(int sanctionId) {
+	    Optional<SanctionLetter> o = slr.findById(sanctionId);
+	    
+	    if (!o.isPresent()) {
+	        System.out.println("Sanction Letter not found.");
+	        return;
+	    }
+
+	    SanctionLetter sl = o.get();
+
+	    double loanAmount = sl.getLoanAmtSanctioned();
+	    float rateOfInterest = sl.getRateOfInterest();
+	    int loanTenureInMonths = sl.getLoanTenureInMonth();
+
+	    float monthlyInterestRate = rateOfInterest / 12 / 100;
+	    
+	    
+	    double emi = (loanAmount * monthlyInterestRate * Math.pow(1 + monthlyInterestRate, loanTenureInMonths)) / 
+	                 (Math.pow(1 + monthlyInterestRate, loanTenureInMonths) - 1);
+
+	   
+	    sl.setMonthlyEmiAmount(emi);
+
+	    double remainingBalance = loanAmount;
+
+	    System.out.println("Loan Amount: ₹" + loanAmount);
+	    System.out.println("Annual Interest Rate: " + rateOfInterest + "%");
+	    System.out.println("Loan Tenure: " + loanTenureInMonths + " months");
+	    System.out.println("EMI: ₹" + emi);
+
+	  
+	    for (int month = 1; month <= loanTenureInMonths; month++) {
+	        double interestPayment = remainingBalance * monthlyInterestRate;
+	        double principalRepayment = emi - interestPayment;
+
+	        remainingBalance -= principalRepayment;
+
+	        
+	        interestPayment = Math.round(interestPayment * 100.0) / 100.0;
+	        principalRepayment = Math.round(principalRepayment * 100.0) / 100.0;
+	        remainingBalance = Math.round(remainingBalance * 100.0) / 100.0;
+
+	     
+	        if (month == loanTenureInMonths && remainingBalance > 0) {
+	            emi = remainingBalance + interestPayment;  
+	            principalRepayment = remainingBalance;     
+	            remainingBalance = 0;                    
+	        }
+
+	        
+	        if (remainingBalance < 0) {
+	            remainingBalance = 0;
+	        }
+	    }	  
+	    slr.save(sl);
+	}
+
 
 	
 	@Override
