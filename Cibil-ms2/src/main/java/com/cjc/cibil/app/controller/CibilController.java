@@ -48,11 +48,12 @@ public class CibilController {
 		LoanApplication[] arr = rt.getForObject(url , LoanApplication[].class);
 		
 		List<LoanApplication> l = Arrays.asList(arr);
-		System.out.println(l);
+		
 		List<LoanApplication> la1 = new ArrayList<LoanApplication>();
 		String ss = "Verified";
 		for(LoanApplication s:l)
 		{
+			System.out.println("Checking loanStatus: " + s.getLoanStatus());
 			if(s.getLoanStatus().equals(ss))
 			{
 				la1.add(s);

@@ -53,13 +53,23 @@ public class SanctionLetterServiceImpl implements SanctionLetterI {
 	public void generateLimit(int loanid, List<LoanApplication> l) 
 	{
 		SanctionLetter sl = new SanctionLetter();
-		
-		 LoanApplication la = new LoanApplication();
+		System.out.println(l);
 		 
-		      for(LoanApplication  lp: l)
+		      for(LoanApplication  la: l)
 		      {
-		    	  if(lp.getLoanid() == loanid)
+		    	  if(la.getLoanid() == loanid)
 		    	  {
+		    		    sl.setSanctionDate(new Date());
+						sl.setApplicantName(la.getCustomerName());
+						sl.setContactDetails(la.getCustomerMobileNumber());
+						sl.setInterestType("Simple");
+									
+						sl.setLoanTenureInMonth(la.getRequiredTenure());
+						sl.setModeOfPayment("In Cash");
+						sl.setRemarks("Ok");
+						sl.setTermsCondition("The loan must be repaid in full by [repayment date].");
+						sl.setStatus("CreditLimitGenerated");
+						
 
 					   if(la.getCibil()>=750)
 					   {
@@ -75,29 +85,14 @@ public class SanctionLetterServiceImpl implements SanctionLetterI {
 						   double s = la.getCustomerTotalLoanRequired()-100000;
 						   sl.setLoanAmtSanctioned(s);
 					   }
-					   
-					}
-					else
-					{
-						throw new RuntimeException("Data Not Found");
-					}
-					
-					sl.setSanctionDate(new Date());
-					sl.setApplicantName(la.getCustomerName());
-					sl.setContactDetails(la.getCustomerMobileNumber());
-					sl.setInterestType("Simple");
-								
-					sl.setLoanTenureInMonth(la.getRequiredTenure());
-					sl.setModeOfPayment("In Cash");
-					sl.setRemarks("Ok");
-					sl.setTermsCondition("The loan must be repaid in full by [repayment date].");
-					sl.setStatus("CreditLimitGenerated");
+					   					
 					
 					slr.save(sl);  
 					la.setSanctionLetter(sl);
 					lri.save(la);
 		    	  }
 		      }
+		 }
 		  
 			
 
@@ -290,14 +285,13 @@ public class SanctionLetterServiceImpl implements SanctionLetterI {
 	                byte[] bytes = byt.readAllBytes();
 	              
 	                sanctionLetter.setSanctionLetter(bytes);
+	                
                     if(sanctionLetter.getStatus().equals("MonthlyEmiGenrated"))
                     {
                     	sanctionLetter.setStatus("SanctionLetterGenerated");
                     	slr.save(sanctionLetter);
                     }
-	                	  
-	                    
-	                System.out.println("Sanction Letter generated and saved.");
+	                	 
 	                
 	                for(LoanApplication la:l)
 	                {
