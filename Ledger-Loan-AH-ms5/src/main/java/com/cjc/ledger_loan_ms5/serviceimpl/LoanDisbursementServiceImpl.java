@@ -45,6 +45,7 @@ public class LoanDisbursementServiceImpl implements LoanDisbursementI  {
 			
 			ldi.save(ld);
 			l.setLoanDisbursement(ld);
+			l.setLoanStatus("Disbursed");;
 			lri.save(l);
 			}
 		
