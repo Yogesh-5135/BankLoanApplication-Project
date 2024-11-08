@@ -54,25 +54,25 @@ public class SanctionLetterServiceImpl implements SanctionLetterI {
 	{
 		SanctionLetter sl = new SanctionLetter();
 		
-		 
+		 LoanApplication la = new LoanApplication();
 		 
 		      for(LoanApplication  lp: l)
 		      {
 		    	  if(lp.getLoanid() == loanid)
 		    	  {
 
-					   if(lp.getCibil()>=750)
+					   if(la.getCibil()>=750)
 					   {
-						   sl.setLoanAmtSanctioned(lp.getCustomerTotalLoanRequired());
+						   sl.setLoanAmtSanctioned(la.getCustomerTotalLoanRequired());
 					   }
-					   else if(lp.getCibil()>=700)
+					   else if(la.getCibil()>=700)
 					   {
-						   double d = lp.getCustomerTotalLoanRequired()-50000;
+						   double d = la.getCustomerTotalLoanRequired()-50000;
 						   sl.setLoanAmtSanctioned(d);
 					   }
-					   else if(lp.getCibil()>=650)
+					   else if(la.getCibil()>=650)
 					   {
-						   double s = lp.getCustomerTotalLoanRequired()-100000;
+						   double s = la.getCustomerTotalLoanRequired()-100000;
 						   sl.setLoanAmtSanctioned(s);
 					   }
 					   
@@ -83,19 +83,19 @@ public class SanctionLetterServiceImpl implements SanctionLetterI {
 					}
 					
 					sl.setSanctionDate(new Date());
-					sl.setApplicantName(lp.getCustomerName());
-					sl.setContactDetails(lp.getCustomerMobileNumber());
+					sl.setApplicantName(la.getCustomerName());
+					sl.setContactDetails(la.getCustomerMobileNumber());
 					sl.setInterestType("Simple");
 								
-					sl.setLoanTenureInMonth(lp.getRequiredTenure());
+					sl.setLoanTenureInMonth(la.getRequiredTenure());
 					sl.setModeOfPayment("In Cash");
 					sl.setRemarks("Ok");
 					sl.setTermsCondition("The loan must be repaid in full by [repayment date].");
 					sl.setStatus("CreditLimitGenerated");
 					
 					slr.save(sl);  
-					lp.setSanctionLetter(sl);
-					lri.save(lp);
+					la.setSanctionLetter(sl);
+					lri.save(la);
 		    	  }
 		      }
 		  
