@@ -55,47 +55,52 @@ public class SanctionLetterServiceImpl implements SanctionLetterI {
 		SanctionLetter sl = new SanctionLetter();
 		
 		 LoanApplication la = new LoanApplication();
+		 
+		      for(LoanApplication  lp: l)
+		      {
+		    	  System.out.println(lp);
+		      }
 		  
-			Optional<LoanApplication> ol = lri.findById(loanid);
-			if(ol.isPresent())
-			{
-				la = ol.get();
-			
-			   if(la.getCibil()>=750)
-			   {
-				   sl.setLoanAmtSanctioned(la.getCustomerTotalLoanRequired());
-			   }
-			   else if(la.getCibil()>=700)
-			   {
-				   double d = la.getCustomerTotalLoanRequired()-50000;
-				   sl.setLoanAmtSanctioned(d);
-			   }
-			   else if(la.getCibil()>=650)
-			   {
-				   double s = la.getCustomerTotalLoanRequired()-100000;
-				   sl.setLoanAmtSanctioned(s);
-			   }
-			   
-			}
-			else
-			{
-				throw new RuntimeException("Data Not Found");
-			}
-			
-			sl.setSanctionDate(new Date());
-			sl.setApplicantName(la.getCustomerName());
-			sl.setContactDetails(la.getCustomerMobileNumber());
-			sl.setInterestType("Simple");
-						
-			sl.setLoanTenureInMonth(la.getRequiredTenure());
-			sl.setModeOfPayment("In Cash");
-			sl.setRemarks("Ok");
-			sl.setTermsCondition("The loan must be repaid in full by [repayment date].");
-			sl.setStatus("Offered");
-			
-			slr.save(sl);
-			la.setSanctionLetter(sl);
-			lri.save(la);
+//			Optional<LoanApplication> ol = lri.findById(loanid);
+//			if(ol.isPresent())
+//			{
+//				la = ol.get();
+//			
+//			   if(la.getCibil()>=750)
+//			   {
+//				   sl.setLoanAmtSanctioned(la.getCustomerTotalLoanRequired());
+//			   }
+//			   else if(la.getCibil()>=700)
+//			   {
+//				   double d = la.getCustomerTotalLoanRequired()-50000;
+//				   sl.setLoanAmtSanctioned(d);
+//			   }
+//			   else if(la.getCibil()>=650)
+//			   {
+//				   double s = la.getCustomerTotalLoanRequired()-100000;
+//				   sl.setLoanAmtSanctioned(s);
+//			   }
+//			   
+//			}
+//			else
+//			{
+//				throw new RuntimeException("Data Not Found");
+//			}
+//			
+//			sl.setSanctionDate(new Date());
+//			sl.setApplicantName(la.getCustomerName());
+//			sl.setContactDetails(la.getCustomerMobileNumber());
+//			sl.setInterestType("Simple");
+//						
+//			sl.setLoanTenureInMonth(la.getRequiredTenure());
+//			sl.setModeOfPayment("In Cash");
+//			sl.setRemarks("Ok");
+//			sl.setTermsCondition("The loan must be repaid in full by [repayment date].");
+//			sl.setStatus("CreditLimitGenerated");
+//			
+//			slr.save(sl);
+//			la.setSanctionLetter(sl);
+//			lri.save(la);
 		  }		
 	
 
@@ -143,7 +148,12 @@ public class SanctionLetterServiceImpl implements SanctionLetterI {
 			        sl.setRateOfInterest(12.2f);  
 			    }
 		  }
-		 slr.save(sl);
+		if(sl.getStatus().equals("CreditLimitGenerated"))
+		{
+			sl.setStatus("GettingROI");
+			slr.save(sl);	
+		}
+		 
 	}
 
 
@@ -177,8 +187,12 @@ public class SanctionLetterServiceImpl implements SanctionLetterI {
 
 	    
 	    sl.setMonthlyEmiAmount(monthlyEMI);
-
-	    slr.save(sl);
+        if(sl.getStatus().equals("GettingROI"))
+        {
+        	sl.setStatus("MonthlyEmiGenrated");
+        	slr.save(sl);
+        }
+	    
 	}
 
 
@@ -279,8 +293,12 @@ public class SanctionLetterServiceImpl implements SanctionLetterI {
 	                byte[] bytes = byt.readAllBytes();
 	              
 	                sanctionLetter.setSanctionLetter(bytes);
-
-	                slr.save(sanctionLetter);	  
+                    if(sanctionLetter.getStatus().equals("MonthlyEmiGenrated"))
+                    {
+                    	sanctionLetter.setStatus("SanctionLetterGenerated");
+                    	slr.save(sanctionLetter);
+                    }
+	                	  
 	                    
 	                System.out.println("Sanction Letter generated and saved.");
 	                
@@ -294,9 +312,15 @@ public class SanctionLetterServiceImpl implements SanctionLetterI {
 	        	        return;
 	        	    }
 	        	    la.setSanctionLetter(sanctionLetter);
-	        	    la.setLoanStatus("Sanctioned");
-	        	    lri.save(la);
-	        	        
+	        	    if(la.getLoanStatus().equals("Approved"))
+	        	    {
+	        	    if(la.getSanctionLetter().getStatus().equals("SanctionLetterGenerated"))
+	        	    {
+	        	    	la.setLoanStatus("Sanctioned");
+		        	    lri.save(la);
+	        	    }
+	        	    
+	        	    }    
 	                
 	            } catch (Exception e) {
 	                e.printStackTrace();

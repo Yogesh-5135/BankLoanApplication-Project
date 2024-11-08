@@ -27,25 +27,29 @@ public class SanctionLetterController
 	@Autowired
 	RestTemplate rt;
 	
-	 List<LoanApplication> l =new ArrayList<LoanApplication>();	 
+	 
   
   @GetMapping("/getAllVerified")
-  public ResponseEntity<List<LoanApplication>> getAllVerified()
+  public List<LoanApplication> getAllVerified()
   {
 	  String url = "http://localhost:9095/api/v2/getAllDocumentVerifiedList";  
+	  
+		 List<LoanApplication> l =new ArrayList<LoanApplication>();
 	  
 	  LoanApplication[] arr = rt.getForObject(url , LoanApplication[].class);
 		
 	  l = Arrays.asList(arr);
 	  System.out.println(l);
-	  return new ResponseEntity<List<LoanApplication>>(l,HttpStatus.OK);
+	  return l;
 	  
   }
   
   @PutMapping("/generateCreditLimit/{loanid}")
   public ResponseEntity<String> generateCreditLimit(@PathVariable int loanid)
   {
-	 sli.generateLimit(loanid , l);
+ List<LoanApplication> al = getAllVerified();
+	  
+	 sli.generateLimit(loanid , al);
 	  
 	 return new ResponseEntity<String>("Credit limit generated",HttpStatus.OK);
   }
@@ -67,7 +71,7 @@ public class SanctionLetterController
   @PutMapping("/generateSanctionLetter/{sanctionId}/{loanid}")
   public ResponseEntity<String> generateSanctionLetter(@PathVariable int sanctionId , @PathVariable int loanid)
   {
-	 sli.generateSanctionLetter(l,sanctionId, loanid);	  
+//	 sli.generateSanctionLetter(l,sanctionId, loanid);	  
 	return new ResponseEntity<String>("SanctionLetter Generated Successfully",HttpStatus.OK);
 	  
   }
