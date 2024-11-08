@@ -21,16 +21,14 @@ public class LoanDisbursementServiceImpl implements LoanDisbursementI  {
 	LoanAppRepoI lri;
 	
 	@Override
-	public void updateLoan(int loanid ) 
+	public void updateLoan(int loanid , List<LoanApplication> la) 
 	{
-		LoanApplication l = new LoanApplication();
-		Optional<LoanApplication> o = lri.findById(loanid);
-		if(o.isPresent()) {
-			l = o.get();
-		}
-		
-		LoanDisbursement ld = new LoanDisbursement();
-		
+		for(LoanApplication l:la)
+		{
+			if(l.getLoanid()==loanid)
+			{
+			LoanDisbursement ld = new LoanDisbursement();
+			
 			ld.setLoanNo(l.getLoanid());
 			ld.setAgreementDate(new Date());
 			ld.setTotalAmount(l.getSanctionLetter().getLoanAmtSanctioned());
@@ -48,5 +46,15 @@ public class LoanDisbursementServiceImpl implements LoanDisbursementI  {
 			l.setLoanStatus("Disbursed");;
 			lri.save(l);
 			}
+		}
+		
+		}
+//		LoanApplication l = new LoanApplication();
+//		Optional<LoanApplication> o = lri.findById(loanid);
+//		if(o.isPresent()) {
+//			l = o.get();
+//		}
+		
+		
 		
 }

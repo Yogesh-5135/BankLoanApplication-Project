@@ -163,13 +163,15 @@ public class LoanApplyServiceImpl implements LoanApplyServiceI{
 		List<Enquiry> en = csi.getAllApprovedData();
 		for (Enquiry enquiry : en) {
 			
-			if(enquiry.getMobileno() == mb) {
+			if(enquiry.getMobileno() == mb) 
+			{
 				
 				int i = enquiry.getCibil().getCibilscore();
 				la.setCibil(i);
 				la.setLoanStatus("Submitted");
 				lri.save(la);
-			} 
+			}
+			
 		}
 									
 	}

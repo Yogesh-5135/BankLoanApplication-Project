@@ -47,7 +47,7 @@ public class SanctionLetterController
   @PutMapping("/generateCreditLimit/{loanid}")
   public ResponseEntity<String> generateCreditLimit(@PathVariable int loanid)
   {
- List<LoanApplication> al = getAllVerified();
+     List<LoanApplication> al = getAllVerified();
 	  
 	 sli.generateLimit(loanid , al);
 	  
@@ -71,7 +71,10 @@ public class SanctionLetterController
   @PutMapping("/generateSanctionLetter/{sanctionId}/{loanid}")
   public ResponseEntity<String> generateSanctionLetter(@PathVariable int sanctionId , @PathVariable int loanid)
   {
-//	 sli.generateSanctionLetter(l,sanctionId, loanid);	  
+	 List<LoanApplication> l = getAllVerified();
+	 
+	 sli.generateSanctionLetter(l,sanctionId, loanid);	
+	 
 	return new ResponseEntity<String>("SanctionLetter Generated Successfully",HttpStatus.OK);
 	  
   }

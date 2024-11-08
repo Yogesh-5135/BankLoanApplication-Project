@@ -299,25 +299,31 @@ public class SanctionLetterServiceImpl implements SanctionLetterI {
 	                    
 	                System.out.println("Sanction Letter generated and saved.");
 	                
-	                Optional<LoanApplication> o = lri.findById(loanid);
-	                LoanApplication la = new LoanApplication();
+	                for(LoanApplication la:l)
+	                {
+	                	if(la.getLoanid()==loanid)
+	                	{
+	                		la.setSanctionLetter(sanctionLetter);
+	     	        	   
+	    	        	    if(la.getSanctionLetter().getStatus().equals("SanctionLetterGenerated"))
+	    	        	    {
+	    	        	    	la.setLoanStatus("Sanctioned");
+	    		        	    lri.save(la);
+	    	        	    }
+	    	        	    
+	                	}
+	                }
+//	                Optional<LoanApplication> o = lri.findById(loanid);
+//	                LoanApplication la = new LoanApplication();
+//	        	    
+//	        	    if (o.isPresent()) {
+//	        	    	la = o.get();
+//	        	    } else {
+//	        	        System.out.println("Loan Application not found for loanid: " + loanid);
+//	        	        return;
+//	        	    }
 	        	    
-	        	    if (o.isPresent()) {
-	        	    	la = o.get();
-	        	    } else {
-	        	        System.out.println("Loan Application not found for loanid: " + loanid);
-	        	        return;
-	        	    }
-	        	    la.setSanctionLetter(sanctionLetter);
-	        	    if(la.getLoanStatus().equals("Approved"))
-	        	    {
-	        	    if(la.getSanctionLetter().getStatus().equals("SanctionLetterGenerated"))
-	        	    {
-	        	    	la.setLoanStatus("Sanctioned");
-		        	    lri.save(la);
-	        	    }
-	        	    
-	        	    }    
+	        	       
 	                
 	            } catch (Exception e) {
 	                e.printStackTrace();

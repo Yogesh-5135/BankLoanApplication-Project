@@ -27,19 +27,20 @@ public class LoanDisbursementController
 	@Autowired
 	RestTemplate rt;
 	
-	List<LoanApplication> l = new ArrayList<LoanApplication>();
 	
 	 @GetMapping("/getAllAcceptedData")	
-	 public ResponseEntity<List<LoanApplication>> getAllAccepted()
+	 public List<LoanApplication> getAllAccepted()
 	 {
 		 
 		 String url = "http://localhost:9090/applyLoan/getAllAccepted"; 
 		 
 		 LoanApplication[] lp = rt.getForObject(url, LoanApplication[].class);
 		 
+		 List<LoanApplication> l = new ArrayList<LoanApplication>();
+		 
 		 l = Arrays.asList(lp);
 		 
-		 return new ResponseEntity<List<LoanApplication>>(l , HttpStatus.OK);
+		 return l;
 		 
 	 }
 	
@@ -47,7 +48,10 @@ public class LoanDisbursementController
 	 @PutMapping("/update/{loanid}")
 	 public ResponseEntity<String> updateloandiburse(@PathVariable int loanid)
 	 {
-		 ldi.updateLoan(loanid );
+		 List<LoanApplication> la = getAllAccepted();
+		 
+		 ldi.updateLoan(loanid,la);
+		 
 		 return new ResponseEntity<String>("Updated" , HttpStatus.OK); 
 		 
 	 }
