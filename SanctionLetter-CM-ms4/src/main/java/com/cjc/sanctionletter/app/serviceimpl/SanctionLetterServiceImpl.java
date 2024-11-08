@@ -58,51 +58,48 @@ public class SanctionLetterServiceImpl implements SanctionLetterI {
 		 
 		      for(LoanApplication  lp: l)
 		      {
-		    	  System.out.println(lp);
+		    	  if(lp.getLoanid() == loanid)
+		    	  {
+
+					   if(la.getCibil()>=750)
+					   {
+						   sl.setLoanAmtSanctioned(la.getCustomerTotalLoanRequired());
+					   }
+					   else if(la.getCibil()>=700)
+					   {
+						   double d = la.getCustomerTotalLoanRequired()-50000;
+						   sl.setLoanAmtSanctioned(d);
+					   }
+					   else if(la.getCibil()>=650)
+					   {
+						   double s = la.getCustomerTotalLoanRequired()-100000;
+						   sl.setLoanAmtSanctioned(s);
+					   }
+					   
+					}
+					else
+					{
+						throw new RuntimeException("Data Not Found");
+					}
+					
+					sl.setSanctionDate(new Date());
+					sl.setApplicantName(la.getCustomerName());
+					sl.setContactDetails(la.getCustomerMobileNumber());
+					sl.setInterestType("Simple");
+								
+					sl.setLoanTenureInMonth(la.getRequiredTenure());
+					sl.setModeOfPayment("In Cash");
+					sl.setRemarks("Ok");
+					sl.setTermsCondition("The loan must be repaid in full by [repayment date].");
+					sl.setStatus("CreditLimitGenerated");
+					
+					slr.save(sl);  
+					la.setSanctionLetter(sl);
+					lri.save(la);
+		    	  }
 		      }
 		  
-//			Optional<LoanApplication> ol = lri.findById(loanid);
-//			if(ol.isPresent())
-//			{
-//				la = ol.get();
-//			
-//			   if(la.getCibil()>=750)
-//			   {
-//				   sl.setLoanAmtSanctioned(la.getCustomerTotalLoanRequired());
-//			   }
-//			   else if(la.getCibil()>=700)
-//			   {
-//				   double d = la.getCustomerTotalLoanRequired()-50000;
-//				   sl.setLoanAmtSanctioned(d);
-//			   }
-//			   else if(la.getCibil()>=650)
-//			   {
-//				   double s = la.getCustomerTotalLoanRequired()-100000;
-//				   sl.setLoanAmtSanctioned(s);
-//			   }
-//			   
-//			}
-//			else
-//			{
-//				throw new RuntimeException("Data Not Found");
-//			}
-//			
-//			sl.setSanctionDate(new Date());
-//			sl.setApplicantName(la.getCustomerName());
-//			sl.setContactDetails(la.getCustomerMobileNumber());
-//			sl.setInterestType("Simple");
-//						
-//			sl.setLoanTenureInMonth(la.getRequiredTenure());
-//			sl.setModeOfPayment("In Cash");
-//			sl.setRemarks("Ok");
-//			sl.setTermsCondition("The loan must be repaid in full by [repayment date].");
-//			sl.setStatus("CreditLimitGenerated");
-//			
-//			slr.save(sl);
-//			la.setSanctionLetter(sl);
-//			lri.save(la);
-		  }		
-	
+			
 
 	@Override
 	public void generateIntRate( int sanctionId) 
