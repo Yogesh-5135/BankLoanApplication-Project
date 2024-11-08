@@ -34,7 +34,7 @@ public class SanctionLetterController
   {
 	  String url = "http://localhost:9095/api/v2/getAllDocumentVerifiedList";  
 	  
-		 List<LoanApplication> l =new ArrayList<LoanApplication>();
+	  List<LoanApplication> l =new ArrayList<LoanApplication>();
 	  
 	  LoanApplication[] arr = rt.getForObject(url , LoanApplication[].class);
 		

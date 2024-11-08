@@ -138,25 +138,25 @@ public class LoanApplyServiceImpl implements LoanApplyServiceI{
 		}
 		
 		double l = ld.getCustomerAmountPaidForHome();
-		if(l>=1000000 && l<=5000000)
+		if(l>=100000 && l<=5000000)
 		{
 			la.setCustomerAmountPaidForHome(l);
 		}
 		else
 		{
 			log.error("Please Enter Valid Amount");
-			throw new InvalidDataException("Customer must paid between 1000000 to 5000000 for home");
+			throw new InvalidDataException("Customer must paid between 100000 to 5000000 for home");
 		}
 		
 		double m = ld.getCustomerTotalLoanRequired();
-		if(m>=1000000 && m<=4000000)
+		if(m>=100000 && m<=4000000)
 		{
 			la.setCustomerTotalLoanRequired(m);
 		}
 		else
 		{
 			log.error("Please Enter Valid Amount");
-			throw new InvalidDataException(" Customer is Eligible to get loan between 1000000 to 4000000 ");
+			throw new InvalidDataException(" Customer is Eligible to get loan between 100000 to 4000000 ");
 		}
 		
 		
