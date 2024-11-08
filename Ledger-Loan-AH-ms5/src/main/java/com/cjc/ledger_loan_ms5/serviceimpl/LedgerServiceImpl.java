@@ -18,7 +18,6 @@ public class LedgerServiceImpl implements LedgerServiceI {
 
     @Autowired
     private LedgerRepoI ldri;
-
     @Autowired
     private LoanAppRepoI lri;
 
