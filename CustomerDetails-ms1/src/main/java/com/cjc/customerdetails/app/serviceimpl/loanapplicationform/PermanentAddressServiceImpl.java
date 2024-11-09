@@ -29,7 +29,7 @@ public class PermanentAddressServiceImpl implements PermanentAddressServiceI
 @Override
 public PermanentAddress savePermanentAddress(PermanentAddress a,int customerAddressId) 
 {
-	CustomerAddress l = null;
+	CustomerAddress l = new CustomerAddress();
 	
 	Optional<CustomerAddress> ol = car.findById(customerAddressId);
 	if(ol.isPresent())

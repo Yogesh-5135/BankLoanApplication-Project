@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cjc.customerdetails.app.model.loanapplicationform.LocalAddress;
 import com.cjc.customerdetails.app.model.loanapplicationform.PermanentAddress;
 import com.cjc.customerdetails.app.servicei.loanapplicationform.PermanentAddressServiceI;
 
