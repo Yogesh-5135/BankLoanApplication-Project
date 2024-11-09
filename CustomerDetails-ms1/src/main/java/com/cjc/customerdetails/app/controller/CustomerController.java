@@ -27,6 +27,7 @@ public class CustomerController {
 	@PostMapping("/saveCustomer")
 	public ResponseEntity<Enquiry> addStudent(@RequestBody Enquiry s)
 	{
+		
 		Enquiry ss=csi.saveCustomer(s);
 		return new ResponseEntity<Enquiry> (ss,HttpStatus.CREATED);
 	}

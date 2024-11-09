@@ -72,7 +72,7 @@ public class LoanApplyServiceImpl implements LoanApplyServiceI{
 		}
 		
 		int e = ld.getRequiredTenure();
-		if(e>=1 && e<=60)
+		if(e>=1 && e<=240)
 		{
 			la.setRequiredTenure(e);
 		}
