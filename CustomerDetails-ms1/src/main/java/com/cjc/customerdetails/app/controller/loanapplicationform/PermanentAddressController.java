@@ -27,6 +27,7 @@ public class PermanentAddressController
 	  PermanentAddress a1 = pas.savePermanentAddress(a,customerAddressId);
 	  
 	  return new ResponseEntity<PermanentAddress>(a1,HttpStatus.CREATED);
+	  
   }
   
   @GetMapping("/getSinglePermanentAddress/{permanentAddressId}")
