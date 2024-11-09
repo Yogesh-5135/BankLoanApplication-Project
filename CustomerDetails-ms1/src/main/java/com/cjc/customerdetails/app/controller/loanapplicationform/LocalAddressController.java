@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cjc.customerdetails.app.model.loanapplicationform.CustomerAddress;
 import com.cjc.customerdetails.app.model.loanapplicationform.LocalAddress;
 import com.cjc.customerdetails.app.servicei.loanapplicationform.LocalAddressServiceI;
 
@@ -21,13 +20,21 @@ public class LocalAddressController
   @Autowired
   LocalAddressServiceI las ;
   
-  @PostMapping("/saveLocalAddrerss/{customerAddressId}")
-  public ResponseEntity<LocalAddress> saveLocalAddress(@RequestBody LocalAddress a,int customerAddressId)
-  {
-	  LocalAddress a1 = las.saveLocalAddress(a,customerAddressId);
-	  
-	  return new ResponseEntity<LocalAddress>(a1,HttpStatus.CREATED);
+ 
+  
+  @PostMapping("/saveLocal/{customerAddressId}")
+  public ResponseEntity<LocalAddress> saveLocalAddress(@RequestBody LocalAddress a, @PathVariable int customerAddressId) {
+      try {
+          
+          LocalAddress a1 = las.saveLocalAddress(a, customerAddressId);
+        
+          return new ResponseEntity<>(a1, HttpStatus.CREATED);
+      } catch (Exception e) {
+          
+          throw e; 
+      }
   }
+
   
   @GetMapping("/getSingleLocalAddress/{localAddressId}")
   public ResponseEntity<LocalAddress> getSingleLocalAddress(@PathVariable int localAddressId)

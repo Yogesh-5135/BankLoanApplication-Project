@@ -22,7 +22,7 @@ public class PermanentAddressController
   PermanentAddressServiceI pas;
   
   @PostMapping("/savePermanentAddrerss/{customerAddressId}")
-  public ResponseEntity<PermanentAddress> savePermanentAddress(@RequestBody PermanentAddress a,int customerAddressId)
+  public ResponseEntity<PermanentAddress> savePermanentAddress(@RequestBody PermanentAddress a, @PathVariable int customerAddressId)
   {
 	  PermanentAddress a1 = pas.savePermanentAddress(a,customerAddressId);
 	  
