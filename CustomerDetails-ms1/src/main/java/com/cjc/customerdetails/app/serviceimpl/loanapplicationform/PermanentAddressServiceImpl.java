@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.cjc.customerdetails.app.exception.IdNotFountException;
 import com.cjc.customerdetails.app.exception.InvalidDataException;
 import com.cjc.customerdetails.app.model.loanapplicationform.CustomerAddress;
+import com.cjc.customerdetails.app.model.loanapplicationform.LocalAddress;
 import com.cjc.customerdetails.app.model.loanapplicationform.PermanentAddress;
 import com.cjc.customerdetails.app.repoi.loanapplicationform.CustomerAddressRepoI;
 import com.cjc.customerdetails.app.repoi.loanapplicationform.PermanentAddressRepoI;
@@ -26,133 +27,113 @@ public class PermanentAddressServiceImpl implements PermanentAddressServiceI
  
  private static final Logger log = LoggerFactory.getLogger(PermanentAddressServiceImpl.class);
 
-@Override
-public PermanentAddress savePermanentAddress(PermanentAddress a,int customerAddressId) 
-{
-	CustomerAddress l = new CustomerAddress();
-	
-	Optional<CustomerAddress> ol = car.findById(customerAddressId);
-	if(ol.isPresent())
-	{
-		 l = ol.get();
-	}
-	else
-	{
-		log.error("Please Enter Valid Id");
-		throw new IdNotFountException("Id Not Found");
-	}
-	
-	PermanentAddress pa = new PermanentAddress();
-	
-	String a1 = a.getAreaname();
-	char[]b = a1.toCharArray();
-	for(int i=0;i<b.length;i++)
-	{
-	if (b[i]>='a'&& b[i]<='z'|| b[i]>='A'&& b[i]<='Z'|| b[i]==32)
-	{
-		pa.setAreaname(a1); 	
-	}
-	else
-	{
-		log.error("Please Use Letters Only");
-		throw new InvalidDataException("Areaname does not contain any special character or Number");
-	}
-	}
-	
-	String c = a.getCityname();
-	char[]d = c.toCharArray();
-	for(int i=0;i<d.length;i++)
-	{
-	if (d[i]>='a'&& d[i]<='z'|| d[i]>='A'&& d[i]<='Z'|| d[i]==32)
-	{
-		pa.setCityname(c); 	
-	}
-	else
-	{
-		log.error("Please Use Letters Only");
-		throw new InvalidDataException("Cityname does not contain any special character or Number");
-	}
-	}
-    
-	String e = a.getDistrict();
-	char[]f = e.toCharArray();
-	for(int i=0;i<f.length;i++)
-	{
-	if (f[i]>='a'&& f[i]<='z'|| f[i]>='A'&& f[i]<='Z'|| f[i]==32)
-	{
-		pa.setDistrict(e); 	
-	}
-	else
-	{
-		log.error("Please Use Letters Only");
-		throw new InvalidDataException("District Name does not contain any special character or Number");
-	}
-	}
-    
-	String g = a.getState();
-	char[]h = g.toCharArray();
-	for(int i=0;i<h.length;i++)
-	{
-	if (h[i]>='a'&& h[i]<='z'|| h[i]>='A'&& h[i]<='Z'|| h[i]==32)
-	{
-		pa.setState(g); 	
-	}
-	else
-	{
-		log.error("Please Use Letters Only");
-		throw new InvalidDataException("State Name does not contain any special character or Number");
-	}
-	}
-	
-	long i = a.getPincode();
-	int count = 0;
-	for (long no = i; no > 0; no = no / 10) 
-	{
-		count++;
-	}
-	if (count > 6 || count<6) 
-	{
-		log.error("Please Enter Valid Pincode");
-		throw new InvalidDataException("Pincode Is Invalid ..Enter only 6 numbers");
-	}
-	else 
-	{
-		pa.setPincode(i);
-	}
-	
-	int j = a.getHouseNumber();
-	if (j <= 1 || j >= 99) 
-	{ 
-		log.error("Please Enter Valid House Number");
-        throw new InvalidDataException("House number must be between 1 and 99.");
-    }
-	else
-	{
-		pa.setHouseNumber(j);
-	}
-	
-	String k = a.getStreetName();
-	char[]m = k.toCharArray();
-	for(int i1=0;i1<m.length;i++)
-	{
-	if (m[i1]>='a'&& m[i1]<='z'|| m[i1]>='A'&& m[i1]<='Z'|| m[i1]==32)
-	{
-		pa.setStreetName(k); 	
-	}
-	else
-	{
-		log.error("Please Use Letters Only");
-		throw new InvalidDataException("StreetName does not contain any special character or Number");
-	}
-	}
-		
-	par.save(pa);
-	l.setPermanentAddress(pa);
-	car.save(l);
-	
-	return pa;
-}
 
+ @Override
+ public PermanentAddress savePermanentAddress(PermanentAddress a, int customerAddressId) {
+     
+     
+     CustomerAddress ca = new CustomerAddress();
+     Optional<CustomerAddress> ol = car.findById(customerAddressId);
+     if (ol.isPresent()) {
+         ca = ol.get();
+        
+     } else {
+         log.error("CustomerAddress not found with id: {}", customerAddressId);
+         throw new IdNotFountException("Id Not Found");
+     }
+
+     PermanentAddress pa = new PermanentAddress();
+     
+     
+     log.info("Validating area name: {}", a.getAreaname());
+     String a1 = a.getAreaname();
+     char[] b = a1.toCharArray();
+     for (int i = 0; i < b.length; i++) {
+         if (Character.isLetter(b[i]) || b[i] == 32) {
+             pa.setAreaname(a1);
+         } else {
+             log.error("Invalid character in area name: {}", a1);
+             throw new InvalidDataException("Areaname does not contain any special character or Number");
+         }
+     }
+
+     
+     String c = a.getCityname();
+     char[] d = c.toCharArray();
+     for (int i = 0; i < d.length; i++) {
+         if (Character.isLetter(d[i]) || d[i] == 32) {
+             pa.setCityname(c);
+         } else {
+             log.error("Invalid character in city name: {}", c);
+             throw new InvalidDataException("Cityname does not contain any special character or Number");
+         }
+     }
+
+     
+     String e = a.getDistrict();
+     char[] f = e.toCharArray();
+     for (int i = 0; i < f.length; i++) {
+         if (Character.isLetter(f[i]) || f[i] == 32) {
+             pa.setDistrict(e);
+         } else {
+             log.error("Invalid character in district name: {}", e);
+             throw new InvalidDataException("District Name does not contain any special character or Number");
+         }
+     }
+
+     
+     String g = a.getState();
+     char[] h = g.toCharArray();
+     for (int i = 0; i < h.length; i++) {
+         if (Character.isLetter(h[i]) || h[i] == 32) {
+             pa.setState(g);
+         } else {
+             log.error("Invalid character in state name: {}", g);
+             throw new InvalidDataException("State Name does not contain any special character or Number");
+         }
+     }
+
+     
+     long i = a.getPincode();
+     int count = 0;
+     for (long no = i; no > 0; no = no / 10) {
+         count++;
+     }
+     if (count != 6) {
+         log.error("Invalid pincode: {}", i);
+         throw new InvalidDataException("Pincode is invalid. It must be 6 digits.");
+     } else {
+         pa.setPincode(i);
+     }
+
+    
+     int j = a.getHouseNumber();
+     if (j <= 1 || j >= 99) {
+         log.error("Invalid house number: {}", j);
+         throw new InvalidDataException("House number must be between 1 and 99.");
+     } else {
+         pa.setHouseNumber(j);
+     }
+
+    
+     String k = a.getStreetName();
+     char[] m = k.toCharArray();
+     for (int i1 = 0; i1 < m.length; i1++) {
+         if (Character.isLetter(m[i1]) || m[i1] == 32) {
+             pa.setStreetName(k);
+         } else {
+             log.error("Invalid character in street name: {}", k);
+             throw new InvalidDataException("StreetName does not contain any special character or Number");
+         }
+     }
+
+   
+     par.save(pa);
+     ca.setPermanentAddress(pa);
+     car.save(ca);
+
+     return pa;
+ }
 @Override
 public PermanentAddress getSinglePermanentAddress(int permanentAddressId) 
 {

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cjc.customerdetails.app.model.loanapplicationform.LocalAddress;
 import com.cjc.customerdetails.app.model.loanapplicationform.PermanentAddress;
 import com.cjc.customerdetails.app.servicei.loanapplicationform.PermanentAddressServiceI;
 
@@ -21,14 +22,20 @@ public class PermanentAddressController
   PermanentAddressServiceI pas;
   
   @PostMapping("/savePermanentAddrerss/{customerAddressId}")
-  public ResponseEntity<PermanentAddress> savePermanentAddress(@RequestBody PermanentAddress a, @PathVariable int customerAddressId)
-  {
-	  PermanentAddress a1 = pas.savePermanentAddress(a,customerAddressId);
-	  
-	  return new ResponseEntity<PermanentAddress>(a1,HttpStatus.CREATED);
-	  
+  public ResponseEntity<PermanentAddress> savePermanentAddress(@RequestBody PermanentAddress a, @PathVariable int customerAddressId) {
+      try {
+          
+    	  PermanentAddress a1 = pas.savePermanentAddress(a, customerAddressId);
+        
+          return new ResponseEntity<>(a1, HttpStatus.CREATED);
+          
+      } 
+      catch (Exception e) 
+      {
+          
+          throw e; 
+      }
   }
-  
   @GetMapping("/getSinglePermanentAddress/{permanentAddressId}")
   public ResponseEntity<PermanentAddress> getSinglePermanentAddress(@PathVariable int permanentAddressId)
   {
