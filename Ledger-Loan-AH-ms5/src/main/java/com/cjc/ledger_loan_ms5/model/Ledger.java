@@ -12,6 +12,7 @@ import lombok.Data;
 @Entity
 public class Ledger {
 
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 		private Integer ledgerId;
