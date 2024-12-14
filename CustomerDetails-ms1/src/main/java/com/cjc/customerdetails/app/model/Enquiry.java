@@ -15,8 +15,8 @@ public class Enquiry {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int customerid;
-	private String fname;
-	private String lname;
+	private String username;
+	private String password;
 	private int age;
 	private String email;
 	private long mobileno;

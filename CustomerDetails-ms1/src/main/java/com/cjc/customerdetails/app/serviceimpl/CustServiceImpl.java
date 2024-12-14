@@ -61,13 +61,13 @@ public class CustServiceImpl implements CustServiceI{
 			log.error("Required Age is 18");
 			throw new AgeException("Enter age above 18");
 		}
-		String g = s.getFname();
+		String g = s.getUsername();
 		char[]d=g.toCharArray();
 		for(int i=0;i<d.length;i++)
 		{
 		if (d[i]>='a'&&d[i]<='z'||d[i]>='A'&&d[i]<='Z'||d[i]==32)
 		{
-		    e.setFname(g);	
+		    e.setUsername(g);
 		}
 		else
 		{
@@ -77,13 +77,13 @@ public class CustServiceImpl implements CustServiceI{
 		
 		}
 		
-		String r = s.getLname();
+		String r = s.getPassword();
 		char[]w=r.toCharArray();
 		for(int i=0;i<d.length;i++)
 		{
 		if (d[i]>='a'&&d[i]<='z'||d[i]>='A'&&d[i]<='Z'||d[i]==32)
 		{
-		    e.setLname(r);	
+		    e.setPassword(r);	
 		}
 		else
 		{
@@ -145,8 +145,8 @@ public class CustServiceImpl implements CustServiceI{
 		if(o.isPresent()) {
 			Enquiry cd = o.get();
 			
-			cd.setFname(c.getFname());
-			cd.setLname(c.getLname());
+			cd.setUsername(c.getUsername());
+			cd.setPassword(c.getPassword());
 			cd.setEmail(c.getEmail());
 			cd.setAge(c.getAge());
 			cd.setMobileno(c.getMobileno());
