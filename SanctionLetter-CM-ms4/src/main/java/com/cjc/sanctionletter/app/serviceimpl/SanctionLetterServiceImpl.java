@@ -220,7 +220,7 @@ public class SanctionLetterServiceImpl implements SanctionLetterI {
 	                document.open();
 
 	                try {
-	                    Image img = Image.getInstance("C:\\Users\\Dell\\Desktop\\istockphoto-1492732089-612x612.jpg");
+	                    Image img = Image.getInstance("C:\\Users\\Akshay\\Downloads\\images\\home.jpeg");
 	                    img.scalePercent(50, 50);
 	                    img.setAlignment(Element.ALIGN_RIGHT);
 	                    document.add(img);
