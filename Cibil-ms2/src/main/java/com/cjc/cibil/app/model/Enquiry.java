@@ -15,8 +15,9 @@ public class Enquiry {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int customerid;
-	private String fname;
-	private String lname;
+	private String name;
+	private String username;
+	private String password;
 	private int age;
 	private String email;
 	private long mobileno;
@@ -25,5 +26,4 @@ public class Enquiry {
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	private Cibil cibil;
-	
 }

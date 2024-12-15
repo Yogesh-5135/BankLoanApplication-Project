@@ -42,7 +42,7 @@ public class CustServiceImpl implements CustServiceI{
 			throw new MobNoException("Mobno invalid ..Enter only 10 numbers");
 		}else 
 		{
-			e.setMobileno(s.getMobileno());
+			e.setMobileno(l);
 		}
 		
 		
@@ -61,40 +61,65 @@ public class CustServiceImpl implements CustServiceI{
 			log.error("Required Age is 18");
 			throw new AgeException("Enter age above 18");
 		}
-		String g = s.getUsername();
+		String g = s.getName();
 		char[]d=g.toCharArray();
 		for(int i=0;i<d.length;i++)
 		{
 		if (d[i]>='a'&&d[i]<='z'||d[i]>='A'&&d[i]<='Z'||d[i]==32)
 		{
-		    e.setUsername(g);
+		    e.setName(g);
 		}
 		else
 		{
-			log.error("Your Fname does not contain any special character");
+			log.error("Your Name does not contain any special character");
 			throw new InvalidNameException("Please Enter Valid Name");
 		}
 		
 		}
+		String q = s.getUsername();
+		char[] z = q.toCharArray();
+
 		
+		for (int i = 0; i < z.length; i++) {
+		   
+		    if ((z[i] >= 'a' && z[i] <= 'z') || (z[i] >= 'A' && z[i] <= 'Z') || (z[i] >= '0' && z[i] <= '9') || z[i] == 32) {
+		      
+		        e.setUsername(q);
+		    } else {
+		       
+		        log.error("Your username contains invalid special characters");
+		        throw new InvalidNameException("Please Enter a Valid Username");
+		    }
+		}
+
 		String r = s.getPassword();
-		char[]w=r.toCharArray();
-		for(int i=0;i<d.length;i++)
-		{
-		if (d[i]>='a'&&d[i]<='z'||d[i]>='A'&&d[i]<='Z'||d[i]==32)
-		{
-		    e.setPassword(r);	
+		char[] w = r.toCharArray();
+
+		boolean hasAlpha = false;
+		boolean hasDigit = false;
+		boolean hasSpecialChar = false;
+
+		for (int i = 0; i < w.length; i++) {
+	
+		    if (Character.isLetter(w[i])) {
+		        hasAlpha = true;
+		    }
+		  
+		    else if (Character.isDigit(w[i])) {
+		        hasDigit = true;
+		    }
+	
+		    else if (!Character.isLetterOrDigit(w[i])) {
+		        hasSpecialChar = true;
+		    }
 		}
-		else
-		{
-			log.error("Your Lname does not contain any special character");
-			throw new InvalidNameException("Please Enter Valid Name");
+		if (hasAlpha && hasDigit && hasSpecialChar) {
+		    e.setPassword(r);
+		} else {
+		    log.error("Password must contain at least one letter, one digit, and one special character.");
+		    throw new InvalidNameException("Please Enter Valid Password. It must contain at least one letter, one digit, and one special character.");
 		}
-		
-		}
-		
-		
-		
+
 		String pancard = s.getPancard();
 		boolean isValid = true;
 
@@ -145,6 +170,7 @@ public class CustServiceImpl implements CustServiceI{
 		if(o.isPresent()) {
 			Enquiry cd = o.get();
 			
+			cd.setName(c.getName());
 			cd.setUsername(c.getUsername());
 			cd.setPassword(c.getPassword());
 			cd.setEmail(c.getEmail());
