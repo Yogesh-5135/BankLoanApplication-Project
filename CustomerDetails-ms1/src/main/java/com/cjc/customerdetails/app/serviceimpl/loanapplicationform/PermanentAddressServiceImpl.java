@@ -29,7 +29,7 @@ public class PermanentAddressServiceImpl implements PermanentAddressServiceI
 
 
  @Override
- public PermanentAddress savePermanentAddress(PermanentAddress a, int customerAddressId) {
+ public void savePermanentAddress(PermanentAddress a, int customerAddressId) {
      
      
      CustomerAddress ca = new CustomerAddress();
@@ -132,7 +132,7 @@ public class PermanentAddressServiceImpl implements PermanentAddressServiceI
      ca.setPermanentAddress(pa);
      car.save(ca);
 
-     return pa;
+    
  }
 @Override
 public PermanentAddress getSinglePermanentAddress(int permanentAddressId) 

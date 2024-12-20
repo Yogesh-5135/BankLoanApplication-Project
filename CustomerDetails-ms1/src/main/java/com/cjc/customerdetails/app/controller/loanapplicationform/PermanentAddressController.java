@@ -21,13 +21,13 @@ public class PermanentAddressController
   @Autowired
   PermanentAddressServiceI pas;
   
-  @PostMapping("/savePermanentAddrerss/{customerAddressId}")
-  public ResponseEntity<PermanentAddress> savePermanentAddress(@RequestBody PermanentAddress a, @PathVariable int customerAddressId) {
+  @PostMapping("/savePermanentAddress/{customerAddressId}")
+  public ResponseEntity<String> savePermanentAddress(@RequestBody PermanentAddress a, @PathVariable int customerAddressId) {
       try {
           
-    	  PermanentAddress a1 = pas.savePermanentAddress(a, customerAddressId);
+    	  pas.savePermanentAddress(a, customerAddressId);
         
-          return new ResponseEntity<>(a1, HttpStatus.CREATED);
+          return new ResponseEntity<String>("Saved", HttpStatus.CREATED);
           
       } 
       catch (Exception e) 

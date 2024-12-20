@@ -4,7 +4,7 @@ import com.cjc.customerdetails.app.model.loanapplicationform.LocalAddress;
 
 public interface LocalAddressServiceI {
 
-	public LocalAddress saveLocalAddress(LocalAddress a, int customerAddressId);
+	public void saveLocalAddress(LocalAddress a, int customerAddressId);
 
 	public LocalAddress getSingleLocalAddress(int localAddressId);
 

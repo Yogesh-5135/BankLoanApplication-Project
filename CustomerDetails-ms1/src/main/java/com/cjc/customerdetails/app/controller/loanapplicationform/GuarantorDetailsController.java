@@ -23,10 +23,19 @@ public class GuarantorDetailsController
   
   
   @PostMapping("/saveGuarantor/{loanid}")
- 	public ResponseEntity<GuarantorDetails> addGuarantor(@RequestBody GuarantorDetails s , int loanid)
+ 	public ResponseEntity<String> addGuarantor(@RequestBody GuarantorDetails s ,@PathVariable Integer loanid)
  	{
-	  GuarantorDetails ss=gds.saveData(s , loanid);
- 		return new ResponseEntity<GuarantorDetails> (ss,HttpStatus.CREATED);
+	  if (loanid == null) {
+	        return ResponseEntity.badRequest().body("Loan ID cannot be null.");
+	    }
+	  try {
+	            gds.saveData(s , loanid);
+	            
+ 		return new ResponseEntity<String> (HttpStatus.CREATED);
+ 		
+	  }catch (Exception e) {
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error saving guarantor details.");
+	    }
  	}
  	
  		

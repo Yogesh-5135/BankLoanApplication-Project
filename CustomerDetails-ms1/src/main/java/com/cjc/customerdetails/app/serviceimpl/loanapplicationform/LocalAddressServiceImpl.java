@@ -27,7 +27,7 @@ public class LocalAddressServiceImpl implements LocalAddressServiceI
   private static final Logger log = LoggerFactory.getLogger(LocalAddressServiceImpl.class);
   
   @Override
-  public LocalAddress saveLocalAddress(LocalAddress a, int customerAddressId) {
+  public void saveLocalAddress(LocalAddress a, int customerAddressId) {
       
       
       CustomerAddress ca = new CustomerAddress();
@@ -130,7 +130,7 @@ public class LocalAddressServiceImpl implements LocalAddressServiceI
       ca.setLocalAddress(la);
       car.save(ca);
 
-      return la;
+     
   }
 
 

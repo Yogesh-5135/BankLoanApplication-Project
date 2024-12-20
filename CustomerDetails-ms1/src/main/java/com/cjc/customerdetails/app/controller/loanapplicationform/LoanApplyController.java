@@ -19,23 +19,21 @@ import com.cjc.customerdetails.app.model.loanapplicationform.LoanApplication;
 import com.cjc.customerdetails.app.servicei.loanapplicationform.LoanApplyServiceI;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:5173")
-@RequestMapping("/applyLoan")
 public class LoanApplyController {
 
 	@Autowired 
 	LoanApplyServiceI lsi;
 	
 	@PostMapping("/saveLoanApplication")
-	public ResponseEntity<String> saveAccountDetails(@RequestBody LoanApplication ad )
+	public ResponseEntity<LoanApplication> saveAccountDetails(@RequestBody LoanApplication ad )
 	{
-		 lsi.saveLoanApplication(ad);
+		 LoanApplication da = lsi.saveLoanApplication(ad);
 		
-		return new ResponseEntity<String>("Data added",HttpStatus.CREATED);
+		return new ResponseEntity<LoanApplication>(da,HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/getSingleLoanApplication/{loanid}")
-	public ResponseEntity<LoanApplication> getSingleAccountDetails(@PathVariable int loanid)
+	public ResponseEntity<LoanApplication> getSingleAccountDetails(@PathVariable Integer loanid)
 	{
 		LoanApplication l = lsi.getSingleLoanApplication(loanid);
 		
@@ -54,7 +52,7 @@ public class LoanApplyController {
 	
 	
 	@PutMapping("/updateLoanApplication/{loanid}")
-	public ResponseEntity<LoanApplication> updateLoanApplication(@PathVariable int loanid,@RequestBody LoanApplication ld)
+	public ResponseEntity<LoanApplication> updateLoanApplication(@PathVariable Integer loanid,@RequestBody LoanApplication ld)
 	{
 		LoanApplication l = lsi.updateLoanApplication(loanid,ld);
 		

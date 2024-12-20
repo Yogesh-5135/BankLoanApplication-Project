@@ -13,7 +13,7 @@ public class AccountDetails {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int accountId;
-	private String accounType	;
+	private String accountType	;
 	private double accountBalance;
 	private String 	accountHolderName;
 	private String accountStatus;

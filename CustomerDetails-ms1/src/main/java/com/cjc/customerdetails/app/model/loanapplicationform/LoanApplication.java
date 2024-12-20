@@ -17,7 +17,7 @@ public class LoanApplication {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int loanid;
+	private Integer loanid;
 	
 	
 	private String customerName	;

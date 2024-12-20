@@ -20,8 +20,8 @@ public class CustomerAddressController
   @Autowired
   CustomerAddressServiceI cas;
   
-  @PostMapping("/saveCustomerAddrerss/{loanid}")
-  public ResponseEntity<CustomerAddress> saveCustomerAddress(@PathVariable int loanid)
+  @PostMapping("/saveCustomerAddress/{loanid}")
+  public ResponseEntity<CustomerAddress> saveCustomerAddress(@PathVariable Integer loanid)
   {
 	  CustomerAddress ca1 = cas.saveCustomerAddress(loanid);
 	  

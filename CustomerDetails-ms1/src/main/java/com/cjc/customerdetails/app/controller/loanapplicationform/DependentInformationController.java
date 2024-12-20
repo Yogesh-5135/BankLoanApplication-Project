@@ -1,7 +1,5 @@
 package com.cjc.customerdetails.app.controller.loanapplicationform;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cjc.customerdetails.app.model.Enquiry;
 import com.cjc.customerdetails.app.model.loanapplicationform.DependentInforamtion;
 import com.cjc.customerdetails.app.servicei.loanapplicationform.DependentInformationServiceI;
 
@@ -25,7 +22,7 @@ public class DependentInformationController
   
   
   @PostMapping("/saveDependent/{loanid}")
-	public ResponseEntity<DependentInforamtion> addDependent(@RequestBody DependentInforamtion s,int loanid)
+	public ResponseEntity<DependentInforamtion> addDependent(@RequestBody DependentInforamtion s,@PathVariable Integer loanid)
 	{
 	  DependentInforamtion ss=dis.saveData(s ,  loanid);
 		return new ResponseEntity<DependentInforamtion> (ss,HttpStatus.CREATED);

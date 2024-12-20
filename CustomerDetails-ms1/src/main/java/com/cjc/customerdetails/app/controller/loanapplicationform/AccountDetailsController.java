@@ -22,7 +22,7 @@ public class AccountDetailsController
 	AccountDetailsServiceI ads;
 	
 	@PostMapping("/saveAccountDetails/{loanid}")
-	public ResponseEntity<AccountDetails> saveAccountDetails(@RequestBody AccountDetails ad,int loanid)
+	public ResponseEntity<AccountDetails> saveAccountDetails(@RequestBody AccountDetails ad, @PathVariable Integer loanid)
 	{
 		AccountDetails ad1 = ads.saveAccountDetails(ad,loanid);
 		

@@ -25,18 +25,25 @@ public class AllPersonalDocumentsController
 	AllPersonalDocumentsServiceI apd;
 	
 	@PostMapping("/saveDocuments/{loanid}")
-	public ResponseEntity<String> addDocument(@RequestPart ("ap") MultipartFile addressProof ,
-				@RequestPart ("pc") MultipartFile panCard ,@RequestPart ("it") MultipartFile IncomeTax,
-				@RequestPart ("ac") MultipartFile addharCard,@RequestPart ("ph") MultipartFile photo,
-				@RequestPart ("sig") MultipartFile signature, @RequestPart ("bc") MultipartFile bankCheque,
-				@RequestPart ("ss") MultipartFile salarySlips ,@PathVariable int loanid)	
-	{
-		
-		apd.saveDocument(addressProof,panCard,IncomeTax,addharCard,photo,signature,bankCheque,salarySlips,loanid);
-		return new ResponseEntity<String> ("Data Added",HttpStatus.CREATED);
+	public ResponseEntity<String> addDocument(
+	    @RequestPart("ap") MultipartFile addressProof,
+	    @RequestPart("pc") MultipartFile panCard,
+	    @RequestPart("it") MultipartFile incomeTax,
+	    @RequestPart("ac") MultipartFile aadharCard,
+	    @RequestPart("ph") MultipartFile photo,
+	    @RequestPart("sig") MultipartFile signature,
+	    @RequestPart("bc") MultipartFile bankCheque,
+	    @RequestPart("ss") MultipartFile salarySlips,
+	    @PathVariable Integer loanid
+	) {
+	    try {
+	        apd.saveDocument(addressProof, panCard, incomeTax, aadharCard, photo, signature, bankCheque, salarySlips, loanid);
+	        return new ResponseEntity<>("Documents uploaded successfully!", HttpStatus.CREATED);
+	    } catch (Exception e) {
+	        return new ResponseEntity<>("Error uploading documents!", HttpStatus.INTERNAL_SERVER_ERROR);
+	    }
 	}
 	
-		
 	@PutMapping("/editDocuments/{loanid}/{documentID}")
 	public ResponseEntity<String> update(@PathVariable int documentID ,int loanid ,@RequestPart ("ap") MultipartFile addressProof )
 	{

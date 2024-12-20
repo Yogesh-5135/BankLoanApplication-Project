@@ -28,7 +28,7 @@ public class AccountDetailsServiceImpl implements AccountDetailsServiceI {
 	@Override
 	public AccountDetails saveAccountDetails(AccountDetails ad, int loanid) {
 		
-		LoanApplication l = new LoanApplication();
+		LoanApplication l = null;
 
 		Optional<LoanApplication> oa = lri.findById(loanid);
 		if (oa.isPresent()) {
@@ -40,11 +40,12 @@ public class AccountDetailsServiceImpl implements AccountDetailsServiceI {
 
 		AccountDetails ad1 = new AccountDetails();
 
-		String a = ad.getAccounType();
+		String a = ad.getAccountType();
 		char[] b = a.toCharArray();
 		for (int i = 0; i < b.length; i++) {
-			if (b[i] >= 'a' && b[i] <= 'z' || b[i] >= 'A' && b[i] <= 'Z' || b[i] == 32) {
-				ad1.setAccounType(a);
+			if (b[i] >= 'a' && b[i] <= 'z' || b[i] >= 'A' && b[i] <= 'Z')
+			{
+				ad1.setAccountType(a);
 			} else {
 				log.error("Please Use Letters Only");
 				throw new InvalidDataException("Account type does not contain any special character or Number");

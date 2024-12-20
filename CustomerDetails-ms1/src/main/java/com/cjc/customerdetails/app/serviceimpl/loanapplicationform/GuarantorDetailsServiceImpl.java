@@ -27,7 +27,7 @@ public class GuarantorDetailsServiceImpl implements GuarantorDetailsServiceI
   private static final Logger log = LoggerFactory.getLogger(GuarantorDetailsServiceImpl.class);
   
 	@Override
-	public GuarantorDetails saveData(GuarantorDetails s ,int loanid) 
+	public void saveData(GuarantorDetails s ,int loanid) 
 	{
 		LoanApplication l = null;
 		
@@ -60,7 +60,7 @@ public class GuarantorDetailsServiceImpl implements GuarantorDetailsServiceI
 		    throw new InvalidDataException("Guarantor name should only contain letters and spaces");
 		}
 
-		
+		                                   
 		String guarantorDateOfBirth = s.getGuarantorDateOfBirth();
 		if (guarantorDateOfBirth != null  ) {
 		    	        
@@ -175,7 +175,7 @@ public class GuarantorDetailsServiceImpl implements GuarantorDetailsServiceI
 		lri.save(l);
 		
 		
-		return di;
+
 	}
 	
 	@Override

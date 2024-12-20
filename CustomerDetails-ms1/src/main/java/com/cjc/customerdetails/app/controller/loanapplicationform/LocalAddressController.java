@@ -23,12 +23,12 @@ public class LocalAddressController
  
   
   @PostMapping("/saveLocal/{customerAddressId}")
-  public ResponseEntity<LocalAddress> saveLocalAddress(@RequestBody LocalAddress a, @PathVariable int customerAddressId) {
+  public ResponseEntity<String> saveLocalAddress(@RequestBody LocalAddress a, @PathVariable int customerAddressId) {
       try {
           
-          LocalAddress a1 = las.saveLocalAddress(a, customerAddressId);
+           las.saveLocalAddress(a, customerAddressId);
         
-          return new ResponseEntity<>(a1, HttpStatus.CREATED);
+          return new ResponseEntity<String>("saved", HttpStatus.CREATED);
       } catch (Exception e) {
           
           throw e; 

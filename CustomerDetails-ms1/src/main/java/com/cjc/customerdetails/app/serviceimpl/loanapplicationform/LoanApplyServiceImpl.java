@@ -30,10 +30,9 @@ public class LoanApplyServiceImpl implements LoanApplyServiceI{
 	private static final Logger log = LoggerFactory.getLogger(LoanApplyServiceImpl.class);
 
 	@Override
-	public void saveLoanApplication(LoanApplication ld) 
+	public LoanApplication saveLoanApplication(LoanApplication ld) 
 	{
 		LoanApplication la = new LoanApplication();
-		
 		String a = ld.getCustomerName();
 		char[]b = a.toCharArray();
 		for(int i=0;i<b.length;i++)
@@ -167,12 +166,14 @@ public class LoanApplyServiceImpl implements LoanApplyServiceI{
 			{
 				
 				int i = enquiry.getCibil().getCibilscore();
+			
 				la.setCibil(i);
 				la.setLoanStatus("Submitted");
 				lri.save(la);
 			}
 			
 		}
+		return la;
 									
 	}
 		
