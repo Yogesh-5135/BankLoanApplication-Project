@@ -69,10 +69,7 @@ public class AdminServiceImpl implements AdminServiceI {
                 throw new RuntimeException("Error saving employee details to database: " + e.getMessage(), e);
             }
         } 
-        else 
-        {
-            throw new RuntimeException("Failed to create employee details: Data is incomplete.");
-        }
+        
     
     }
     @Override
