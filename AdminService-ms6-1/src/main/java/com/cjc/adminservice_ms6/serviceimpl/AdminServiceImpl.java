@@ -1,14 +1,20 @@
 package com.cjc.adminservice_ms6.serviceimpl;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import com.cjc.adminservice_ms6.model.AdminService;
+import com.cjc.adminservice_ms6.model.EmployeeDetails;
 import com.cjc.adminservice_ms6.repoi.AdminServiceRepoI;
 import com.cjc.adminservice_ms6.servicei.AdminServiceI;
+import com.cjc.adminservice_ms6.utility.CredentialGeneratorUtility;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class AdminServiceImpl implements AdminServiceI{
@@ -17,17 +23,47 @@ public class AdminServiceImpl implements AdminServiceI{
 	AdminServiceRepoI ari;
 
 	@Override
-	public void saveAdmin(AdminService a) 
+	public void saveAdmin(String json, MultipartFile empImage, MultipartFile empPancard) 
 	{
-		ari.save(a);		
+        ObjectMapper om = new ObjectMapper();
+		
+		EmployeeDetails emplyeedetails = null;
+		
+		try {
+			emplyeedetails = om.readValue(json,EmployeeDetails.class);
+					emplyeedetails.setUsername(CredentialGeneratorUtility.generateUsername(emplyeedetails.getEmpFirstName()));
+					emplyeedetails.setPassword(CredentialGeneratorUtility.generatePassword(emplyeedetails.getEmpFirstName()));
+		    } 
+		    catch (JsonMappingException e) 
+		    {
+			e.printStackTrace();
+		    }
+		    catch (JsonProcessingException e) 
+		    {
+			e.printStackTrace();
+		    }
+		if(emplyeedetails!=null)
+		    {
+			try {
+				emplyeedetails.setEmpImage(empImage.getBytes());
+				emplyeedetails.setEmpPancard(empPancard.getBytes());
+			    }
+			    catch (IOException e) 
+			    {
+				e.printStackTrace();
+			    }
+		    }
+		ari.save(emplyeedetails);
+		
 	}
 
+
 	@Override
-	public AdminService getSingleAdmin(int id) 
+	public EmployeeDetails getSingleAdmin(int id) 
 	{
 		
-		Optional<AdminService> o = ari.findById(id);
-		AdminService a = new AdminService();
+		Optional<EmployeeDetails> o = ari.findById(id);
+		EmployeeDetails a = new EmployeeDetails();
 		if(o.isPresent()) {
 			a = o.get();
 			return a;
@@ -38,9 +74,9 @@ public class AdminServiceImpl implements AdminServiceI{
 	}
 
 	@Override
-	public List<AdminService> getAllAdmin() 
+	public List<EmployeeDetails> getAllAdmin() 
 	{
-		List<AdminService> l = ari.findAll();
+		List<EmployeeDetails> l = ari.findAll();
 		return l;
 	}
 
@@ -51,21 +87,39 @@ public class AdminServiceImpl implements AdminServiceI{
 	}
 
 	@Override
-	public void editAdmin(int id, AdminService a) 
-	{		
-		Optional<AdminService> o = ari.findById(id);
-		AdminService ad = new AdminService();
+	public void editAdmin(int empId,String json, MultipartFile empImage, MultipartFile empPancard) 
+	{
+		Optional<EmployeeDetails> o = ari.findById(empId);
+		EmployeeDetails as = new EmployeeDetails();
 		if(o.isPresent()) {
-			ad = o.get();
-			ad.setUsername(a.getUsername());
-			ad.setPassword(a.getPassword());
-			ad.setEmail(a.getEmail());
-			ad.setMobileno(a.getMobileno());
-			ad.setAge(a.getAge());
-			ad.setDesignation(a.getDesignation());
 			
-			ari.save(ad);
-		}
+			            as = o.get();
+
+	            ObjectMapper objectMapper = new ObjectMapper();
+	            try {
+	                EmployeeDetails updatedData = objectMapper.readValue(json, EmployeeDetails.class);
+
+	                as.setEmpFirstName(updatedData.getEmpFirstName());
+	                as.setEmpMiddleName(updatedData.getEmpMiddleName());
+	                as.setEmpLastName(updatedData.getEmpLastName());
+	                as.setEmpEmail(updatedData.getEmpEmail());
+	                as.setEmpSalary(updatedData.getEmpSalary());
+	                as.setEmpAge(updatedData.getEmpAge());
+	                as.setUserType(updatedData.getUserType());
+	                
+	                as.setEmpImage(empImage.getBytes());
+	                as.setEmpPancard(empPancard.getBytes());
+	                
+
+	                ari.save(as);
+
+	            } catch (Exception e) {
+	                e.printStackTrace();
+	            }
+	        }
+		
+		
 	}
 
+	
 }

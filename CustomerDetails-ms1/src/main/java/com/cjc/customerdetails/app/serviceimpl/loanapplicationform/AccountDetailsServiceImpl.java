@@ -121,7 +121,7 @@ public class AccountDetailsServiceImpl implements AccountDetailsServiceI {
 		Optional<AccountDetails> oa = adr.findById(accountId);
 		if (oa.isPresent()) {
 			AccountDetails a = oa.get();
-			a.setAccounType(ad.getAccounType());
+			a.setAccountType(ad.getAccountType());
 			a.setAccountBalance(ad.getAccountBalance());
 			a.setAccountHolderName(ad.getAccountHolderName());
 			a.setAccountStatus(ad.getAccountStatus());

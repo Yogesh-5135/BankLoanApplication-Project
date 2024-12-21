@@ -2,18 +2,22 @@ package com.cjc.adminservice_ms6.servicei;
 
 import java.util.List;
 
-import com.cjc.adminservice_ms6.model.AdminService;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.cjc.adminservice_ms6.model.EmployeeDetails;
 
 public interface AdminServiceI {
 
-	void saveAdmin(AdminService a);
+	void saveAdmin(String json, MultipartFile empImage, MultipartFile empPancard);
 
-	AdminService getSingleAdmin(int id);
+	EmployeeDetails getSingleAdmin(int id);
 
-	List<AdminService> getAllAdmin();
+	List<EmployeeDetails> getAllAdmin();
 
 	void deleteAdmin(int id);
 
-	void editAdmin(int id, AdminService a);
+	void editAdmin(int empId, String json, MultipartFile empImage, MultipartFile empPancard);
+
+	
 
 }
