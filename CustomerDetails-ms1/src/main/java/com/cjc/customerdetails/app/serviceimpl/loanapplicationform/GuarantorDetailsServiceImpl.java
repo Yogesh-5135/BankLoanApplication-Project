@@ -30,7 +30,7 @@ public class GuarantorDetailsServiceImpl implements GuarantorDetailsServiceI
 	public void saveData(GuarantorDetails s ,int loanid) 
 	{
 		LoanApplication l = null;
-		
+		System.out.println(s);
 		Optional<LoanApplication> oa = lri.findById(loanid);
 		if(oa.isPresent())
 		{
@@ -172,9 +172,7 @@ public class GuarantorDetailsServiceImpl implements GuarantorDetailsServiceI
 		
 		gdr.save(di);
 		l.setGurantordetails(di);
-		lri.save(l);
-		
-		
+		lri.save(l);		
 
 	}
 	

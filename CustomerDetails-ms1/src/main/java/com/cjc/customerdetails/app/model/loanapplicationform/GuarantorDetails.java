@@ -13,17 +13,17 @@ public class GuarantorDetails {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int GuarantorId	;
+	private int guarantorId	;
 	
-	private String GuarantorName;	
-	private String GuarantorDateOfBirth	;
-	private String GuarantorRelationshipwithCustomer;
-	private long GuarantorMobileNumber;
-	private long GuarantorAdharCardNo;
-	private String GuarantorMortgageDetails	;
-	private String GuarantorJobDetails;
-	private String GuarantorLoaclAddress;
-	private String GuarantorPermanentAddress;
+	private String guarantorName;	
+	private String guarantorDateOfBirth	;
+	private String guarantorRelationshipwithCustomer;
+	private long guarantorMobileNumber;
+	private long guarantorAdharCardNo;
+	private String guarantorMortgageDetails	;
+	private String guarantorJobDetails;
+	private String guarantorLoaclAddress;
+	private String guarantorPermanentAddress;
 
 	
 }

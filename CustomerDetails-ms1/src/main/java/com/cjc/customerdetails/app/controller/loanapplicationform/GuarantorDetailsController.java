@@ -28,36 +28,36 @@ public class GuarantorDetailsController
 	  if (loanid == null) {
 	        return ResponseEntity.badRequest().body("Loan ID cannot be null.");
 	    }
-	  try {
+//	  try {
 	            gds.saveData(s , loanid);
 	            
  		return new ResponseEntity<String> (HttpStatus.CREATED);
  		
-	  }catch (Exception e) {
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error saving guarantor details.");
-	    }
+//	  }catch (Exception e) {
+//	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error saving guarantor details.");
+//	    }
  	}
  	
  		
- 	@PutMapping("/editGuarantor/{GuarantorId}")
- 	public ResponseEntity<String> updateGuarantor(@PathVariable int GuarantorId , @RequestBody GuarantorDetails c)
+ 	@PutMapping("/editGuarantor/{guarantorId}")
+ 	public ResponseEntity<String> updateGuarantor(@PathVariable int guarantorId , @RequestBody GuarantorDetails c)
  	{
- 		gds.editData(GuarantorId , c);
+ 		gds.editData(guarantorId , c);
  		return new ResponseEntity<String>("Data Updated" , HttpStatus.OK);
  	}
  	
  	@GetMapping("/getGuarantor/{GuarantorId}")
- 	public ResponseEntity<GuarantorDetails> getSingleGuarantor(@PathVariable int GuarantorId )
+ 	public ResponseEntity<GuarantorDetails> getSingleGuarantor(@PathVariable int guarantorId )
  	{
- 		GuarantorDetails cd = gds.getData(GuarantorId);
+ 		GuarantorDetails cd = gds.getData(guarantorId);
  		return new ResponseEntity<GuarantorDetails>(cd , HttpStatus.OK);
  	}
 
 
- 	@DeleteMapping("/deleteGuarantor/{GuarantorId}")
- 	public ResponseEntity<String> deleteSingleData(@PathVariable int GuarantorId)
+ 	@DeleteMapping("/deleteGuarantor/{guarantorId}")
+ 	public ResponseEntity<String> deleteSingleData(@PathVariable int guarantorId)
  	{
- 		gds.deleteData(GuarantorId);
+ 		gds.deleteData(guarantorId);
  		return new ResponseEntity<String>( HttpStatus.NO_CONTENT);
  	}
  	
