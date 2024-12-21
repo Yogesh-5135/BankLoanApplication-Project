@@ -35,9 +35,5 @@ public class EmployeeDetails {
 	@Lob
 	@Column(length = 999999999)
 	private byte[] empPancard;
-	
-	
-	
-	
 
 }

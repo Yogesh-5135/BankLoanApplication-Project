@@ -29,7 +29,7 @@ public class AdminServiceController {
 	@PostMapping("/saveAdmin")
 	public ResponseEntity<String> addAdmin(@RequestPart("info")String json,
 			   @RequestPart("empImage")MultipartFile empImage,
-	           @RequestPart("panCard")MultipartFile empPancard
+	           @RequestPart("empPancard")MultipartFile empPancard
 	           ) 
 	{
 		asi.saveAdmin(json,empImage,empPancard);

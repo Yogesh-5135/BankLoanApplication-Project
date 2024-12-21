@@ -13,113 +13,139 @@ import com.cjc.adminservice_ms6.repoi.AdminServiceRepoI;
 import com.cjc.adminservice_ms6.servicei.AdminServiceI;
 import com.cjc.adminservice_ms6.utility.CredentialGeneratorUtility;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
-public class AdminServiceImpl implements AdminServiceI{
-	
-	@Autowired
-	AdminServiceRepoI ari;
+public class AdminServiceImpl implements AdminServiceI {
 
-	@Override
-	public void saveAdmin(String json, MultipartFile empImage, MultipartFile empPancard) 
-	{
+    @Autowired
+    AdminServiceRepoI ari;
+
+    @Override
+    public void saveAdmin(String json, MultipartFile empImage, MultipartFile empPancard) {
+       
         ObjectMapper om = new ObjectMapper();
-		
-		EmployeeDetails emplyeedetails = null;
-		
-		try {
-			emplyeedetails = om.readValue(json,EmployeeDetails.class);
-					emplyeedetails.setUsername(CredentialGeneratorUtility.generateUsername(emplyeedetails.getEmpFirstName()));
-					emplyeedetails.setPassword(CredentialGeneratorUtility.generatePassword(emplyeedetails.getEmpFirstName()));
-		    } 
-		    catch (JsonMappingException e) 
-		    {
-			e.printStackTrace();
-		    }
-		    catch (JsonProcessingException e) 
-		    {
-			e.printStackTrace();
-		    }
-		if(emplyeedetails!=null)
-		    {
-			try {
-				emplyeedetails.setEmpImage(empImage.getBytes());
-				emplyeedetails.setEmpPancard(empPancard.getBytes());
-			    }
-			    catch (IOException e) 
-			    {
-				e.printStackTrace();
-			    }
-		    }
-		ari.save(emplyeedetails);
-		
-	}
+        EmployeeDetails emplyeedetails = null;
 
+        try {
+            
+            emplyeedetails = om.readValue(json, EmployeeDetails.class);
 
-	@Override
-	public EmployeeDetails getSingleAdmin(int id) 
-	{
-		
-		Optional<EmployeeDetails> o = ari.findById(id);
-		EmployeeDetails a = new EmployeeDetails();
-		if(o.isPresent()) {
-			a = o.get();
-			return a;
-		}else
-		{ 
-			throw new RuntimeException("Id not found");
-		}
-	}
+           
+            emplyeedetails.setUsername(CredentialGeneratorUtility.generateUsername(emplyeedetails.getEmpFirstName()));
+            emplyeedetails.setPassword(CredentialGeneratorUtility.generatePassword(emplyeedetails.getEmpFirstName()));
 
-	@Override
-	public List<EmployeeDetails> getAllAdmin() 
-	{
-		List<EmployeeDetails> l = ari.findAll();
-		return l;
-	}
+            
+            if (empImage != null && !empImage.isEmpty()) {
+                emplyeedetails.setEmpImage(empImage.getBytes());
+            } else {
+                throw new RuntimeException("Employee image is required.");
+            }
 
-	@Override
-	public void deleteAdmin(int id) 
-	{
-		ari.deleteById(id);
-	}
+            if (empPancard != null && !empPancard.isEmpty()) {
+                emplyeedetails.setEmpPancard(empPancard.getBytes());
+            } else {
+                throw new RuntimeException("Employee pancard is required.");
+            }
 
-	@Override
-	public void editAdmin(int empId,String json, MultipartFile empImage, MultipartFile empPancard) 
-	{
-		Optional<EmployeeDetails> o = ari.findById(empId);
-		EmployeeDetails as = new EmployeeDetails();
-		if(o.isPresent()) {
-			
-			            as = o.get();
+        } catch (JsonProcessingException e) {
+           
+            e.printStackTrace();
+            throw new RuntimeException("Error parsing the input JSON: " + e.getMessage(), e);
+        } catch (IOException e) {
+            
+            e.printStackTrace();
+            throw new RuntimeException("Error reading file data: " + e.getMessage(), e);
+        }
 
-	            ObjectMapper objectMapper = new ObjectMapper();
-	            try {
-	                EmployeeDetails updatedData = objectMapper.readValue(json, EmployeeDetails.class);
+        
+        if (emplyeedetails != null) {
+            try {
+                
+                ari.save(emplyeedetails);
+            } catch (Exception e) {
+                
+                e.printStackTrace();
+                throw new RuntimeException("Error saving employee details to database: " + e.getMessage(), e);
+            }
+        } 
+        else 
+        {
+            throw new RuntimeException("Failed to create employee details: Data is incomplete.");
+        }
+    
+    }
+    @Override
+    public EmployeeDetails getSingleAdmin(int id) {
+        Optional<EmployeeDetails> o = ari.findById(id);
+        EmployeeDetails a = new EmployeeDetails();
+        if (o.isPresent()) {
+            a = o.get();
+            return a;
+        } else {
+            throw new RuntimeException("Employee not found with ID: " + id);
+        }
+    }
 
-	                as.setEmpFirstName(updatedData.getEmpFirstName());
-	                as.setEmpMiddleName(updatedData.getEmpMiddleName());
-	                as.setEmpLastName(updatedData.getEmpLastName());
-	                as.setEmpEmail(updatedData.getEmpEmail());
-	                as.setEmpSalary(updatedData.getEmpSalary());
-	                as.setEmpAge(updatedData.getEmpAge());
-	                as.setUserType(updatedData.getUserType());
-	                
-	                as.setEmpImage(empImage.getBytes());
-	                as.setEmpPancard(empPancard.getBytes());
-	                
+    @Override
+    public List<EmployeeDetails> getAllAdmin() {
+        return ari.findAll();
+    }
 
-	                ari.save(as);
+    @Override
+    public void deleteAdmin(int id) {
+        Optional<EmployeeDetails> o = ari.findById(id);
+        if (o.isPresent()) {
+            ari.deleteById(id);
+        } else {
+            throw new RuntimeException("Employee not found with ID: " + id);
+        }
+    }
 
-	            } catch (Exception e) {
-	                e.printStackTrace();
-	            }
-	        }
-		
-		
-	}
+    @Override
+    public void editAdmin(int empId, String json, MultipartFile empImage, MultipartFile empPancard) {
+        Optional<EmployeeDetails> o = ari.findById(empId);
+        EmployeeDetails as = new EmployeeDetails();
 
-	
+        if (o.isPresent()) {
+            as = o.get();
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            try {
+               
+                EmployeeDetails updatedData = objectMapper.readValue(json, EmployeeDetails.class);
+
+                as.setEmpFirstName(updatedData.getEmpFirstName());
+                as.setEmpMiddleName(updatedData.getEmpMiddleName());
+                as.setEmpLastName(updatedData.getEmpLastName());
+                as.setEmpEmail(updatedData.getEmpEmail());
+                as.setEmpSalary(updatedData.getEmpSalary());
+                as.setEmpAge(updatedData.getEmpAge());
+                as.setUserType(updatedData.getUserType());
+
+                
+                if (empImage != null && !empImage.isEmpty()) {
+                    as.setEmpImage(empImage.getBytes());
+                }
+
+                if (empPancard != null && !empPancard.isEmpty()) {
+                    as.setEmpPancard(empPancard.getBytes());
+                }
+
+                
+                ari.save(as);
+
+            } catch (JsonProcessingException e) {
+            
+                e.printStackTrace();
+                throw new RuntimeException("Error parsing the input JSON for update: " + e.getMessage(), e);
+            } catch (IOException e) {
+            	
+                e.printStackTrace();
+                throw new RuntimeException("Error reading file data for update: " + e.getMessage(), e);
+            }
+        } else {
+            throw new RuntimeException("Employee not found with ID: " + empId);
+        }
+    }
 }
