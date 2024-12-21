@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
-import com.cjc.adminservice_ms6.model.AdminService;
+import com.cjc.adminservice_ms6.model.EmployeeDetails;
 import com.cjc.adminservice_ms6.servicei.AdminServiceI;
 
 @RestController
@@ -25,37 +27,43 @@ public class AdminServiceController {
 	AdminServiceI asi;
 
 	@PostMapping("/saveAdmin")
-	public ResponseEntity<String> addAdmin(@RequestBody AdminService a) 
+	public ResponseEntity<String> addAdmin(@RequestPart("info")String json,
+			   @RequestPart("empImage")MultipartFile empImage,
+	           @RequestPart("panCard")MultipartFile empPancard
+	           ) 
 	{
-		asi.saveAdmin(a);
+		asi.saveAdmin(json,empImage,empPancard);
 		return new ResponseEntity<String>("Data added", HttpStatus.CREATED);
 	}
 	
-	@GetMapping("/getAdmin/{adminID}")
-	public ResponseEntity<AdminService> getAdmin(@PathVariable ("adminID") int id) 
+	@GetMapping("/getAdmin/{empID}")
+	public ResponseEntity<EmployeeDetails> getAdmin(@PathVariable ("empID") int id) 
 	{
-		AdminService a = asi.getSingleAdmin(id);
-		return new ResponseEntity<AdminService>(a , HttpStatus.OK);
+		EmployeeDetails a = asi.getSingleAdmin(id);
+		return new ResponseEntity<EmployeeDetails>(a , HttpStatus.OK);
 	}
 	
 	@GetMapping("/getAllAdmin")
-	public ResponseEntity<List<AdminService>> getAdmins() 
+	public ResponseEntity<List<EmployeeDetails>> getAdmins() 
 	{
-		List<AdminService> l = asi.getAllAdmin();
-		return new ResponseEntity<List<AdminService>>(l , HttpStatus.OK);
+		List<EmployeeDetails> l = asi.getAllAdmin();
+		return new ResponseEntity<List<EmployeeDetails>>(l , HttpStatus.OK);
 	}
 	
-	@DeleteMapping("/delete/{adminID}")
-	public ResponseEntity<String> getAdmins(@PathVariable ("adminID") int id) 
+	@DeleteMapping("/delete/{empID}")
+	public ResponseEntity<String> getAdmins(@PathVariable ("empID") int id) 
 	{
 		asi.deleteAdmin(id);
 		return new ResponseEntity<String>("Data deleted", HttpStatus.NO_CONTENT);
 	}
 	
-	@PutMapping("/editAdmin/{adminID}")
-	public ResponseEntity<String> updateAdmin(@PathVariable ("adminID") int id , @RequestBody AdminService a)
+	@PutMapping("/editAdmin/{empID}")
+	public ResponseEntity<String> updateAdmin(@PathVariable int empId,@RequestPart("info")String json,
+			   @RequestPart("empImage")MultipartFile empImage,
+	           @RequestPart("panCard")MultipartFile empPancard
+	           )
 	{
-		asi.editAdmin(id , a);
+		asi.editAdmin(empId,json,empImage,empPancard);
 		return new ResponseEntity<String>("Data Updated" , HttpStatus.OK);
 	}
 	
