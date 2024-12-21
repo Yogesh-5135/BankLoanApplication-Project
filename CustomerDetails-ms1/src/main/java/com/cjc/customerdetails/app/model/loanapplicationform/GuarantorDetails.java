@@ -12,6 +12,7 @@ public class GuarantorDetails {
 
 	
 	@Id
+	
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int guarantorId	;
 	
