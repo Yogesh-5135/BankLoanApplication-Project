@@ -20,7 +20,7 @@ import com.cjc.adminservice_ms6.model.EmployeeDetails;
 import com.cjc.adminservice_ms6.servicei.AdminServiceI;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v5")
 public class AdminServiceController {
 	
 	@Autowired
