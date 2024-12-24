@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,6 +23,12 @@ public class AdminServiceImpl implements AdminServiceI {
 
     @Autowired
     AdminServiceRepoI ari;
+    
+    @Value("${spring.mail.username}")
+	String FROM_MAIL;
+    @Autowired
+	JavaMailSender jms;
+	
 
     @Override
     public void saveAdmin(String json, MultipartFile empImage, MultipartFile empPancard) {
@@ -63,6 +72,16 @@ public class AdminServiceImpl implements AdminServiceI {
             try {
                 
                 ari.save(emplyeedetails);
+                
+
+        	    SimpleMailMessage mail = new SimpleMailMessage();
+        	    mail.setTo(emplyeedetails.getEmpEmail());
+        	    mail.setFrom(FROM_MAIL);
+        	    mail.setSubject("Employee Login Credentials");
+        	    mail.setText("Hi "+emplyeedetails.getEmpFirstName()+",\n Below are your login credentials..!"+"\n Username:-"
+        	    +emplyeedetails.getUsername()+"\n Password:-"+emplyeedetails.getPassword());
+        		
+        	    jms.send(mail);
             } catch (Exception e) {
                 
                 e.printStackTrace();
@@ -145,4 +164,11 @@ public class AdminServiceImpl implements AdminServiceI {
             throw new RuntimeException("Employee not found with ID: " + empId);
         }
     }
+	@Override
+	public EmployeeDetails getEmployee(String username, String password) {
+		
+		EmployeeDetails ed = ari.findByUsernameAndPassword(username,password);
+		
+		return ed;
+	}
 }

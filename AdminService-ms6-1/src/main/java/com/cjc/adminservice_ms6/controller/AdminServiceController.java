@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +21,7 @@ import com.cjc.adminservice_ms6.servicei.AdminServiceI;
 @RestController
 @RequestMapping("/api/v5")
 public class AdminServiceController {
+	
 	
 	@Autowired
 	AdminServiceI asi;
@@ -50,6 +50,13 @@ public class AdminServiceController {
 		return new ResponseEntity<List<EmployeeDetails>>(l , HttpStatus.OK);
 	}
 	
+	@GetMapping("/getEmployee/{username}/{password}")
+	public ResponseEntity<EmployeeDetails> getEmployee(@PathVariable ("username") String username,@PathVariable ("password") String password )
+	{
+		EmployeeDetails ed = asi.getEmployee(username,password);
+		
+		return new ResponseEntity<EmployeeDetails>(ed,HttpStatus.OK);
+	}
 	@DeleteMapping("/delete/{empID}")
 	public ResponseEntity<String> getAdmins(@PathVariable ("empID") int id) 
 	{

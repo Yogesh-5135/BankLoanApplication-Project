@@ -18,6 +18,8 @@ public interface AdminServiceI {
 
 	void editAdmin(int empId, String json, MultipartFile empImage, MultipartFile empPancard);
 
+	EmployeeDetails getEmployee(String username, String password);
+
 	
 
 }

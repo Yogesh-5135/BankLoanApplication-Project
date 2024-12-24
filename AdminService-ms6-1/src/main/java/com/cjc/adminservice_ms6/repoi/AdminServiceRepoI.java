@@ -8,4 +8,6 @@ import com.cjc.adminservice_ms6.model.EmployeeDetails;
 @Repository
 public interface AdminServiceRepoI extends JpaRepository<EmployeeDetails, Integer>{
 
+	EmployeeDetails findByUsernameAndPassword(String username, String password);
+
 }
