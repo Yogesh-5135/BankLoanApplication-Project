@@ -26,6 +26,7 @@ public class EmployeeDetails {
 	private float empSalary;
 	private int empAge;
 	@Enumerated(EnumType.STRING)
+	@Column(length = 999999999)
 	private UserType userType;
 	private String username;
 	private String password;
