@@ -65,12 +65,12 @@ public class AdminServiceController {
 	}
 	
 	@PutMapping("/editAdmin/{empID}")
-	public ResponseEntity<String> updateAdmin(@PathVariable int empId,@RequestPart("info")String json,
+	public ResponseEntity<String> updateAdmin(@PathVariable int empID,@RequestPart("info")String json,
 			   @RequestPart("empImage")MultipartFile empImage,
 	           @RequestPart("panCard")MultipartFile empPancard
 	           )
 	{
-		asi.editAdmin(empId,json,empImage,empPancard);
+		asi.editAdmin(empID,json,empImage,empPancard);
 		return new ResponseEntity<String>("Data Updated" , HttpStatus.OK);
 	}
 	

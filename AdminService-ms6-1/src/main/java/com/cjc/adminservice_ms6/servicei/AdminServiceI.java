@@ -16,7 +16,7 @@ public interface AdminServiceI {
 
 	void deleteAdmin(int id);
 
-	void editAdmin(int empId, String json, MultipartFile empImage, MultipartFile empPancard);
+	void editAdmin(int empID, String json, MultipartFile empImage, MultipartFile empPancard);
 
 	EmployeeDetails getEmployee(String username, String password);
 

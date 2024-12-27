@@ -12,7 +12,8 @@ public interface CustServiceI {
 	Enquiry getData(int customerid);
 
 	List<Enquiry> getAllData();
-
+    
+	Enquiry getCustomer(String username,String password);
 
 	void deleteData(int customerid);
 

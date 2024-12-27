@@ -119,8 +119,8 @@ public class AdminServiceImpl implements AdminServiceI {
     }
 
     @Override
-    public void editAdmin(int empId, String json, MultipartFile empImage, MultipartFile empPancard) {
-        Optional<EmployeeDetails> o = ari.findById(empId);
+    public void editAdmin(int empID, String json, MultipartFile empImage, MultipartFile empPancard) {
+        Optional<EmployeeDetails> o = ari.findById(empID);
         EmployeeDetails as = new EmployeeDetails();
 
         if (o.isPresent()) {
@@ -161,7 +161,7 @@ public class AdminServiceImpl implements AdminServiceI {
                 throw new RuntimeException("Error reading file data for update: " + e.getMessage(), e);
             }
         } else {
-            throw new RuntimeException("Employee not found with ID: " + empId);
+            throw new RuntimeException("Employee not found with ID: " + empID);
         }
     }
 	@Override

@@ -206,6 +206,14 @@ public class CustServiceImpl implements CustServiceI{
 
 
 		@Override
+		public Enquiry getCustomer(String username, String password) {
+			
+			Enquiry cd = cri.findByUsernameAndPassword(username,password);
+			
+			return cd;
+		}
+
+		@Override
 		public void deleteData(int customerid) 
 		{			
 			cri.deleteById(customerid);
@@ -231,7 +239,7 @@ public class CustServiceImpl implements CustServiceI{
 			{
 				 String status = e.getEnquiryStatus();
 			    
-			     if ("Approved".equals(status.trim())) 
+			     if ("Approved for ApplyLoan".equals(status.trim())) 
 			     {
 			            l.add(e);
 			            System.out.println("Approved enquiry: " + e);
@@ -266,4 +274,6 @@ public class CustServiceImpl implements CustServiceI{
 
 		}
 
+
+		
 }	

@@ -7,4 +7,6 @@ import com.cjc.customerdetails.app.model.Enquiry;
 @Repository
 public interface CustRepoI extends JpaRepository<Enquiry, Integer>{
 
+	Enquiry findByUsernameAndPassword(String username, String password);
+
 }

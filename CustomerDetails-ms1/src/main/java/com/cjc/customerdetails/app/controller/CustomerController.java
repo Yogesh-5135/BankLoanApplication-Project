@@ -53,6 +53,12 @@ public class CustomerController {
 		List<Enquiry> cd = csi.getAllData();
 		return new ResponseEntity<List<Enquiry>>( cd , HttpStatus.OK);
 	}
+	@GetMapping("/getCustomer/{username}/{password}")
+	public ResponseEntity<Enquiry> getCustomer(@PathVariable String username,@PathVariable String password)
+	{
+		Enquiry cd = csi.getCustomer(username, password);
+		return new ResponseEntity<Enquiry>(cd,HttpStatus.OK);
+	}
 
 	@GetMapping("/getAllApprovedCustomer")
 	public ResponseEntity<List<Enquiry>> getAllApprovedCustomer()
