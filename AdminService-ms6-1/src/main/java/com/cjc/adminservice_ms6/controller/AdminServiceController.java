@@ -65,7 +65,7 @@ public class AdminServiceController {
 	}
 	
 	@PutMapping("/editAdmin/{empID}")
-	public ResponseEntity<String> updateAdmin(@PathVariable int empID,@RequestPart("info")String json,
+	public ResponseEntity<String> updateAdmin(@PathVariable ("empID") int empID,@RequestPart("info")String json,
 			   @RequestPart("empImage")MultipartFile empImage,
 	           @RequestPart("panCard")MultipartFile empPancard
 	           )
