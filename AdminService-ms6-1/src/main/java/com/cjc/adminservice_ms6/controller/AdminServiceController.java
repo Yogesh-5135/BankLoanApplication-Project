@@ -65,9 +65,9 @@ public class AdminServiceController {
 	}
 	
 	@PutMapping("/editAdmin/{empID}")
-	public ResponseEntity<String> updateAdmin(@PathVariable int empID,@RequestPart("info")String json,
-			   @RequestPart("empImage")MultipartFile empImage,
-	           @RequestPart("panCard")MultipartFile empPancard
+	public ResponseEntity<String> updateAdmin(@PathVariable("empID") int empID,@RequestPart("info")String json,
+			   @RequestPart(value="empImage",required = false)MultipartFile empImage,
+	           @RequestPart(value="panCard",required = false)MultipartFile empPancard
 	           )
 	{
 		asi.editAdmin(empID,json,empImage,empPancard);

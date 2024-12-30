@@ -72,11 +72,10 @@ public class CibilServiceImpl implements CibilServiceI {
 				c.setRemark("You are Great, work hard and improve score");
 				e.setEnquiryStatus("Rejected");
 			}
-              
+			e.setCibil(c);
 			String customeremail = e.getEmail();
 			String enquirystatus = e.getEnquiryStatus();
 			String remark = e.getCibil().getRemark();
-		
 			if(e.getEnquiryStatus().equals("Approved")) {
 				
 				SimpleMailMessage sm = new SimpleMailMessage();
@@ -96,7 +95,7 @@ public class CibilServiceImpl implements CibilServiceI {
 				e.setEnquiryStatus("Closed");
 				jms.send(sm);
 			}
-			e.setCibil(c);
+			
 			eri.save(e);
 			
 			return e;

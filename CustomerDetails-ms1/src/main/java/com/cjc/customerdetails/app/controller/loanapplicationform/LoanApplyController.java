@@ -37,7 +37,7 @@ public class LoanApplyController {
 	{
 		LoanApplication l = lsi.getSingleLoanApplication(loanid);
 		
-		return new ResponseEntity<LoanApplication>(l,HttpStatus.OK);
+		return new ResponseEntity<LoanApplication>(new LoanApplication(),HttpStatus.OK);
 	}
 	
 	
