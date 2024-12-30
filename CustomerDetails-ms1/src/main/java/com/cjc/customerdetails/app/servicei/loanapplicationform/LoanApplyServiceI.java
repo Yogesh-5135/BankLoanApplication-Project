@@ -18,4 +18,6 @@ public interface LoanApplyServiceI {
 
 	List<LoanApplication> getAccepted();
 
+	LoanApplication updateLoanStatus(Integer loanid);
+
 }

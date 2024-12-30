@@ -44,7 +44,7 @@ public class CibilController {
 	@GetMapping("/getAllDocumentVerifiedList")
 	public List<LoanApplication> getDocumentVerifiedList()
 	{
-		String url = "http://localhost:9090/applyLoan/getAllLoanApplication";
+		String url = "http://localhost:9090/getAllLoanApplication";
 		LoanApplication[] arr = rt.getForObject(url , LoanApplication[].class);
 		
 		List<LoanApplication> l = Arrays.asList(arr);

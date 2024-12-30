@@ -24,10 +24,10 @@ public class AllPersonalDocuments {
 	private byte[] panCard ;
 	@Lob
 	@Column(length = 999999999)
-	private byte[] IncomeTax;
+	private byte[] incomeTax;
 	@Lob
 	@Column(length = 999999999)
-	private byte[] addharCard;
+	private byte[] aadharCard;
 	@Lob
 	@Column(length = 999999999)
 	private byte[] photo;

@@ -33,7 +33,7 @@ public class AllPersonalDocumentsServiceImpl implements AllPersonalDocumentsServ
 
   @Override
 	public void saveDocument( MultipartFile addressProof, MultipartFile panCard, MultipartFile incomeTax,
-			MultipartFile addharCard, MultipartFile photo, MultipartFile signature, MultipartFile bankCheque,
+			MultipartFile aadharCard, MultipartFile photo, MultipartFile signature, MultipartFile bankCheque,
 			MultipartFile salarySlips ,int  loanid) 
   {
 	  LoanApplication l = null;
@@ -54,7 +54,7 @@ public class AllPersonalDocumentsServiceImpl implements AllPersonalDocumentsServ
 			ap.setAddressProof(addressProof.getBytes());
 			ap.setPanCard(panCard.getBytes());
 			ap.setIncomeTax(incomeTax.getBytes());
-			ap.setAddharCard(addharCard.getBytes());
+			ap.setAadharCard(aadharCard.getBytes());
 			ap.setPhoto(photo.getBytes());
 			ap.setSignature(signature.getBytes());
 			ap.setBankCheque(bankCheque.getBytes());
@@ -64,7 +64,6 @@ public class AllPersonalDocumentsServiceImpl implements AllPersonalDocumentsServ
 			}		
 	apd.save(ap);
 	l.setAllPersonalDocuments(ap);
-	l.setLoanStatus("Verified");
 	lri.save(l);
   		
 	}

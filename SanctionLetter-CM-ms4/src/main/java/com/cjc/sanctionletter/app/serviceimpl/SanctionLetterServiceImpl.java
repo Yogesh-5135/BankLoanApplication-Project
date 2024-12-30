@@ -50,7 +50,7 @@ public class SanctionLetterServiceImpl implements SanctionLetterI {
 	
 	
 	@Override
-	public void generateLimit(int loanid, List<LoanApplication> l) 
+	public SanctionLetter generateLimit(int loanid, List<LoanApplication> l) 
 	{
 		SanctionLetter sl = new SanctionLetter();
 		System.out.println(l);
@@ -92,6 +92,7 @@ public class SanctionLetterServiceImpl implements SanctionLetterI {
 					lri.save(la);
 		    	  }
 		      }
+			return sl;
 		 }
 		  
 			
@@ -190,7 +191,7 @@ public class SanctionLetterServiceImpl implements SanctionLetterI {
 
 	
 	@Override
-	public void generateSanctionLetter( List<LoanApplication> l, int sanctionId ,int loanid) 
+	public SanctionLetter generateSanctionLetter( List<LoanApplication> l, int sanctionId ,int loanid) 
 	{
 	    Optional<SanctionLetter> ol = slr.findById(sanctionId);
 	    SanctionLetter sanctionLetter = new SanctionLetter();
@@ -199,7 +200,7 @@ public class SanctionLetterServiceImpl implements SanctionLetterI {
 	        sanctionLetter = ol.get();
 	    } else {
 	        System.out.println("Sanction letter not found for sanctionId: " + sanctionId);
-	        return;
+	       
 	    }
 	        	
 	            String title = "Axis Bank Ltd.";
@@ -351,6 +352,7 @@ public class SanctionLetterServiceImpl implements SanctionLetterI {
 	        			System.out.println("Email Failed to Send!!!!!!");
 	        			e.printStackTrace();
 	        		}
+					return sanctionLetter;
 	        	
 	    }
 

@@ -254,5 +254,22 @@ public class LoanApplyServiceImpl implements LoanApplyServiceI{
 		}
 		 
 		return lp;
+	}
+
+
+	@Override
+	public LoanApplication updateLoanStatus(Integer loanid) {
+		Optional<LoanApplication> oa = lri.findById(loanid);
+		if(oa.isPresent())
+		{
+			LoanApplication l = oa.get();
+			l.setLoanStatus("Verified");
+			lri.save(l);
+	        return l;
+		}
+		else
+		{
+			throw new IdNotFountException("Invalid Id Exception");
+		}
 	}	
 }

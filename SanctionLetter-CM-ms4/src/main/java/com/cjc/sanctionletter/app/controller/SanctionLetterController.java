@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.cjc.sanctionletter.app.model.LoanApplication;
+import com.cjc.sanctionletter.app.model.SanctionLetter;
 import com.cjc.sanctionletter.app.servicei.SanctionLetterI;
 
 @RestController
@@ -45,13 +46,13 @@ public class SanctionLetterController
   }
   
   @PutMapping("/generateCreditLimit/{loanid}")
-  public ResponseEntity<String> generateCreditLimit(@PathVariable int loanid)
+  public ResponseEntity<SanctionLetter> generateCreditLimit(@PathVariable int loanid)
   {
      List<LoanApplication> al = getAllVerified();
 	  
-	 sli.generateLimit(loanid , al);
+     SanctionLetter sl =  sli.generateLimit(loanid , al);
 	  
-	 return new ResponseEntity<String>("Credit limit generated",HttpStatus.OK);
+	 return new ResponseEntity<SanctionLetter>(sl,HttpStatus.OK);
   }
   
   @PutMapping("/getIntRate/{sanctionId}")
@@ -69,13 +70,13 @@ public class SanctionLetterController
   }
   
   @PutMapping("/generateSanctionLetter/{sanctionId}/{loanid}")
-  public ResponseEntity<String> generateSanctionLetter(@PathVariable int sanctionId , @PathVariable int loanid)
+  public ResponseEntity<SanctionLetter> generateSanctionLetter(@PathVariable int sanctionId , @PathVariable int loanid)
   {
 	 List<LoanApplication> l = getAllVerified();
 	 
-	 sli.generateSanctionLetter(l,sanctionId, loanid);	
+	 SanctionLetter sl =sli.generateSanctionLetter(l,sanctionId, loanid);	
 	 
-	return new ResponseEntity<String>("SanctionLetter Generated Successfully",HttpStatus.OK);
+	return new ResponseEntity<SanctionLetter>(sl,HttpStatus.OK);
 	  
   }
   

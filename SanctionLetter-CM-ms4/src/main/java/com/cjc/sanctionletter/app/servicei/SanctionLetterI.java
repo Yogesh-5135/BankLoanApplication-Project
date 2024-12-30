@@ -3,17 +3,18 @@ package com.cjc.sanctionletter.app.servicei;
 import java.util.List;
 
 import com.cjc.sanctionletter.app.model.LoanApplication;
+import com.cjc.sanctionletter.app.model.SanctionLetter;
 
 public interface SanctionLetterI {
 
 
-	void generateLimit(int loanid, List<LoanApplication> l);
+	SanctionLetter generateLimit(int loanid, List<LoanApplication> l);
 
 	void generateIntRate(int sanctionId);
 
 	void getMonthlyEmi(int sanctionId);
 
-	void generateSanctionLetter(List<LoanApplication> l, int sanctionId, int loanid);
+	SanctionLetter generateSanctionLetter(List<LoanApplication> l, int sanctionId, int loanid);
 
 	void loanStatusChange(String loanStatus, int loanid);
 
