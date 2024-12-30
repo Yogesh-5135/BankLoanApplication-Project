@@ -33,11 +33,11 @@ public class LoanApplyController {
 	}
 	
 	@GetMapping("/getSingleLoanApplication/{loanid}")
-	public ResponseEntity<LoanApplication> getSingleAccountDetails(@PathVariable Integer loanid)
+	public ResponseEntity<LoanApplication> getSingleAccountDetails(@PathVariable("loanid") Integer loanid)
 	{
 		LoanApplication l = lsi.getSingleLoanApplication(loanid);
 		
-		return new ResponseEntity<LoanApplication>(new LoanApplication(),HttpStatus.OK);
+		return new ResponseEntity<LoanApplication>(l,HttpStatus.OK);
 	}
 	
 	
