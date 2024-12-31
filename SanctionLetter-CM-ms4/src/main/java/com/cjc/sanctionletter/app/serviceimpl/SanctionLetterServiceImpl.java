@@ -177,7 +177,6 @@ public class SanctionLetterServiceImpl implements SanctionLetterI {
 	        
 	        monthlyEMI = loanAmount / loanTenureInMonths;
 	    }
-
 	    
 	    sl.setMonthlyEmiAmount(monthlyEMI);
         if(sl.getStatus().equals("GettingROI"))
@@ -187,8 +186,6 @@ public class SanctionLetterServiceImpl implements SanctionLetterI {
         }
 	    
 	}
-
-
 	
 	@Override
 	public SanctionLetter generateSanctionLetter( List<LoanApplication> l, int sanctionId ,int loanid) 
