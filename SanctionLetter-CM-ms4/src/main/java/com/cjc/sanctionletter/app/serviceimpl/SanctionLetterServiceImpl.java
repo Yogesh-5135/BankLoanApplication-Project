@@ -87,7 +87,7 @@ public class SanctionLetterServiceImpl implements SanctionLetterI {
 					   }
 					   					
 					
-					slr.save(sl);  
+				    sl=slr.save(sl);  
 					la.setSanctionLetter(sl);
 					lri.save(la);
 		    	  }
