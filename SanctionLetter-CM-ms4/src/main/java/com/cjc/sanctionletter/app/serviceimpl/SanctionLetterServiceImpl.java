@@ -374,6 +374,30 @@ public class SanctionLetterServiceImpl implements SanctionLetterI {
 		
 	}
 
+
+
+	@Override
+	public SanctionLetter getSanctionLetter(int sanctionId) {
+		
+		Optional<SanctionLetter> sl = slr.findById(sanctionId);
+		if(sl.isPresent())
+		{
+			SanctionLetter l = sl.get();
+			if (l.getStatus().equals("SanctionLetterGenerated"))
+			{
+			return l ;
+			}
+			else
+			{
+				throw new RuntimeException("Sanction Letter is Not Sanctioned");
+			}
+		}
+		else
+		{
+			throw new RuntimeException("Id Not Found");
+		}
+	}
+
 	
 
 	

@@ -18,6 +18,8 @@ public interface SanctionLetterI {
 
 	void loanStatusChange(String loanStatus, int loanid);
 
+	SanctionLetter getSanctionLetter(int sanctionId);
+
 
 
 }

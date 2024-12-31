@@ -80,6 +80,14 @@ public class SanctionLetterController
 	  
   }
   
+  @GetMapping("/getSanctionLetter/{sanctionId}")
+  public ResponseEntity<SanctionLetter> getSanctionLetter(@PathVariable int sanctionId)
+  { 
+	  
+	  SanctionLetter sl = sli.getSanctionLetter(sanctionId);
+	  
+	  return new ResponseEntity<SanctionLetter>(sl,HttpStatus.OK);
+  }
   @PutMapping("/add/{loanStatus}/{loanid}")
   public ResponseEntity<String> loanStatusChange(@PathVariable String loanStatus,@PathVariable int loanid)
   {
