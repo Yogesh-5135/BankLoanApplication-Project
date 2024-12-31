@@ -32,7 +32,7 @@ public class LoanDisbursementController
 	 public List<LoanApplication> getAllAccepted()
 	 {
 		 
-		 String url = "http://localhost:9090/applyLoan/getAllAccepted"; 
+		 String url = "http://localhost:9090/getAllAccepted"; 
 		 
 		 LoanApplication[] lp = rt.getForObject(url, LoanApplication[].class);
 		 

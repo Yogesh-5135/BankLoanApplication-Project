@@ -8,4 +8,6 @@ import com.cjc.ledger_loan_ms5.model.LoanApplication;
 @Repository
 public interface LoanAppRepoI extends JpaRepository<LoanApplication, Integer>{
 
+	
+
 }

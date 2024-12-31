@@ -2,9 +2,12 @@ package com.cjc.ledger_loan_ms5.serviceimpl;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.cjc.ledger_loan_ms5.model.Ledger;
@@ -21,14 +24,14 @@ public class LedgerServiceImpl implements LedgerServiceI {
     @Autowired
     private LoanAppRepoI lri;
 
-    private static final String STATUS_PENDING = "Pending";
+    
     private static final String STATUS_MISSED = "Missed";
     private static final String STATUS_PAID = "Paid";
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
 
     @Override
-    public void updateLedger(int loanid) {
+    public List<Ledger> updateLedger(int loanid) {
         Optional<LoanApplication> loanOpt = lri.findById(loanid);
         
         if (!loanOpt.isPresent()) {
@@ -59,7 +62,7 @@ public class LedgerServiceImpl implements LedgerServiceI {
             ledger.setLedgerCreatedDate(java.sql.Date.valueOf(LocalDate.now()));
             ledger.setTotalLoanAmount(loanAmount);
             ledger.setTenure(tenureInMonths);
-            ledger.setLoanStatus(STATUS_PENDING);
+            ledger.setLoanStatus("Pending");
 
             ledger.setRateOfInterest(rateOfInterest);
             ledger.setMonthlyEMI(monthlyEMI);
@@ -115,6 +118,8 @@ public class LedgerServiceImpl implements LedgerServiceI {
 
        
         lri.save(loan);
+        
+		return loan.getLedger();
     }
 
     
@@ -169,4 +174,51 @@ public class LedgerServiceImpl implements LedgerServiceI {
         LocalDate loanEndDate = LocalDate.now().plusMonths(tenureInMonths);
         return loanEndDate.format(DATE_FORMATTER);
     }
+
+
+    @Override
+    public List<Ledger> updateLoanStatus(int loanid, int ledgerId) {
+      
+        Optional<LoanApplication> loanApplicationOptional = lri.findById(loanid);
+        
+        if (!loanApplicationOptional.isPresent()) {
+       
+            return new ArrayList<>();
+        }
+
+        LoanApplication loanApplication = loanApplicationOptional.get();
+        List<Ledger> ledgers = loanApplication.getLedger(); 
+
+        for (Ledger ledger : ledgers) {
+            if (ledger.getLedgerId() == ledgerId) {
+                
+                ledger.setLoanStatus("EMI Paid");
+                ldri.save(ledger); 
+                break; 
+            }
+        }
+
+       
+        return ledgers;
+    }
+
+
+    @Override
+    public List<Ledger> getLedger(int loanid) {
+      
+        Optional<LoanApplication> loanApplicationOptional = lri.findById(loanid);
+        
+        if (!loanApplicationOptional.isPresent()) {
+            
+            return new ArrayList<>();
+        }
+
+        
+        LoanApplication loanApplication = loanApplicationOptional.get();
+        
+      
+        return loanApplication.getLedger(); 
+    }
+
+
 }
