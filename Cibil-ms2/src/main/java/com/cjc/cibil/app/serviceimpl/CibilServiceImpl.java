@@ -87,6 +87,7 @@ public class CibilServiceImpl implements CibilServiceI {
 				jms.send(sm);
 			}
 			else {
+				
 				SimpleMailMessage sm = new SimpleMailMessage();
 				sm.setTo(customeremail);
 				sm.setFrom(FROM_MAIL);

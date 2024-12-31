@@ -59,6 +59,15 @@ public class LoanApplyController {
 		return new ResponseEntity<LoanApplication>(l,HttpStatus.OK);
 	}
 	
+
+	@PutMapping("/updateLoanStatusAsVerified/{loanid}")
+	public ResponseEntity<LoanApplication> updateLoanStatus(@PathVariable Integer loanid)
+	{
+		LoanApplication l = lsi.updateLoanStatus(loanid);
+		
+		return new ResponseEntity<LoanApplication>(l,HttpStatus.OK);
+	}
+	
 	@DeleteMapping("/deleteLoanApplication/{loanid}")
 	public ResponseEntity<String> deleteLoanApplication(@PathVariable int loanid)
 	{

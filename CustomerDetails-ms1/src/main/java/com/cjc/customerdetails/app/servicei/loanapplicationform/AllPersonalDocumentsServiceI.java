@@ -14,7 +14,7 @@ public interface AllPersonalDocumentsServiceI {
 	void deleteDocument(int documentID);
 
 	void saveDocument(MultipartFile addressProof, MultipartFile panCard, MultipartFile incomeTax,
-			MultipartFile addharCard, MultipartFile photo, MultipartFile signature, MultipartFile bankCheque,
+			MultipartFile aadharCard, MultipartFile photo, MultipartFile signature, MultipartFile bankCheque,
 			MultipartFile salarySlips,int customerid);
 
 }

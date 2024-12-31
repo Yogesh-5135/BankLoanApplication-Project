@@ -26,6 +26,7 @@ public class AdminServiceController {
 	@Autowired
 	AdminServiceI asi;
 
+	
 	@PostMapping("/saveAdmin")
 	public ResponseEntity<String> addAdmin(@RequestPart("info")String json,
 			   @RequestPart("empImage")MultipartFile empImage,
