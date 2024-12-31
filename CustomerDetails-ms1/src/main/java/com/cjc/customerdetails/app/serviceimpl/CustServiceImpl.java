@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.cjc.customerdetails.app.exception.AgeException;
 import com.cjc.customerdetails.app.exception.EmailNotValidException;
 import com.cjc.customerdetails.app.exception.IdNotFountException;
@@ -273,7 +274,6 @@ public class CustServiceImpl implements CustServiceI{
 			return l;
 
 		}
-
 
 		
 }	
