@@ -39,5 +39,13 @@ public class LedgerController {
 			List<Ledger> l = lsi.getLedger(loanid);
 			
 			return new ResponseEntity<List<Ledger>>(l, HttpStatus.OK);
-		} 
+		}
+	 
+	 @GetMapping("getLedgerOnlyEmiPaid/{loanid}")
+	 public ResponseEntity<List<Ledger>> getLedgerOnlyEmiPaid(@PathVariable int loanid) 
+		{
+			List<Ledger> l = lsi.getLedgerOnlyEmiPaid(loanid);
+			
+			return new ResponseEntity<List<Ledger>>(l, HttpStatus.OK);
+		}
 }

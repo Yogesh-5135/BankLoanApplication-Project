@@ -13,4 +13,6 @@ public interface LedgerServiceI
 
 	List<Ledger> getLedger(int loanid);
 
+	List<Ledger> getLedgerOnlyEmiPaid(int loanid);
+
 }

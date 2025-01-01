@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -177,7 +178,8 @@ public class LedgerServiceImpl implements LedgerServiceI {
 
 
     @Override
-    public List<Ledger> updateLoanStatus(int loanid, int ledgerId) {
+    public List<Ledger> updateLoanStatus(int loanid, int ledgerId) 
+    {
       
         Optional<LoanApplication> loanApplicationOptional = lri.findById(loanid);
         
@@ -218,6 +220,25 @@ public class LedgerServiceImpl implements LedgerServiceI {
         
       
         return loanApplication.getLedger(); 
+    }
+
+
+    @Override
+    public List<Ledger> getLedgerOnlyEmiPaid(int loanid) {
+        Optional<LoanApplication> loanApplicationOptional = lri.findById(loanid);
+
+        if (!loanApplicationOptional.isPresent()) {
+            return new ArrayList<>(); 
+        }
+
+        LoanApplication loanApplication = loanApplicationOptional.get();
+        List<Ledger> ledgers = loanApplication.getLedger();
+
+        List<Ledger> emiPaidLedgers = ledgers.stream()
+            .filter(ledger -> "EMI Paid".equals(ledger.getLoanStatus()))
+            .collect(Collectors.toList());
+
+        return emiPaidLedgers; 
     }
 
 
